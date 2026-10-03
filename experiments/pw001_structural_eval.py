@@ -16,6 +16,7 @@ from genesis.relational import CrossRegionRelationalPredictor
 from genesis.graph_relational import GraphRelationalPredictor
 from genesis.innovation import InnovationPredictor
 from genesis.state_innovation import StateInnovationPredictor, STATE_FEATURES
+from genesis.state_trajectory import StateTrajectoryPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -240,6 +241,21 @@ def main() -> None:
                 f"{state_innovation.state_mae:.15g}",
                 f"{state_innovation.shuffled_mae:.15g}",
                 f"{state_innovation.improvement:.15g}",
+            )
+
+        for history_length in (2, 3, 5, 10):
+            trajectory = StateTrajectoryPredictor(
+                feature_name="combined",
+                history_length=history_length,
+                train_fraction=0.5,
+                require_consecutive=True,
+            ).evaluate(records)
+            print(
+                "STATE_TRAJECTORY", history_length, seed, trajectory.samples,
+                f"{trajectory.zero_mae:.15g}",
+                f"{trajectory.trajectory_mae:.15g}",
+                f"{trajectory.shuffled_mae:.15g}",
+                f"{trajectory.improvement:.15g}",
             )
 
         combined = StateInnovationPredictor(
