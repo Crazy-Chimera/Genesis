@@ -778,3 +778,25 @@ Lokální trajektorie nepřekonala persistence v žádném ze tří seedů. Orde
 Výsledek také naznačuje, že pouhé prodloužení lokálního receptive field v čase není dostačující. Další krok by měl testovat jiný typ časového vztahu, nikoli pouze concatenation několika statických patchů.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.6 — Lokální trajektorie
+
+GENESIS-2.6 testuje tři po sobě jdoucí 3×3 pevně orientované lokální phase fields jako jediný prediktivní vstup. Celkem jde o 54 hodnot; coherence history není vstupem. Pairs jsou přijímány pouze při přesně po sobě jdoucích tickech.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #54  
+Commit: 911966f05a4158f4759b907a25a24d91f0d8c52c
+
+| seed | samples | persistence MAE | trajectory MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103839 | 0.000120511918 | 0.054936... | 0.054... | ... |
+| 390002 | 938... | ... | ... | ... | ... |
+| 390003 | 869... | ... | ... | ... | ... |
+
+Autoritativní experiment proběhl úspěšně; přesné numerické hodnoty musí být při publikaci převzaty přímo z artefaktu PW-001 #54, nikoli ručně rekonstruovány.
+
+### Interpretation
+
+2.6 je první přímý test krátké lokální trajektorie. Nezavádí nový univerzální mechanismus ani zpětnou vazbu do GenesisUniverse. Výsledek je třeba interpretovat pouze podle skutečných MAE a shuffled control z artefaktu.
