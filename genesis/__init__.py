@@ -14,6 +14,10 @@ from .graph_relational import GraphRelationalPredictor, GraphRelationalEvaluatio
 from .innovation import InnovationPredictor, InnovationEvaluationResult
 from .state_innovation import StateFeatureSpec, StateInnovationEvaluationResult, StateInnovationPredictor
 from .state_trajectory import StateTrajectoryEvaluationResult, StateTrajectoryPredictor
+from .state_delta_trajectory import (
+    StateDeltaTrajectoryEvaluationResult,
+    StateDeltaTrajectoryPredictor,
+)
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -57,5 +61,7 @@ __all__ = [
     "StateInnovationPredictor",
     "StateTrajectoryEvaluationResult",
     "StateTrajectoryPredictor",
+    "StateDeltaTrajectoryEvaluationResult",
+    "StateDeltaTrajectoryPredictor",
     "run",
 ]
