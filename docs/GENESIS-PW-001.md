@@ -42,6 +42,14 @@ Z = | mean(exp(i θ_i)) |
 
 This is a measurement, not a control variable.
 
+## GENESIS-1.1 — External local structure observer
+
+The observer now computes a local coherence field over each cell and its four periodic neighbours. Cells above a configurable threshold are grouped into four-neighbour connected components.
+
+A component is a **detected coherent region**, not an entity. No entity state is written into the universe and detection does not alter oscillator phases.
+
+The next measurement layer will track component persistence across ticks, lifetime, boundary contrast, and identity overlap. Only after those measurements exist should an entity-candidate criterion be evaluated.
+
 ## Evolution path
 
 GENESIS-0 → no coupling
