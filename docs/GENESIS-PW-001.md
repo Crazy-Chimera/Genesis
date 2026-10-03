@@ -25,16 +25,22 @@ A detected coherent region is **not an entity**. It is an observer measurement. 
 
 ### GENESIS-1.2
 
-The observer now measures:
-
-1. **Persistence** — number of observed frames for which the same region identity is maintained.
-2. **Lifetime** — consecutive observation count for a tracked region.
-3. **Boundary contrast** — difference between coherence inside a region and coherence immediately outside its boundary.
-4. **Identity overlap** — Jaccard overlap between the current and previous cell sets.
+The observer adds persistence, lifetime, boundary contrast, and Jaccard identity overlap.
 
 Region identity is assigned by the observer using spatial overlap only. It is not part of the universe state.
 
-The resulting RegionObservation is still an external measurement record, not an endogenous entity.
+### GENESIS-1.3
+
+The observer adds a lifecycle event stream:
+
+- **birth** — a measured region has no qualifying predecessor.
+- **growth** — a tracked region gains cells.
+- **decay** — a tracked region loses cells.
+- **split** — one predecessor overlaps multiple current regions.
+- **merge** — one current region overlaps multiple predecessors.
+- **death** — a predecessor has no qualifying successor.
+
+These are observer-level classifications of measured region sets. They are not causal mechanisms inside the universe.
 
 ## Measurement rule
 
@@ -42,17 +48,17 @@ For regions A and B:
 
 J(A,B) = |A intersection B| / |A union B|
 
-A current region inherits the previous identity when J(A,B) >= overlap_threshold and that previous identity has not already been assigned in the current frame.
+A current region inherits a previous identity when J(A,B) >= overlap_threshold and that previous identity has not already been assigned in the current frame.
 
-New regions receive a new observer-local identity.
+Lifecycle events are then derived from the overlap graph between consecutive observation frames.
 
 ## Non-interference rule
 
-GENESIS-1.2 must not:
+GENESIS-1.3 must not:
 
-- write identities into GenesisUniverse
+- write identities or lifecycle events into GenesisUniverse
 - modify phase, frequency, amplitude, coupling, or noise
-- introduce memory into the universe
+- introduce endogenous memory
 - introduce goals, meaning, language, agency, or self-models
 
-The next experimental question is whether measured persistence and identity continuity provide a useful empirical basis for a later memory layer.
+The next experimental question is whether lifecycle traces provide a useful substrate for an external memory layer and later predictive measurements.
