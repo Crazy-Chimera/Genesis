@@ -6,6 +6,7 @@ from genesis.local_nonlinear import NonlinearLocalPatchPredictor
 from genesis.local_phase import PhasePatchPredictor
 from genesis.local_gradient import LocalGradientPredictor
 from genesis.local_motion import MotionPredictor
+from genesis.boundary_flux import BoundaryFluxPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -115,6 +116,19 @@ def main() -> None:
             f"{motion.motion_mae:.15g}",
             f"{motion.shuffled_mae:.15g}",
             f"{motion.improvement:.15g}",
+        )
+
+        flux = BoundaryFluxPredictor(
+            train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "BOUNDARY_FLUX",
+            seed,
+            flux.samples,
+            f"{flux.baseline_mae:.15g}",
+            f"{flux.flux_mae:.15g}",
+            f"{flux.shuffled_mae:.15g}",
+            f"{flux.improvement:.15g}",
         )
 
 
