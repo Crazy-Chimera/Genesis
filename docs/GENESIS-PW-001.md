@@ -813,3 +813,26 @@ Výsledek proto podporuje pouze slabší tvrzení: **současné vztahy mezi regi
 Další experiment by měl rozlišit, zda je informace rozložena v samotné síti vztahů, a ne pouze v nejbližších dvou peerech. Vhodnou další sondou je proto graph-level relational predictor s deterministickou agregací většího počtu peer-regionů, stále bez coherence jako vstupu a se zachováním shuffled kontroly.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.8 — Graph-level relational predictor
+
+GENESIS-2.8 rozšiřuje cross-region probe z maximálně dvou nejbližších peer regionů na širší lokální graf až osmi peerů. Pro každý cílový region se vztahy agregují pomocí mean/std/min/max přes relativní polohu, fázový vztah, poměr velikostí, rozdíl boundary contrast a vzdálenost; přidává se normalizovaný počet dostupných peerů. Výsledná reprezentace má 33 hodnot. Cílová koherence není vstupem prediktoru.
+
+PW-001 run #64 (a0842fa12c57b72cd052a79efe47784e7a117556) dokončil celý benchmark úspěšně. Artifact digest: sha256:e8923d2667f55a2117516959954a37ba1c83ba38b869403a014f667753dd4b69.
+
+| seed | samples | persistence MAE | graph MAE | shuffled graph MAE | improvement |
+|---|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.050765597517 | 0.066235851797 | -0.050645028064 |
+| 390002 | 93990 | 0.000097287754 | 0.047290570970 | 0.061824190387 | -0.047193283216 |
+| 390003 | 86979 | 0.000107119591 | 0.054775654688 | 0.067305877639 | -0.054668535097 |
+
+Interpretace:
+- Graph-level relational prediction nepřekonala persistence v žádném ze tří seed.
+- Ordered graph representation byla ve všech třech seed lepší než shuffled control.
+- Rozšíření z 2 peerů na 8 peerů tedy pod současnou lineární reprezentací nepřineslo přístup k hlavnímu predikčnímu signálu.
+- Výsledek nepodporuje tvrzení, že hlavní krátkodobá predikční informace je obsažena pouze v současné širší síti regionálních vztahů.
+- Výsledek také není důkazem, že vztahy mezi regiony nenesou informaci: rozdíl vůči shuffled control ukazuje, že testovaná reprezentace obsahuje určitou časovou strukturu.
+- Stejně jako předchozí fáze neposkytuje důkaz inteligence, agency, self-modelu ani endogenous learning.
+
+Další probe by měl oddělit samotnou autoregresní informaci v již pozorované koherenci od informace přítomné v ostatních měřených strukturách. To zabrání tomu, aby opakované vítězství history predictor bylo mylně interpretováno jako důkaz emergentní predikce vyšší úrovně.
