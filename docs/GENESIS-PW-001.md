@@ -967,3 +967,73 @@ This means the current evidence does not identify the physical/observer variable
 No predictor output is fed back into GenesisUniverse or TemporalMemory. The result provides no evidence of intelligence, agency, self-modeling, or endogenous learning.
 
 The next logical probe is a **state-trajectory innovation predictor**: preserve a short sequence of non-coherence states across consecutive ticks and predict the next coherence change, while continuing to exclude coherence history itself. This directly tests whether the missing information resides in the trajectory of the underlying state rather than in any single frame.
+
+## GENESIS-2.10 — State-to-innovation source probe
+
+GENESIS-2.10 testuje další otázku po 2.9: pokud je predikovatelná změna koherence, lze tuto změnu predikovat přímo z aktuálního observer-state bez použití coherence history?
+
+Cíl je následující změna koherence: delta C(t+1) = C(t+1) − C(t).
+
+Prediktor dostává pouze reprezentaci aktuálního měřeného regionu. Coherence aktuálního ani předchozího rámce není součástí vstupu. Používá se stejný 50% chronological holdout, exact-consecutive-tick požadavek a deterministický shuffled control jako v předchozích sondách. Zero baseline předpokládá delta C = 0.
+
+Testovány byly: structure, local_patch, phase_patch, gradient_patch, motion, boundary_flux, spatial_field, multiscale_field, relational a graph_relational.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #70  
+Commit: `b0def8157a077f753304e2905725a2d4cb5ad310`  
+Artifact: `11268229198`  
+Artifact digest: `sha256:dbdc86bba337313a749e069aa137a0239c24fe963163e709e2634acb9c3468a2`
+
+| feature | seed | samples | zero MAE | state MAE | shuffled MAE | improvement |
+|---|---:|---:|---:|---:|---:|---:|
+| structure | 390001 | 103931 | 0.000120569452 | 0.000133870449 | 0.000158464540 | -0.0000133010 |
+| structure | 390002 | 93990 | 0.000097287754 | 0.000107885995 | 0.000126289027 | -0.0000105982 |
+| structure | 390003 | 86979 | 0.000107119591 | 0.000094175331 | 0.000115903304 | +0.0000129443 |
+| local_patch | 390001 | 103931 | 0.000120569452 | 0.000131120779 | 0.000127531024 | -0.0000105513 |
+| local_patch | 390002 | 93990 | 0.000097287754 | 0.000113949445 | 0.000108671741 | -0.0000166617 |
+| local_patch | 390003 | 86979 | 0.000107119591 | 0.000110112590 | 0.000110844244 | -0.0000029930 |
+| phase_patch | 390001 | 103931 | 0.000120569452 | 0.000133219234 | 0.000133055737 | -0.0000126498 |
+| phase_patch | 390002 | 93990 | 0.000097287754 | 0.000106904764 | 0.000106508163 | -0.0000096170 |
+| phase_patch | 390003 | 86979 | 0.000107119591 | 0.000110368552 | 0.000118869844 | -0.0000032490 |
+| gradient_patch | 390001 | 103931 | 0.000120569452 | 0.000126709089 | 0.000130852157 | -0.0000061396 |
+| gradient_patch | 390002 | 93990 | 0.000097287754 | 0.000106506987 | 0.000107075089 | -0.0000092192 |
+| gradient_patch | 390003 | 86979 | 0.000107119591 | 0.000110049700 | 0.000116059997 | -0.0000029301 |
+| motion | 390001 | 103885 | 0.000120540651 | 0.000120380734 | 0.000120396892 | +0.0000001599 |
+| motion | 390002 | 93951 | 0.000097256523 | 0.000097503738 | 0.000097513571 | -0.0000002472 |
+| motion | 390003 | 86937 | 0.000107100653 | 0.000107221899 | 0.000107229244 | -0.0000001212 |
+| boundary_flux | 390001 | 103931 | 0.000120569452 | 0.000124811892 | 0.000124168638 | -0.0000042424 |
+| boundary_flux | 390002 | 93990 | 0.000097287754 | 0.000101815807 | 0.000101068519 | -0.0000045281 |
+| boundary_flux | 390003 | 86979 | 0.000107119591 | 0.000110200389 | 0.000110400545 | -0.0000030808 |
+| spatial_field | 390001 | 103931 | 0.000120569452 | 0.000120965669 | 0.000121485704 | -0.0000003962 |
+| spatial_field | 390002 | 93990 | 0.000097287754 | 0.000099045221 | 0.000099135259 | -0.0000017575 |
+| spatial_field | 390003 | 86979 | 0.000107119591 | 0.000107457495 | 0.000107705605 | -0.0000003379 |
+| multiscale_field | 390001 | 103931 | 0.000120569452 | 0.000124621574 | 0.000126082643 | -0.0000040521 |
+| multiscale_field | 390002 | 93990 | 0.000097287754 | 0.000106331677 | 0.000105838218 | -0.0000090439 |
+| multiscale_field | 390003 | 86979 | 0.000107119591 | 0.000110435541 | 0.000111674520 | -0.0000033160 |
+| relational | 390001 | 103931 | 0.000120569452 | 0.000128506707 | 0.000130423948 | -0.0000079373 |
+| relational | 390002 | 93990 | 0.000097287754 | 0.000099367675 | 0.000103745442 | -0.0000020799 |
+| relational | 390003 | 86979 | 0.000107119591 | 0.000106338344 | 0.000109613740 | +0.0000007812 |
+| graph_relational | 390001 | 103931 | 0.000120569452 | 0.000135062276 | 0.000133060893 | -0.0000144928 |
+| graph_relational | 390002 | 93990 | 0.000097287754 | 0.000114740956 | 0.000112638409 | -0.0000174532 |
+| graph_relational | 390003 | 86979 | 0.000107119591 | 0.000118902909 | 0.000121446027 | -0.0000117833 |
+
+### Interpretation
+
+Žádná z testovaných reprezentací neposkytla robustní tříseedovou výhodu nad zero-change baseline pro predikci delta C.
+
+Dvě drobné výjimky stojí za zaznamenání: structure překonala zero baseline pouze v seedu 390003 a relational ji překonala pouze v seedu 390003.
+
+U motion je MAE téměř identické s nulovým baseline ve všech třech seedech, ale výhoda se nereprodukuje: 390001 je nepatrně lepší, zatímco 390002 a 390003 jsou nepatrně horší. Motion proto nelze označit za robustní nosič inovačního signálu.
+
+Výsledek 2.10 tedy neposkytuje jednoduchou fyzickou/observer-level reprezentaci, která by sama vysvětlila inovační predikční signál z GENESIS-2.9. Signál z 2.9 není v této podobě snadno rekonstruovatelný z žádné z deseti testovaných aktuálních reprezentací.
+
+Důležitá metodická hranice: všechny sondy používají lineární ridge model a konkrétní observer reprezentace. Negativní výsledek proto nevylučuje nelineární kombinace, víceškálové časové kontexty, jiné kotvení regionu ani latentní kombinace více měřených polí.
+
+### Stav hypotézy po 2.10
+
+GENESIS-2.9 ukázal reprodukovatelnou predikovatelnost změny koherence z její vlastní krátké historie. GENESIS-2.10 současně neukázal, že by tento inovační signál byl jednoduše dostupný z jednoho aktuálního observer-state reprezentovaného testovanými poli.
+
+Další experimentální krok proto bude systematická multi-state innovation reconstruction: kombinovat několik aktuálních stavových reprezentací současně, ale stále bez coherence jako vstupu, a ověřit, zda kombinace nese inovační informaci, kterou jednotlivé reprezentace samostatně neodhalily.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
