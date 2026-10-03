@@ -4,7 +4,19 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "genesis/**"
+      - "genesis/core.py"
+      - "genesis/observer.py"
+      - "genesis/memory.py"
+      - "genesis/evaluation.py"
+      - "genesis/predictor.py"
+      - "genesis/structural.py"
+      - "genesis/innovation.py"
+      - "genesis/state_innovation.py"
+      - "genesis/state_trajectory.py"
+      - "genesis/state_delta_trajectory.py"
+      - "genesis/nonlinear_state.py"
+      - "genesis/compressed_state_trajectory.py"
+      - "genesis/nonlinear_state_trajectory.py"
       - "experiments/pw001_predictive_eval.py"
       - "experiments/pw001_robustness.py"
       - "experiments/pw001_structural_eval.py"
