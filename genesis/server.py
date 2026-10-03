@@ -5,6 +5,7 @@ import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from .core import GenesisConfig, GenesisObserver, GenesisUniverse
+from .ui import render_dashboard
 
 
 class GenesisServer:
@@ -26,7 +27,7 @@ class GenesisServer:
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "GENESIS/0.1"
+    server_version = "GENESIS/0.2"
 
     def do_GET(self) -> None:
         app: GenesisServer = self.server.genesis_app  # type: ignore[attr-defined]
@@ -43,13 +44,13 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, app.step())
             return
 
+        if self.path == "/" or self.path == "/index.html":
+            self._html(200, render_dashboard(app.state()))
+            return
+
         self._json(
-            200,
-            {
-                "name": "GENESIS",
-                "experiment": "GENESIS-PW-001",
-                "endpoints": ["/health", "/state", "/step"],
-            },
+            404,
+            {"error": "not_found", "endpoints": ["/", "/health", "/state", "/step"]},
         )
 
     def _json(self, status: int, payload: dict) -> None:
@@ -59,6 +60,14 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+
+    def _html(self, status: int, body: str) -> None:
+        encoded = body.encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        self.wfile.write(encoded)
 
     def log_message(self, format: str, *args: object) -> None:
         return
