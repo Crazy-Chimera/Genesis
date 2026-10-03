@@ -30,18 +30,18 @@ def main() -> None:
     )
     for seed in (390001, 390002, 390003):
         records = collect(seed)
-        result = StructuralPredictor(
-            train_fraction=0.5,
-            require_consecutive=True,
-        ).evaluate(records)
-        print(
-            seed,
-            result.samples,
-            f"{result.baseline_mae:.15g}",
-            f"{result.structural_mae:.15g}",
-            f"{result.shuffled_mae:.15g}",
-            f"{result.improvement:.15g}",
-        )
+        predictor = StructuralPredictor(train_fraction=0.5, require_consecutive=True)
+        for feature_names in (("size",), ("boundary_contrast",), ("lifetime",), ("persistence",), ("overlap",), ("size", "boundary_contrast", "lifetime", "persistence", "overlap")):
+            result = predictor.evaluate(records, feature_names)
+            print(
+                seed,
+                ",".join(result.feature_names),
+                result.samples,
+                f"{result.baseline_mae:.15g}",
+                f"{result.structural_mae:.15g}",
+                f"{result.shuffled_mae:.15g}",
+                f"{result.improvement:.15g}",
+            )
 
 
 if __name__ == "__main__":
