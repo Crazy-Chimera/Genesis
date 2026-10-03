@@ -660,3 +660,29 @@ Ani v jednom seedu spatiotemporální patch nepřekonal persistence. Ordered pat
 Další experiment by měl proto testovat vícekrokovou lokální trajektorii bez použití coherence jako prediktoru: stejný lokální patch ve více minulých rámcích, s explicitním zachováním prostorové orientace. To umožní rozlišit, zda je informace skutečně v krátké trajektorii lokálního pole, nikoli v jediném stavu nebo jeho první diferenci.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.4 — Pevně orientované lokální prostorové pole
+
+GENESIS-2.4 odstranil časovou derivaci z 2.3 a testoval samotný pevně orientovaný 3×3 phase field. Každá z devíti pozic je reprezentována jako sin/cos fáze, celkem 18 hodnot. Patch je stále centrován na měřeném regionu, ale jeho orientace není vůči regionu rotována ani jinak normalizována.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #44  
+Commit: 1accc27f86a570a15ec4943aba93a7268cbf8fdd
+
+| seed | samples | persistence MAE | spatial-field MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.054256577544 | 0.054121286055 | -0.054136008092 |
+| 390002 | 93990 | 0.000097287754 | 0.051439207594 | 0.051378300251 | -0.051341919840 |
+| 390003 | 86979 | 0.000107119591 | 0.058560070546 | 0.058586094145 | -0.058452950955 |
+
+Pevně orientované lokální pole nepřekonalo persistence v žádném ze tří seedů. Ordered a shuffled výsledky jsou prakticky shodné; rozdíly navíc nemají konzistentní směr.
+
+### Interpretation
+
+GENESIS-2.4 nepodporuje hypotézu, že hlavní coherence-history signál je vysvětlitelný jednoduchým 3×3 pevně orientovaným lokálním fázovým polem.
+
+Spolu s 2.3 to ale stále nevylučuje širší prostorový kontext. Oba testy používají malý 3×3 receptive field a centrum regionu. Další rozumná sonda je proto víceškálové pole, například současně radius 1 a radius 2, aby se testovalo, zda relevantní vztah přesahuje bezprostřední sousedství.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
