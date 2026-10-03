@@ -428,3 +428,47 @@ To není důkaz, že prostorová nebo fázová informace není relevantní. Test
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení. Jde stále o externí predikční analýzu observer-level paměti.
 
 Reprodukční vstup: `experiments/pw001_structural_eval.py` (řádek `LOCAL_PHASE`).
+
+
+## GENESIS-1.9 — lokální gradient / flux reprezentace
+
+GENESIS-1.9 testuje jinou lokální reprezentaci prostorového stavu: orientované zabalené fázové gradienty v centroidově zarovnaném 3×3 poli. Pro každou pozici jsou uloženy dvě složky:
+
+- dx — wrapped rozdíl fáze mezi buňkou a jejím pravým sousedem;
+- dy — wrapped rozdíl fáze mezi buňkou a sousedem pod ní.
+
+Rozdíly jsou počítány přes periodickou geometrii a reprezentovány v intervalu [-π, π]. Výsledkem je 18 hodnot pro radius 1. Reprezentace je observer-level a není zapisována do GenesisUniverse.
+
+Prediktor používá pouze předchozí gradientový patch, lineární ridge regresi, chronologický 50% holdout a požadavek na přesně po sobě jdoucí tick. Persistence zůstává baseline a deterministicky zamíchaný gradientový patch je kontrola.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #24  
+Commit: 5b1257ba1b7dd9e0054c899c0529ee52a3bc404f
+
+| seed | samples | persistence MAE | gradient MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.059232644235 | 0.058862640413 | -0.059112074783 |
+| 390002 | 93990 | 0.000097287754 | 0.052823362513 | 0.054479135712 | -0.052726074759 |
+| 390003 | 86979 | 0.000107119591 | 0.061462964228 | 0.062034467792 | -0.061355844638 |
+
+Lokální gradientový model nepřekonal persistence v žádném ze tří seedů. Rozdíl proti baseline je přibližně o dva až tři řády větší než chyba persistence.
+
+Shuffled kontrola není ve všech seedech horší než ordered gradient: u seedu 390001 je shuffled MAE dokonce mírně nižší než ordered MAE. Proto tento experiment neposkytuje důkaz, že tato konkrétní gradientová reprezentace obsahuje využitelnou časovou prediktivní informaci.
+
+### Interpretation
+
+GENESIS-1.9 dále zužuje hypotézu o zdroji signálu z GENESIS-1.6b:
+
+1. aggregate region statistics jej nevysvětlují v testovaných modelech;
+2. jednotlivé aggregate structural features jej nevysvětlují;
+3. centroidově zarovnaný 3×3 coherence patch jej nevysvětluje;
+4. kvadratické rozšíření stejného patchu jej nevysvětluje;
+5. relativní phase patch (sin Δφ, cos Δφ) jej nevysvětluje;
+6. orientovaný lokální gradientový patch jej rovněž nevysvětluje v testovaném lineárním modelu.
+
+Důležité je, že 1.9 současně neposkytuje pozitivní shuffled-control signál. To znamená, že další krok by neměl být interpretován jako „gradient byl téměř správně“. Experiment pouze vylučuje tuto konkrétní reprezentaci a model v rámci daného protokolu.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení. Universe rules zůstaly nezměněny a žádná predikce nebyla vrácena do GenesisUniverse.
+
+Reprodukční vstup: experiments/pw001_structural_eval.py (řádek LOCAL_GRADIENT).
