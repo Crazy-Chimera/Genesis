@@ -7,6 +7,7 @@ on:
       - "genesis/**"
       - "experiments/pw001_predictive_eval.py"
       - "experiments/pw001_robustness.py"
+      - "experiments/pw001_structural_eval.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -20,9 +21,11 @@ jobs:
       - run: pip install .
       - run: python experiments/pw001_predictive_eval.py | tee pw001-results.txt
       - run: python experiments/pw001_robustness.py | tee pw001-robustness.txt
+      - run: python experiments/pw001_structural_eval.py | tee pw001-structural.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
           path: |
             pw001-results.txt
             pw001-robustness.txt
+            pw001-structural.txt
