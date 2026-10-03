@@ -27,7 +27,7 @@ class MemoryRecord:
     spatiotemporal_patch: tuple[float, ...] = ()
     spatial_field: tuple[float, ...] = ()
     multiscale_field: tuple[float, ...] = ()
-    multiscale_field: tuple[float, ...] = ()
+    relational: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -67,6 +67,7 @@ class TemporalMemory:
                 spatiotemporal_patch=observation.spatiotemporal_patch,
                 spatial_field=observation.spatial_field,
                 multiscale_field=observation.multiscale_field,
+                relational=observation.relational,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
