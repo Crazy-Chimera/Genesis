@@ -1,5 +1,6 @@
 from .core import GenesisConfig, GenesisObserver, GenesisUniverse, run
 from .memory import MemoryRecord, TemporalMemory
+from .predictor import PredictiveMemory, PredictionResult, linear_history_predict, persistence_predict
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -19,5 +20,9 @@ __all__ = [
     "RegionObservation",
     "RegionTracker",
     "TemporalMemory",
+    "PredictiveMemory",
+    "PredictionResult",
+    "linear_history_predict",
+    "persistence_predict",
     "run",
 ]
