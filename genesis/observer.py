@@ -28,6 +28,7 @@ class RegionObservation:
     local_patch: tuple[float, ...] = ()
     phase_patch: tuple[float, ...] = ()
     gradient_patch: tuple[float, ...] = ()
+    motion: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -153,6 +154,37 @@ class LocalStructureObserver:
         return tuple(values)
 
     @staticmethod
+    def motion(previous: Cluster | None, current: Cluster, shape: tuple[int, int]) -> tuple[float, ...]:
+        """Measure observer-level periodic centroid displacement and size change."""
+        if previous is None or not previous.cells or not current.cells:
+            return ()
+        rows, cols = shape
+
+        def centroid(cluster: Cluster) -> tuple[float, float]:
+            return (
+                sum(r for r, _ in cluster.cells) / len(cluster.cells),
+                sum(c for _, c in cluster.cells) / len(cluster.cells),
+            )
+
+        old_r, old_c = centroid(previous)
+        new_r, new_c = centroid(current)
+
+        def periodic_delta(new: float, old: float, size: int) -> float:
+            delta = new - old
+            half = size / 2.0
+            if delta > half:
+                delta -= size
+            elif delta < -half:
+                delta += size
+            return delta
+
+        return (
+            periodic_delta(new_r, old_r, rows),
+            periodic_delta(new_c, old_c, cols),
+            float(len(current.cells) - len(previous.cells)),
+        )
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -272,6 +304,8 @@ class RegionTracker:
             self._lifetimes[identity] = lifetime
             self._persistence[identity] = persistence
             current[identity] = cluster
+            previous_cluster = self._previous.get(identity)
+            motion = self.observer.motion(previous_cluster, cluster, phase.shape) if previous_cluster else ()
             observations.append(RegionObservation(
                 cells=cluster.cells,
                 coherence=cluster.coherence,
@@ -283,6 +317,7 @@ class RegionTracker:
                 local_patch=self.observer.local_patch(cluster, local),
                 phase_patch=self.observer.phase_patch(cluster, phase),
                 gradient_patch=self.observer.gradient_patch(cluster, phase),
+                motion=motion,
             ))
         self._previous = current
         return observations
