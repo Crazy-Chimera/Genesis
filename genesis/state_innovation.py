@@ -69,6 +69,13 @@ STATE_FEATURES = (
 )
 
 
+def combined_state(record: MemoryRecord) -> tuple[float, ...]:
+    values: list[float] = []
+    for spec in STATE_FEATURES:
+        values.extend(float(value) for value in spec.feature(record))
+    return tuple(values)
+
+
 STATE_FEATURES_WITH_COMBINED = STATE_FEATURES + (StateFeatureSpec("combined", combined_state, 193),)
 
 
