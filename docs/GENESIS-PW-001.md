@@ -836,3 +836,46 @@ Interpretace:
 - Stejně jako předchozí fáze neposkytuje důkaz inteligence, agency, self-modelu ani endogenous learning.
 
 Další probe by měl oddělit samotnou autoregresní informaci v již pozorované koherenci od informace přítomné v ostatních měřených strukturách. To zabrání tomu, aby opakované vítězství history predictor bylo mylně interpretováno jako důkaz emergentní predikce vyšší úrovně.
+
+
+## GENESIS-2.9 — Coherence innovation predictor
+
+GENESIS-2.9 tests whether the predictive structure observed in GENESIS-1.6b remains after removing simple level persistence. Instead of predicting the next coherence value directly, the predictor models the next **coherence change** (innovation).
+
+For each observer identity, the input consists only of the preceding coherence differences over a bounded history window. The target is the next coherence difference. The evaluation keeps the same chronological 50% holdout and exact-consecutive-tick requirement. A zero-change baseline predicts that the next coherence change is zero. A deterministic shuffled-history control tests whether the ordering of the previous changes matters.
+
+The experiment remains observer-only: no innovation prediction is fed back into GenesisUniverse or TemporalMemory, and no goals, rewards, agency, meaning, language, self-model, or endogenous learning are introduced.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #67  
+Commit: `4aac7d14c40d9e07dbd068d5691f8013dab9abc1`  
+Artifact: `11266983326`  
+Artifact digest: `sha256:a62fa761bca8359c45d3c735befc47df682aa45ccb13a0a512b1b7e68178bc5d`
+
+| seed | history | samples | zero-change MAE | innovation MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|---:|
+| 390001 | 2 | 103885 | 0.000120540651 | 0.000118292732 | 0.000120885863 | +0.000002247919 |
+| 390001 | 3 | 103839 | 0.000120511918 | 0.000116298076 | 0.000121377950 | +0.000004213842 |
+| 390001 | 5 | 103747 | 0.000120453902 | 0.000112607665 | 0.000122572581 | +0.000007846237 |
+| 390001 | 10 | 103517 | 0.000120311442 | 0.000104829708 | 0.000125547330 | +0.000015481738 |
+| 390002 | 2 | 93951 | 0.000097256523 | 0.000096160431 | 0.000097724232 | +0.000001096092 |
+| 390002 | 3 | 93912 | 0.000097225676 | 0.000094846048 | 0.000097949794 | +0.000002379627 |
+| 390002 | 5 | 93834 | 0.000097163027 | 0.000092365998 | 0.000098474289 | +0.000004797029 |
+| 390002 | 10 | 93639 | 0.000097007272 | 0.000086918632 | 0.000099987211 | +0.000010088635 |
+| 390003 | 2 | 86937 | 0.000107100653 | 0.000105678016 | 0.000107497144 | +0.000001422638 |
+| 390003 | 3 | 86895 | 0.000107081617 | 0.000093989937 | 0.000111255433 | +0.000013091680 |
+| 390003 | 5 | 86811 | 0.000107043112 | 0.000093550904 | 0.000111585302 | +0.000013492208 |
+| 390003 | 10 | 86601 | 0.000106948247 | 0.000089860664 | 0.000113041251 | +0.000017087584 |
+
+### Interpretation
+
+The innovation predictor beats the zero-change baseline in **all 12 tested seed × history-length combinations**. Its MAE is also lower than the shuffled-history control in all 12 combinations. The improvement grows with history length for every seed, with the largest observed improvement at history length 10.
+
+This result is methodologically stronger than the earlier level-prediction comparison because it asks a narrower question: whether recent coherence changes contain information about the next coherence change beyond simply assuming no change. Under the tested linear model and protocol, the answer is yes.
+
+The result does **not** establish intelligence, agency, self-modeling, endogenous learning, or an autonomous predictive process. The predictor is an external statistical model trained and evaluated on observer measurements. It also does not establish causality or identify which physical variables generate the innovation signal. The result shows only that the measured coherence trajectory contains reproducible short-history information about its subsequent change under the stated protocol.
+
+GENESIS-2.9 therefore changes the interpretation of GENESIS-1.6b in an important but bounded way: the observed coherence-history signal cannot be reduced entirely to a trivial last-value persistence baseline, because a model of recent coherence changes still improves prediction of the next change. The next experimental question is to identify the physical/observer representation that carries this innovation signal without supplying coherence history directly.
+
+The universe rules remain unchanged and all prediction remains external to GenesisUniverse.
