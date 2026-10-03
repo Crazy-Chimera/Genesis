@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from genesis import GenesisConfig, GenesisObserver, GenesisUniverse
 
@@ -10,6 +11,18 @@ def test_seed_reproduces_initial_state_and_trajectory():
 
     for _ in range(cfg.ticks):
         np.testing.assert_array_equal(a.step(), b.step())
+
+
+def test_reference_pw001_final_coherence():
+    universe = GenesisUniverse(GenesisConfig(ticks=100_000))
+    observer = GenesisObserver()
+
+    for _ in range(universe.config.ticks):
+        universe.step()
+
+    assert observer.coherence(universe.phase) == pytest.approx(
+        0.09507548138916427, abs=1e-15
+    )
 
 
 def test_local_topology_preserves_population():
