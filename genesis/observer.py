@@ -27,6 +27,7 @@ class RegionObservation:
     overlap: float
     local_patch: tuple[float, ...] = ()
     phase_patch: tuple[float, ...] = ()
+    gradient_patch: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -129,6 +130,26 @@ class LocalStructureObserver:
             for dc in range(-radius, radius + 1):
                 delta = phase[(center_r + dr) % rows, (center_c + dc) % cols] - center
                 values.extend((float(np.sin(delta)), float(np.cos(delta))))
+        return tuple(values)
+
+    @staticmethod
+    def gradient_patch(cluster: Cluster, phase: np.ndarray, radius: int = 1) -> tuple[float, ...]:
+        """Return oriented wrapped phase gradients (dx, dy) around a region."""
+        if radius < 0:
+            raise ValueError("radius must be >= 0")
+        rows, cols = phase.shape
+        if not cluster.cells:
+            return ()
+        center_r = int(round(sum(r for r, _ in cluster.cells) / len(cluster.cells)))
+        center_c = int(round(sum(c for _, c in cluster.cells) / len(cluster.cells)))
+        values: list[float] = []
+        for dr in range(-radius, radius + 1):
+            for dc in range(-radius, radius + 1):
+                r = (center_r + dr) % rows
+                c = (center_c + dc) % cols
+                dx = np.angle(np.exp(1j * (phase[r, (c + 1) % cols] - phase[r, c])))
+                dy = np.angle(np.exp(1j * (phase[(r + 1) % rows, c] - phase[r, c])))
+                values.extend((float(dx), float(dy)))
         return tuple(values)
 
     @staticmethod
@@ -261,6 +282,7 @@ class RegionTracker:
                 overlap=overlap,
                 local_patch=self.observer.local_patch(cluster, local),
                 phase_patch=self.observer.phase_patch(cluster, phase),
+                gradient_patch=self.observer.gradient_patch(cluster, phase),
             ))
         self._previous = current
         return observations
