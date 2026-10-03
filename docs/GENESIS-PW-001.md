@@ -472,3 +472,47 @@ Důležité je, že 1.9 současně neposkytuje pozitivní shuffled-control sign�
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení. Universe rules zůstaly nezměněny a žádná predikce nebyla vrácena do GenesisUniverse.
 
 Reprodukční vstup: experiments/pw001_structural_eval.py (řádek LOCAL_GRADIENT).
+
+
+## GENESIS-2.0 — relativní pohyb regionu
+
+Po vyčerpání několika lokálních patchových reprezentací testuje GENESIS-2.0 přímo pohyb měřeného regionu mezi dvěma po sobě jdoucími rámci. Observer ukládá:
+
+- periodický posun centroidu v ose řádků;
+- periodický posun centroidu v ose sloupců;
+- změnu velikosti regionu.
+
+Jde pouze o observer-level veličiny. GenesisUniverse není změněn a predikce není vracena do simulace.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #28  
+Commit: a583ba91852a7ab7356243557870538bcd63d78e
+
+| seed | samples | persistence MAE | motion MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103885 | 0.000120540651 | 0.053682126270 | 0.053681799408 | -0.053561585619 |
+| 390002 | 93951 | 0.000097256523 | 0.051163088992 | 0.051165723885 | -0.051065832470 |
+| 390003 | 86937 | 0.000107100653 | 0.058401544083 | 0.058402856938 | -0.058294443429 |
+
+Motion-only model nepřekonal persistence v žádném ze tří seedů. Ordered a shuffled MAE jsou prakticky totožné ve všech seedech, takže tato reprezentace neposkytuje v rámci protokolu důkaz využitelného časového prediktivního signálu.
+
+### Interpretation
+
+GENESIS-2.0 rozšiřuje dosavadní negativní mapu:
+
+1. aggregate region statistics — bez vysvětlení signálu;
+2. jednotlivé strukturální veličiny — bez vysvětlení;
+3. local coherence patch — bez vysvětlení;
+4. quadratic local patch — bez vysvětlení;
+5. relative phase patch — bez vysvětlení;
+6. oriented phase gradient — bez vysvětlení;
+7. region motion — bez vysvětlení.
+
+Současně je důležité oddělit tento výsledek od tvrzení, že „pohyb není důležitý“. Testována byla pouze tříprvková centroidová reprezentace a lineární ridge model. Nebyla testována deformace regionu, rotace, lokální tok přes hranici, změna vnitřní geometrie ani vyšší časové derivace.
+
+Další experimentální krok proto dává větší smysl zaměřit na **lokální tok přes hranici / deformaci regionu**, nikoli pouze přidávat další globální nebo centroidové veličiny.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+Reprodukční vstup: experiments/pw001_structural_eval.py (řádek LOCAL_MOTION).
