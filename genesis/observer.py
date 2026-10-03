@@ -30,6 +30,7 @@ class RegionObservation:
     gradient_patch: tuple[float, ...] = ()
     motion: tuple[float, ...] = ()
     boundary_flux: tuple[float, ...] = ()
+    boundary_deformation: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -219,6 +220,58 @@ class LocalStructureObserver:
         )
 
     @staticmethod
+    def boundary_deformation(
+        previous: Cluster | None,
+        current: Cluster,
+        previous_phase: np.ndarray | None,
+        current_phase: np.ndarray,
+    ) -> tuple[float, ...]:
+        """Measure change of boundary flux and boundary geometry between frames."""
+        if previous is None or previous_phase is None:
+            return ()
+        old_cells, new_cells = set(previous.cells), set(current.cells)
+        rows, cols = current_phase.shape
+
+        def flux_vector(cells: set[tuple[int, int]], phase: np.ndarray) -> tuple[float, ...]:
+            horizontal: list[float] = []
+            vertical: list[float] = []
+            edges = 0
+            for r, c in cells:
+                for nr, nc, axis in (
+                    ((r - 1) % rows, c, 0),
+                    ((r + 1) % rows, c, 0),
+                    (r, (c - 1) % cols, 1),
+                    (r, (c + 1) % cols, 1),
+                ):
+                    if (nr, nc) in cells:
+                        continue
+                    delta = np.angle(np.exp(1j * (phase[nr, nc] - phase[r, c])))
+                    (horizontal if axis == 0 else vertical).append(float(np.sin(delta)))
+                    edges += 1
+            values = horizontal + vertical
+            return (
+                float(np.mean(horizontal)) if horizontal else 0.0,
+                float(np.mean(vertical)) if vertical else 0.0,
+                float(np.mean(np.abs(values))) if values else 0.0,
+                float(edges),
+                float(edges / len(cells)) if cells else 0.0,
+            )
+
+        old_flux = flux_vector(old_cells, previous_phase)
+        new_flux = flux_vector(new_cells, current_phase)
+        symmetric_difference = len(old_cells ^ new_cells)
+        union_size = len(old_cells | new_cells)
+        return (
+            new_flux[0] - old_flux[0],
+            new_flux[1] - old_flux[1],
+            new_flux[2] - old_flux[2],
+            new_flux[3] - old_flux[3],
+            new_flux[4] - old_flux[4],
+            float(symmetric_difference),
+            float(symmetric_difference / union_size) if union_size else 0.0,
+        )
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -332,6 +385,7 @@ class RegionTracker:
         assignments, _, _ = self._assign(clusters)
         observations = []
         current: dict[int, Cluster] = {}
+        previous_phase = getattr(self, "_previous_phase", None)
         for identity, cluster, overlap in assignments:
             lifetime = self._lifetimes.get(identity, 0) + 1
             persistence = self._persistence.get(identity, 0) + 1
@@ -353,8 +407,10 @@ class RegionTracker:
                 gradient_patch=self.observer.gradient_patch(cluster, phase),
                 motion=motion,
                 boundary_flux=self.observer.boundary_flux(cluster, phase),
+                boundary_deformation=self.observer.boundary_deformation(previous_cluster, cluster, previous_phase, phase),
             ))
         self._previous = current
+        self._previous_phase = phase.copy()
         return observations
 
     def observe_events(self, phase: np.ndarray) -> tuple[list[RegionObservation], list[RegionEvent]]:
