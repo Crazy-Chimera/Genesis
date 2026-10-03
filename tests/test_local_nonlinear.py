@@ -31,21 +31,22 @@ def test_nonlinear_predictor_beats_baseline_on_quadratic_relation():
 
 def test_nonlinear_predictor_requires_exact_patch_width():
     records = [record(t, 0.1, 0.1) for t in range(1, 10)]
-    records[0] = MemoryRecord(
-        tick=records[0].tick,
-        identity=records[0].identity,
-        cells=records[0].cells,
-        coherence=records[0].coherence,
-        boundary_contrast=records[0].boundary_contrast,
-        lifetime=records[0].lifetime,
-        persistence=records[0].persistence,
-        overlap=records[0].overlap,
-        local_patch=(0.1,) * 8,
-    )
+    records = [
+        MemoryRecord(
+            tick=item.tick,
+            identity=item.identity,
+            cells=item.cells,
+            coherence=item.coherence,
+            boundary_contrast=item.boundary_contrast,
+            lifetime=item.lifetime,
+            persistence=item.persistence,
+            overlap=item.overlap,
+            local_patch=(0.1,) * 8,
+        )
+        for item in records
+    ]
     result = NonlinearLocalPatchPredictor().evaluate(records)
     assert result.samples == 0
-
-
 def test_nonlinear_predictor_rejects_invalid_configuration():
     import pytest
 
