@@ -3,6 +3,7 @@ from __future__ import annotations
 from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.local import LocalPatchPredictor
 from genesis.local_nonlinear import NonlinearLocalPatchPredictor
+from genesis.local_phase import PhasePatchPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -73,6 +74,19 @@ def main() -> None:
             f"{nonlinear.nonlinear_mae:.15g}",
             f"{nonlinear.shuffled_mae:.15g}",
             f"{nonlinear.improvement:.15g}",
+        )
+
+        phase = PhasePatchPredictor(
+            train_fraction=0.5, require_consecutive=True, radius=1
+        ).evaluate(records)
+        print(
+            "LOCAL_PHASE",
+            seed,
+            phase.samples,
+            f"{phase.baseline_mae:.15g}",
+            f"{phase.phase_mae:.15g}",
+            f"{phase.shuffled_mae:.15g}",
+            f"{phase.improvement:.15g}",
         )
 
 
