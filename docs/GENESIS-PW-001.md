@@ -634,3 +634,29 @@ GENESIS-2.3 tedy nepodporuje hypotézu, že hlavní coherence-history signál lz
 Důležitá metodická hranice zůstává: patch je stále centroidově zarovnaný, takže experiment netestuje plnou prostorovou geometrii bez ztráty orientace ani širší prostorový kontext. Negativní výsledek proto nevylučuje obecnou prostorově-temporální prediktivní strukturu.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.3 — Spatiotemporal Local Patch
+
+GENESIS-2.3 zachovává lokální prostor i jeho jednorámcovou změnu současně. Pro 3×3 patch obsahuje každý bod sin(phi), cos(phi), sin(phi_t−phi_{t−1}) a cos(phi_t−phi_{t−1}), celkem 36 hodnot. Predictor nepoužívá coherence history jako vstup.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #40  
+Commit: b705bad516f3a2fc99dabf20876df7c4fdad722a
+
+| seed | samples | persistence MAE | patch MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.063775315388 | 0.060691130676 | -0.063654745935 |
+| 390002 | 93990 | 0.000097287754 | 0.053245859352 | 0.059630985231 | -0.053148571598 |
+| 390003 | 86979 | 0.000107119591 | 0.068248304485 | 0.063469757759 | -0.068141184895 |
+
+Ani v jednom seedu spatiotemporální patch nepřekonal persistence. Ordered patch navíc není konzistentně lepší než shuffled kontrola: v seed 390001 a 390003 je shuffled predikce lepší. Tato konkrétní 36rozměrná reprezentace tedy neposkytuje důkaz, že hlavní coherence-history signál lze rekonstruovat z centroidově zarovnaného lokálního phase-state + one-step-change patch.
+
+### Interpretation
+
+2.3 je důležitý negativní výsledek: pouhé zachování lokálního prostoru a jeho okamžité změny nestačí. Tím se zmenšuje prostor hypotéz, ale stále se netestoval plný prostorově-temporální kontext, orientovaná topologie sousedství ani více než jeden krok historie.
+
+Další experiment by měl proto testovat vícekrokovou lokální trajektorii bez použití coherence jako prediktoru: stejný lokální patch ve více minulých rámcích, s explicitním zachováním prostorové orientace. To umožní rozlišit, zda je informace skutečně v krátké trajektorii lokálního pole, nikoli v jediném stavu nebo jeho první diferenci.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
