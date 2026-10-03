@@ -80,8 +80,8 @@ def test_structure_only_predictor_requires_consecutive_records():
         record(0, 0.1),
         record(1, 0.2),
         record(3, 0.4),
-        record(4, 0.5),
-        record(6, 0.7),
+        record(5, 0.5),
+        record(7, 0.7),
     ]
     result = StructuralPredictor(require_consecutive=True).evaluate(records)
     assert result.samples == 0
