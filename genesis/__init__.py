@@ -1,4 +1,5 @@
 from .core import GenesisConfig, GenesisObserver, GenesisUniverse, run
+from .memory import MemoryRecord, TemporalMemory
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -13,8 +14,10 @@ __all__ = [
     "GenesisObserver",
     "GenesisUniverse",
     "LocalStructureObserver",
+    "MemoryRecord",
     "RegionEvent",
     "RegionObservation",
     "RegionTracker",
+    "TemporalMemory",
     "run",
 ]
