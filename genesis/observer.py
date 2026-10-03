@@ -29,6 +29,7 @@ class RegionObservation:
     phase_patch: tuple[float, ...] = ()
     gradient_patch: tuple[float, ...] = ()
     motion: tuple[float, ...] = ()
+    boundary_flux: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -185,6 +186,39 @@ class LocalStructureObserver:
         )
 
     @staticmethod
+    def boundary_flux(cluster: Cluster, phase: np.ndarray) -> tuple[float, ...]:
+        """Measure signed phase flux and boundary geometry across a region."""
+        if not cluster.cells:
+            return ()
+        cells = set(cluster.cells)
+        rows, cols = phase.shape
+        horizontal: list[float] = []
+        vertical: list[float] = []
+        boundary_edges = 0
+        for r, c in cluster.cells:
+            for nr, nc, axis in (
+                ((r - 1) % rows, c, 0),
+                ((r + 1) % rows, c, 0),
+                (r, (c - 1) % cols, 1),
+                (r, (c + 1) % cols, 1),
+            ):
+                if (nr, nc) in cells:
+                    continue
+                delta = np.angle(np.exp(1j * (phase[nr, nc] - phase[r, c])))
+                (horizontal if axis == 0 else vertical).append(float(np.sin(delta)))
+                boundary_edges += 1
+        if boundary_edges == 0:
+            return (0.0, 0.0, 0.0, 0.0, 0.0)
+        values = horizontal + vertical
+        return (
+            float(np.mean(horizontal)) if horizontal else 0.0,
+            float(np.mean(vertical)) if vertical else 0.0,
+            float(np.mean(np.abs(values))),
+            float(boundary_edges),
+            float(boundary_edges / len(cells)),
+        )
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -318,6 +352,7 @@ class RegionTracker:
                 phase_patch=self.observer.phase_patch(cluster, phase),
                 gradient_patch=self.observer.gradient_patch(cluster, phase),
                 motion=motion,
+                boundary_flux=self.observer.boundary_flux(cluster, phase),
             ))
         self._previous = current
         return observations
