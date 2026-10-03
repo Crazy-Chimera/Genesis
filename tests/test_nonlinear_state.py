@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import numpy as np
 import pytest
 
 from genesis.memory import MemoryRecord
@@ -11,24 +10,23 @@ def record(tick: int, value: float) -> MemoryRecord:
     return MemoryRecord(
         tick=tick,
         identity=1,
-        cells=frozenset({(0, 0)}),
+        cells=((0, 0),),
         coherence=value,
         boundary_contrast=0.0,
         lifetime=tick,
-        persistence=1.0,
+        persistence=1,
         overlap=1.0,
-        event_kinds=(),
-        local_patch=tuple([0.0] * 9),
-        phase_patch=tuple([0.0] * 18),
-        gradient_patch=tuple([0.0] * 18),
-        motion=tuple([0.0] * 3),
-        boundary_flux=tuple([0.0] * 5),
-        boundary_deformation=tuple([0.0] * 7),
-        spatiotemporal_patch=tuple([0.0] * 36),
-        spatial_field=tuple([0.0] * 18),
-        multiscale_field=tuple([0.0] * 68),
-        relational=tuple([0.0] * 16),
-        graph_relational=tuple([0.0] * 33),
+        local_patch=(0.0,) * 9,
+        phase_patch=(0.0,) * 18,
+        gradient_patch=(0.0,) * 18,
+        motion=(0.0,) * 3,
+        boundary_flux=(0.0,) * 5,
+        boundary_deformation=(0.0,) * 7,
+        spatiotemporal_patch=(0.0,) * 36,
+        spatial_field=(0.0,) * 18,
+        multiscale_field=(0.0,) * 68,
+        relational=(0.0,) * 16,
+        graph_relational=(0.0,) * 33,
     )
 
 
