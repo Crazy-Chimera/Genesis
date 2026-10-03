@@ -497,7 +497,6 @@ class RegionTracker:
                 spatiotemporal_patch=self.observer.spatiotemporal_patch(previous_phase, phase, cluster),
                 spatial_field=self.observer.spatial_field(phase, cluster),
                 multiscale_field=self.observer.multiscale_field(phase, cluster),
-                multiscale_field=self.observer.multiscale_field(phase, cluster),
             ))
         self._previous = current
         self._previous_phase = phase.copy()
