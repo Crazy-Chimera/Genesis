@@ -220,3 +220,42 @@ GENESIS-1.6 must not:
 - introduce goals, meaning, language, agency, or self-models
 
 The next experimental question is predictive value: whether the temporal trace contains information about a future region state beyond a suitable baseline.
+
+
+## GENESIS-1.7 — structure-only causal probe
+
+GENESIS-1.7 asks whether the short-history predictive structure observed in GENESIS-1.6b can be explained by the observer's measured region structure alone.
+
+The new predictor uses only these observer-level measurements from the previous consecutive frame:
+
+- region size
+- boundary contrast
+- lifetime
+- persistence
+- overlap
+
+Current coherence is deliberately excluded from the predictor inputs. The model is trained only on the chronological pre-holdout portion and evaluated on the future holdout. A deterministic permutation of the held-out structural rows provides a control.
+
+The universe rules are unchanged. The predictor remains external and measurement-only.
+
+### Clean CI result
+
+Run: PW-001 experiment #5  
+Commit: `69be0fb4331e33de78b7742193e58fa6b8dd6e4c`
+
+| seed | samples | persistence MAE | structure-only MAE | shuffled structure MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.043121575274 | 0.065012893657 | -0.043001005822 |
+| 390002 | 93990 | 0.000097287754 | 0.043784649968 | 0.062749533591 | -0.043687362213 |
+| 390003 | 86979 | 0.000107119591 | 0.046144387078 | 0.063992656782 | -0.046037267488 |
+
+Across all three seeds, the structure-only model does not beat persistence. The shuffled control is worse than the ordered structure-only model, so the model does use information contained in the structural features, but that information is not sufficient for next-step coherence prediction under this model and protocol.
+
+This result narrows the interpretation of GENESIS-1.6b: the observed predictive advantage of coherence history is not reproduced by this aggregate structure-only model. It does not prove that structural information is irrelevant; individual structural variables, alternative horizons, or different model classes remain open questions.
+
+GENESIS-1.7 therefore separates two observations:
+
+1. **Temporal coherence history is predictive under the GENESIS-1.6b protocol.**
+2. **The current aggregate region-structure representation does not explain that predictive advantage by itself.**
+
+No predictive output is fed back into the universe.
