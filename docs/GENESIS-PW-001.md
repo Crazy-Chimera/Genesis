@@ -146,7 +146,7 @@ This result changes the interpretation of GENESIS-1.5. The earlier positive resu
 
 The shuffled-history control also does not rescue the linear predictor: its error is larger than the ordered-history error for history lengths 2–10, but both are worse than persistence. This means the ordered temporal values contain some structure that the linear extrapolator is exploiting, while that particular extrapolation rule is nevertheless inferior to simply retaining the latest value.
 
-**Current empirical conclusion:** PW-001 has not yet demonstrated a robust short-history predictive advantage for coherence under the stricter next-tick protocol. This is a valid negative result and should be retained as part of the experimental record.
+**GENESIS-1.6 conclusion:** Under the single linear-vs-persistence comparison, PW-001 did not demonstrate a predictive advantage. GENESIS-1.6b supersedes this as the broader baseline-suite evaluation while retaining the GENESIS-1.6 result as an explicit methodological control.
 
 Reproduction entry point: experiments/pw001_predictive_eval.py.
 
