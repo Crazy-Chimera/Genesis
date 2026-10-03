@@ -25,6 +25,7 @@ class RegionObservation:
     lifetime: int
     persistence: int
     overlap: float
+    local_patch: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -94,6 +95,23 @@ class LocalStructureObserver:
                 Cluster(cells=tuple(sorted(cells)), coherence=float(values.mean()))
             )
         return sorted(clusters, key=lambda c: (-len(c.cells), c.cells))
+
+    @staticmethod
+    @staticmethod
+    def local_patch(cluster: Cluster, local: np.ndarray, radius: int = 1) -> tuple[float, ...]:
+        """Return a small centroid-centered local coherence patch."""
+        if radius < 0:
+            raise ValueError("radius must be >= 0")
+        rows, cols = local.shape
+        if not cluster.cells:
+            return ()
+        center_r = int(round(sum(r for r, _ in cluster.cells) / len(cluster.cells)))
+        center_c = int(round(sum(c for _, c in cluster.cells) / len(cluster.cells)))
+        values = []
+        for dr in range(-radius, radius + 1):
+            for dc in range(-radius, radius + 1):
+                values.append(float(local[(center_r + dr) % rows, (center_c + dc) % cols]))
+        return tuple(values)
 
     @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
@@ -223,6 +241,7 @@ class RegionTracker:
                 lifetime=lifetime,
                 persistence=persistence,
                 overlap=overlap,
+                local_patch=self.observer.local_patch(cluster, local),
             ))
         self._previous = current
         return observations
