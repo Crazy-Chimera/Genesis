@@ -608,3 +608,29 @@ V kombinaci s 2.1 vzniká přesnější rozlišení: samotná boundary flux repr
 Další experiment by měl opustit další ručně agregované regionální atributy a testovat přímo **prostorově-temporální lokální stavovou reprezentaci**, přičemž je nutné zachovat stejné časové holdouty, shuffled control a observer-only invariantu.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.3 — Prostorově-temporální lokální stav
+
+GENESIS-2.3 zachovává v jediném vstupu současný lokální fázový stav a jeho jednorámovou změnu v centroidově zarovnaném 3×3 patchi. Pro každou z 9 pozic se ukládá sin/cos aktuální fáze a sin/cos změny fáze, celkem 36 hodnot.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #40  
+Commit: b705bad516f3a2fc99dabf20876df7c4fdad722a
+
+| seed | samples | persistence MAE | spatiotemporal MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.063775315388 | 0.060691130676 | -0.063654745935 |
+| 390002 | 93990 | 0.000097287754 | 0.053245859352 | 0.059630985231 | -0.053148571598 |
+| 390003 | 86979 | 0.000107119591 | 0.068248304485 | 0.063469757759 | -0.068141184895 |
+
+Spatiotemporální patch nepřekonal persistence v žádném ze tří seedů. V seed 390002 je ordered reprezentace lepší než shuffled kontrola, ale v 390001 a 390003 je shuffled kontrola dokonce lepší. Proto tento experiment neposkytuje robustní důkaz využitelné časové prediktivní informace v této konkrétní reprezentaci.
+
+### Interpretation
+
+GENESIS-2.3 tedy nepodporuje hypotézu, že hlavní coherence-history signál lze vysvětlit jednoduchým centroidově zarovnaným 3×3 prostorem a jeho jednorámovou změnou.
+
+Důležitá metodická hranice zůstává: patch je stále centroidově zarovnaný, takže experiment netestuje plnou prostorovou geometrii bez ztráty orientace ani širší prostorový kontext. Negativní výsledek proto nevylučuje obecnou prostorově-temporální prediktivní strukturu.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
