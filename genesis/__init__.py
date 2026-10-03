@@ -1,4 +1,5 @@
 from .core import GenesisConfig, GenesisObserver, GenesisUniverse, run
+from .evaluation import EvaluationResult, PredictiveEvaluator, shuffled_history_predict
 from .memory import MemoryRecord, TemporalMemory
 from .predictor import PredictiveMemory, PredictionResult, linear_history_predict, persistence_predict
 from .observer import (
@@ -11,6 +12,7 @@ from .observer import (
 
 __all__ = [
     "Cluster",
+    "EvaluationResult",
     "GenesisConfig",
     "GenesisObserver",
     "GenesisUniverse",
@@ -20,9 +22,11 @@ __all__ = [
     "RegionObservation",
     "RegionTracker",
     "TemporalMemory",
+    "PredictiveEvaluator",
     "PredictiveMemory",
     "PredictionResult",
     "linear_history_predict",
     "persistence_predict",
+    "shuffled_history_predict",
     "run",
 ]
