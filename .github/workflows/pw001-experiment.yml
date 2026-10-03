@@ -9,6 +9,7 @@ on:
       - "experiments/pw001_robustness.py"
       - "experiments/pw001_structural_eval.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_state_delta_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -24,6 +25,7 @@ jobs:
       - run: python experiments/pw001_robustness.py | tee pw001-robustness.txt
       - run: python experiments/pw001_structural_eval.py | tee pw001-structural.txt
       - run: python experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
+      - run: python experiments/pw001_state_delta_trajectory.py | tee pw001-state-delta-trajectory.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
@@ -32,3 +34,4 @@ jobs:
             pw001-robustness.txt
             pw001-structural.txt
             pw001-state-trajectory.txt
+            pw001-state-delta-trajectory.txt
