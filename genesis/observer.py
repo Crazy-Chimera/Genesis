@@ -32,6 +32,7 @@ class RegionObservation:
     boundary_flux: tuple[float, ...] = ()
     boundary_deformation: tuple[float, ...] = ()
     spatiotemporal_patch: tuple[float, ...] = ()
+    spatial_field: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -303,6 +304,28 @@ class LocalStructureObserver:
         return tuple(values)
 
     @staticmethod
+    def spatial_field(
+        phase: np.ndarray,
+        cluster: Cluster,
+        radius: int = 1,
+    ) -> tuple[float, ...]:
+        """Measure a fixed-orientation local phase field around the region."""
+        if not cluster.cells:
+            return ()
+        if radius < 0:
+            raise ValueError("radius must be >= 0")
+        rows, cols = phase.shape
+        center_r = int(round(sum(r for r, _ in cluster.cells) / len(cluster.cells)))
+        center_c = int(round(sum(c for _, c in cluster.cells) / len(cluster.cells)))
+        values: list[float] = []
+        for dr in range(-radius, radius + 1):
+            for dc in range(-radius, radius + 1):
+                r = (center_r + dr) % rows
+                c = (center_c + dc) % cols
+                values.extend((float(np.sin(phase[r, c])), float(np.cos(phase[r, c]))))
+        return tuple(values)
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -440,6 +463,7 @@ class RegionTracker:
                 boundary_flux=self.observer.boundary_flux(cluster, phase),
                 boundary_deformation=self.observer.boundary_deformation(previous_cluster, cluster, previous_phase, phase),
                 spatiotemporal_patch=self.observer.spatiotemporal_patch(previous_phase, phase, cluster),
+                spatial_field=self.observer.spatial_field(phase, cluster),
             ))
         self._previous = current
         self._previous_phase = phase.copy()
