@@ -76,6 +76,24 @@ The predictor is measurement-only:
 - it does not introduce goals, rewards, agency, meaning, language, or self-models
 
 A history-based predictor is considered empirically useful for this experiment only when its error is lower than the baseline on held-out transitions. This is a test of predictive information, not a claim of intelligence.
+### GENESIS-1.5 empirical substrate experiment
+
+The first direct experiment was run on the actual GENESIS-PW-001 substrate trajectory for ticks 0–10,000 using the same universe parameters and observer/tracker rules as the reference implementation.
+
+For each observer-tracked identity, the experiment compared a persistence baseline with the linear history predictor over a three-record history window. The target was the next recorded observation for that identity. MAE was used as the error metric.
+
+Observed result:
+
+| feature | samples | persistence MAE | history MAE | improvement |
+|---|---:|---:|---:|---:|
+| coherence | 189,681 | 0.0001195000050 | 0.0000353671743 | +0.0000841328307 |
+| region size | 189,681 | 0.000506112895 | 0.001012225790 | -0.000506112895 |
+
+The trajectory produced 189,783 observer records across 102 observer-assigned identities during the 10,000-tick interval.
+
+The result is feature-specific. Coherence contained measurable short-history predictive information under this predictor, while region size did not benefit from the same linear model. This does not establish intelligence, agency, or self-modeling. It establishes only that one measured property of the observed trajectory was more predictable from short history than from a last-value baseline under the stated experiment.
+
+The experiment remains external to the universe rules. No prediction is fed back into GenesisUniverse, GenesisConfig, phase, omega, or the coupling rule.
 
 ## Measurement rule
 
