@@ -8,6 +8,7 @@ from genesis.local_gradient import LocalGradientPredictor
 from genesis.local_motion import MotionPredictor
 from genesis.boundary_flux import BoundaryFluxPredictor
 from genesis.boundary_deformation import BoundaryDeformationPredictor
+from genesis.spatiotemporal import SpatiotemporalPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -143,6 +144,19 @@ def main() -> None:
             f"{deformation.deformation_mae:.15g}",
             f"{deformation.shuffled_mae:.15g}",
             f"{deformation.improvement:.15g}",
+        )
+
+        spatiotemporal = SpatiotemporalPredictor(
+            train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "SPATIOTEMPORAL_PATCH",
+            seed,
+            spatiotemporal.samples,
+            f"{spatiotemporal.baseline_mae:.15g}",
+            f"{spatiotemporal.patch_mae:.15g}",
+            f"{spatiotemporal.shuffled_mae:.15g}",
+            f"{spatiotemporal.improvement:.15g}",
         )
 
 
