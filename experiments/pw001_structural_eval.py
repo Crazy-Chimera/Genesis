@@ -10,6 +10,7 @@ from genesis.boundary_flux import BoundaryFluxPredictor
 from genesis.boundary_deformation import BoundaryDeformationPredictor
 from genesis.spatiotemporal import SpatiotemporalPredictor
 from genesis.spatial_field import SpatialFieldPredictor
+from genesis.multiscale import MultiscaleFieldPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -171,6 +172,19 @@ def main() -> None:
             f"{spatial.field_mae:.15g}",
             f"{spatial.shuffled_mae:.15g}",
             f"{spatial.improvement:.15g}",
+        )
+
+        multiscale = MultiscaleFieldPredictor(
+            train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "MULTISCALE_FIELD",
+            seed,
+            multiscale.samples,
+            f"{multiscale.baseline_mae:.15g}",
+            f"{multiscale.field_mae:.15g}",
+            f"{multiscale.shuffled_mae:.15g}",
+            f"{multiscale.improvement:.15g}",
         )
 
 
