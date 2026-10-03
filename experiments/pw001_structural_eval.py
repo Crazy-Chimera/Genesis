@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.memory import TemporalMemory
+from genesis.local import LocalPatchPredictor
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
 
@@ -24,10 +25,7 @@ def collect(seed: int, ticks: int = 10_000):
 
 
 def main() -> None:
-    print(
-        "seed samples baseline_mae structural_mae "
-        "shuffled_mae improvement"
-    )
+    print("seed samples baseline_mae structural_mae shuffled_mae improvement")
     for seed in (390001, 390002, 390003):
         records = collect(seed)
         predictor = StructuralPredictor(train_fraction=0.5, require_consecutive=True)
@@ -42,6 +40,12 @@ def main() -> None:
                 f"{result.shuffled_mae:.15g}",
                 f"{result.improvement:.15g}",
             )
+        local = LocalPatchPredictor(train_fraction=0.5, require_consecutive=True, radius=1).evaluate(records)
+        print(
+            "LOCAL_PATCH", seed, local.samples,
+            f"{local.baseline_mae:.15g}", f"{local.local_mae:.15g}",
+            f"{local.shuffled_mae:.15g}", f"{local.improvement:.15g}",
+        )
 
 
 if __name__ == "__main__":
