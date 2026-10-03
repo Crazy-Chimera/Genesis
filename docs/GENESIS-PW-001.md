@@ -62,6 +62,21 @@ TemporalMemory is append-only observer state. It does not write anything into Ge
 
 This layer is deliberately descriptive. Recording history does not imply that the universe itself remembers.
 
+### GENESIS-1.5
+
+An external predictive-memory layer evaluates whether temporal traces contain information about the next observed region state beyond a persistence baseline.
+
+The baseline predicts that the next scalar feature remains equal to the most recent observation. The history predictor extrapolates a linear trend from a bounded history window. Prediction quality is measured with mean absolute error (MAE).
+
+The predictor is measurement-only:
+
+- it reads MemoryRecord values
+- it does not modify GenesisUniverse
+- it does not write back into TemporalMemory
+- it does not introduce goals, rewards, agency, meaning, language, or self-models
+
+A history-based predictor is considered empirically useful for this experiment only when its error is lower than the baseline on held-out transitions. This is a test of predictive information, not a claim of intelligence.
+
 ## Measurement rule
 
 For regions A and B:
