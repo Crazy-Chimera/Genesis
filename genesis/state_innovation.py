@@ -69,6 +69,9 @@ STATE_FEATURES = (
 )
 
 
+STATE_FEATURES_WITH_COMBINED = STATE_FEATURES + (StateFeatureSpec("combined", combined_state, 193),)
+
+
 class StateInnovationPredictor:
     """Predict next coherence change from the current non-coherence state."""
 
@@ -83,7 +86,7 @@ class StateInnovationPredictor:
             raise ValueError("train_fraction must be between 0 and 1")
         if ridge < 0.0:
             raise ValueError("ridge must be >= 0")
-        matches = [spec for spec in STATE_FEATURES if spec.name == feature_name]
+        matches = [spec for spec in STATE_FEATURES_WITH_COMBINED if spec.name == feature_name]
         if not matches:
             raise ValueError(f"unknown state feature: {feature_name}")
         self.spec = matches[0]
