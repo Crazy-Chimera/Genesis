@@ -18,7 +18,7 @@ def collect(seed: int, ticks: int = 10_000):
     return memory.all()
 
 def main():
-    print("GENESIS-2.13 nonlinear state-trajectory benchmark")
+    print("GENESIS-2.14 nonlinear state-trajectory benchmark")
     for seed in (390001,390002,390003):
         records=collect(seed)
         for history_length in (2,3,5,10):
