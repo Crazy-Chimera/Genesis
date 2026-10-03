@@ -1,6 +1,10 @@
 import pytest
 
-from genesis.evaluation import PredictiveEvaluator, shuffled_history_predict
+from genesis.evaluation import (
+    PredictiveEvaluator,
+    mean_history_predict,
+    shuffled_history_predict,
+)
 from genesis.memory import MemoryRecord
 
 
@@ -23,6 +27,11 @@ def test_shuffled_predictor_preserves_feature_values():
     assert isinstance(prediction, float)
 
 
+def test_mean_predictor_returns_history_average():
+    history = [record(0, 0.2), record(1, 0.4), record(2, 0.6)]
+    assert mean_history_predict(history) == pytest.approx(0.4)
+
+
 def test_evaluator_uses_future_holdout_and_consecutive_ticks():
     records = [record(tick, 0.2 + 0.1 * tick) for tick in range(10)]
     result = PredictiveEvaluator(
@@ -34,6 +43,7 @@ def test_evaluator_uses_future_holdout_and_consecutive_ticks():
     assert result.heldout_start_tick == 4
     assert result.samples == 6
     assert result.history_mae < result.baseline_mae
+    assert result.mean_mae > 0.0
 
 
 def test_evaluator_rejects_invalid_configuration():
