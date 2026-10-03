@@ -11,6 +11,7 @@ from genesis.boundary_deformation import BoundaryDeformationPredictor
 from genesis.spatiotemporal import SpatiotemporalPredictor
 from genesis.spatial_field import SpatialFieldPredictor
 from genesis.multiscale import MultiscaleFieldPredictor
+from genesis.trajectory import LocalTrajectoryPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -185,6 +186,19 @@ def main() -> None:
             f"{multiscale.field_mae:.15g}",
             f"{multiscale.shuffled_mae:.15g}",
             f"{multiscale.improvement:.15g}",
+        )
+
+        trajectory = LocalTrajectoryPredictor(
+            history_length=3, train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "LOCAL_TRAJECTORY",
+            seed,
+            trajectory.samples,
+            f"{trajectory.baseline_mae:.15g}",
+            f"{trajectory.trajectory_mae:.15g}",
+            f"{trajectory.shuffled_mae:.15g}",
+            f"{trajectory.improvement:.15g}",
         )
 
 
