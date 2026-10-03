@@ -14,6 +14,7 @@ from genesis.multiscale import MultiscaleFieldPredictor
 from genesis.trajectory import LocalTrajectoryPredictor
 from genesis.relational import CrossRegionRelationalPredictor
 from genesis.graph_relational import GraphRelationalPredictor
+from genesis.innovation import InnovationPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -215,6 +216,18 @@ def main() -> None:
             f"{relational.shuffled_mae:.15g}",
             f"{relational.improvement:.15g}",
         )
+
+        for history_length in (2, 3, 5, 10):
+            innovation = InnovationPredictor(
+                history_length=history_length, train_fraction=0.5, require_consecutive=True
+            ).evaluate(records)
+            print(
+                "INNOVATION", seed, history_length, innovation.samples,
+                f"{innovation.zero_mae:.15g}",
+                f"{innovation.innovation_mae:.15g}",
+                f"{innovation.shuffled_mae:.15g}",
+                f"{innovation.improvement:.15g}",
+            )
 
         graph = GraphRelationalPredictor(
             max_peers=8, train_fraction=0.5, require_consecutive=True
