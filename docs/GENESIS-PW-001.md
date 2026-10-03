@@ -686,3 +686,25 @@ GENESIS-2.4 nepodporuje hypotézu, že hlavní coherence-history signál je vysv
 Spolu s 2.3 to ale stále nevylučuje širší prostorový kontext. Oba testy používají malý 3×3 receptive field a centrum regionu. Další rozumná sonda je proto víceškálové pole, například současně radius 1 a radius 2, aby se testovalo, zda relevantní vztah přesahuje bezprostřední sousedství.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.4 — Pevně orientované lokální prostorové pole
+
+GENESIS-2.4 odstranil centroidové přeuspořádání hodnot jako experimentální osu. Predictor používá pevně orientovaný 3×3 lokální phase field reprezentovaný 18 hodnotami sin/cos fáze. Reprezentace proto zachovává orientaci jednotlivých pozic v patchi.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #44  
+Commit: 1accc27f86a570a15ec4943aba93a7268cbf8fdd
+
+| seed | samples | persistence MAE | spatial-field MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.048900… | … | … |
+| 390002 | 93990 | 0.000097287754 | 0.048900… | … | … |
+| 390003 | 86979 | 0.000107119591 | 0.052900… | … | … |
+
+Autoritativní experiment doběhl úspěšně. Hodnoty jsou zachovány v artifactu PW-001 #44; tato dokumentace zde neuvádí neověřené desetinné údaje.
+
+Pevně orientované pole v testovaném lineárním modelu nepředstavuje vysvětlení hlavního coherence-history signálu GENESIS-1.6b. Persistence zůstává řádově přesnější baseline.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
