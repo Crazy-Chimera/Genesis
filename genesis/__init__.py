@@ -11,6 +11,7 @@ from .structural import StructuralEvaluationResult, StructuralPredictor, structu
 from .local import LocalEvaluationResult, LocalPatchPredictor
 from .relational import CrossRegionRelationalPredictor, RelationalEvaluationResult
 from .graph_relational import GraphRelationalPredictor, GraphRelationalEvaluationResult
+from .innovation import InnovationPredictor, InnovationEvaluationResult
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -47,5 +48,7 @@ __all__ = [
     "RelationalEvaluationResult",
     "GraphRelationalPredictor",
     "GraphRelationalEvaluationResult",
+    "InnovationPredictor",
+    "InnovationEvaluationResult",
     "run",
 ]
