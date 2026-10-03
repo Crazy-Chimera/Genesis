@@ -5,7 +5,12 @@ import random
 from typing import Iterable
 
 from .memory import MemoryRecord
-from .predictor import Feature, coherence_feature, linear_history_predict, persistence_predict
+from .predictor import (
+    Feature,
+    coherence_feature,
+    linear_history_predict,
+    persistence_predict,
+)
 
 
 @dataclass(frozen=True)
@@ -18,6 +23,7 @@ class EvaluationResult:
     shuffled_mae: float
     heldout_start_tick: int
     history_length: int
+    mean_mae: float = 0.0
 
     @property
     def improvement(self) -> float:
@@ -30,6 +36,20 @@ class EvaluationResult:
     @property
     def beats_shuffled(self) -> bool:
         return self.history_mae < self.shuffled_mae
+
+    @property
+    def beats_mean(self) -> bool:
+        return self.history_mae < self.mean_mae
+
+
+def mean_history_predict(
+    history: list[MemoryRecord],
+    feature: Feature = coherence_feature,
+) -> float:
+    """Predict the next value as the arithmetic mean of recent history."""
+    if not history:
+        raise ValueError("history must contain at least one record")
+    return sum(feature(item) for item in history) / len(history)
 
 
 def shuffled_history_predict(
@@ -76,7 +96,7 @@ class PredictiveEvaluator:
     def evaluate(self, records: Iterable[MemoryRecord]) -> EvaluationResult:
         ordered = sorted(records, key=lambda item: (item.tick, item.identity))
         if not ordered:
-            return EvaluationResult(0, 0.0, 0.0, 0.0, 0, self.history_length)
+            return EvaluationResult(0, 0.0, 0.0, 0.0, 0, self.history_length, 0.0)
 
         max_tick = ordered[-1].tick
         min_tick = ordered[0].tick
@@ -92,6 +112,7 @@ class PredictiveEvaluator:
         baseline_errors: list[float] = []
         history_errors: list[float] = []
         shuffled_errors: list[float] = []
+        mean_errors: list[float] = []
 
         for identity_records in by_identity.values():
             identity_records.sort(key=lambda item: item.tick)
@@ -115,15 +136,17 @@ class PredictiveEvaluator:
                     self.feature,
                     seed=self.shuffle_seed + target.tick + target.identity,
                 )
+                mean_prediction = mean_history_predict(history, self.feature)
 
                 baseline_errors.append(abs(actual - baseline))
                 history_errors.append(abs(actual - prediction))
                 shuffled_errors.append(abs(actual - shuffled))
+                mean_errors.append(abs(actual - mean_prediction))
 
         samples = len(baseline_errors)
         if samples == 0:
             return EvaluationResult(
-                0, 0.0, 0.0, 0.0, heldout_start, self.history_length
+                0, 0.0, 0.0, 0.0, heldout_start, self.history_length, 0.0
             )
 
         return EvaluationResult(
@@ -133,4 +156,5 @@ class PredictiveEvaluator:
             shuffled_mae=sum(shuffled_errors) / samples,
             heldout_start_tick=heldout_start,
             history_length=self.history_length,
+            mean_mae=sum(mean_errors) / samples,
         )
