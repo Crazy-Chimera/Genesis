@@ -124,6 +124,12 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-12">
+    <h2>NEXT PROBE · GENESIS-2.13</h2>
+    <p><b>Model-class / representation bottleneck diagnostic.</b></p>
+    <p class="muted">Separate whether the 2.12 negative result comes from information loss in the 193D observer representation, the linear ridge model, or both. No new universe rule and no feedback.</p>
+  </div>
+
+  <div class="card span-12">
     <h2>INVARIANTS</h2>
     <div class="grid">
       <div class="card span-3"><span class="ok">✓</span> Universe rules unchanged</div>
