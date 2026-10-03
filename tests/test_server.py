@@ -1,4 +1,5 @@
 from genesis.server import GenesisServer
+from genesis.ui import render_dashboard
 
 
 def test_server_state_starts_at_zero():
@@ -13,3 +14,19 @@ def test_server_step_advances_universe():
     state = app.step()
     assert state["tick"] == 1
     assert 0.0 <= state["coherence"] <= 1.0
+
+
+def test_dashboard_contains_genesis_pw001():
+    html = render_dashboard({"tick": 0, "coherence": 0.5})
+    assert "GENESIS-PW-001" in html
+    assert "GENESIS-2.12" in html
+    assert "State-Trajectory" in html
+    assert "No self-model" in html
+    assert "/step" in html
+
+
+def test_dashboard_renders_live_state():
+    html = render_dashboard({"tick": 123, "coherence": 0.123456789})
+    assert "123" in html
+    assert "0.123456789" in html
+    assert "100,000" in html
