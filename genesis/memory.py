@@ -67,7 +67,6 @@ class TemporalMemory:
                 spatiotemporal_patch=observation.spatiotemporal_patch,
                 spatial_field=observation.spatial_field,
                 multiscale_field=observation.multiscale_field,
-                multiscale_field=observation.multiscale_field,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
