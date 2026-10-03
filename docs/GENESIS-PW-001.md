@@ -557,3 +557,16 @@ Další smysluplný krok je proto přejít od okamžité boundary reprezentace k
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
 
 Reprodukční vstup: experiments/pw001_structural_eval.py (řádek BOUNDARY_FLUX).
+
+
+## GENESIS-2.2 — Boundary Deformation
+
+GENESIS-2.2 měří změnu hranice mezi po sobě jdoucími rámci. Reprezentace obsahuje změnu horizontálního a vertikálního phase fluxu, změnu jeho absolutní velikosti, změnu počtu hraničních hran, změnu hustoty hranice a velikost symetrického rozdílu buněk mezi starým a novým regionem.
+
+Clean PW-001 experiment #36, commit 10eec0af631b7b0f49f40e22baf92b3e819f85f2, proběhl se stejným chronological holdout a exact-consecutive protokolem jako předchozí sondy.
+
+Autoritativní artifact: 11262560049, digest sha256:62d2cb6c4be0005ae1bf254216d73498082b7c293281216d14c5913c25956e29.
+
+Přesné hodnoty jsou uloženy v reprodukčním artifactu; tento experiment potvrzuje běh, testy a generování výsledku. Interpretace se řídí výhradně naměřeným MAE a shuffled kontrolou, nikoli hypotézou.
+
+Další krok: pokud deformace nepřekoná persistence, je vhodné přestat přidávat další ručně navržené regionální reprezentace a přejít k systematickému rozlišení, zda je 1.6b signál artefaktem měřicího protokolu, nebo skutečně využitelnou krátkodobou predikční strukturou.
