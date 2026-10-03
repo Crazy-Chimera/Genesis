@@ -7,6 +7,7 @@ from genesis.local_phase import PhasePatchPredictor
 from genesis.local_gradient import LocalGradientPredictor
 from genesis.local_motion import MotionPredictor
 from genesis.boundary_flux import BoundaryFluxPredictor
+from genesis.boundary_deformation import BoundaryDeformationPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -129,6 +130,19 @@ def main() -> None:
             f"{flux.flux_mae:.15g}",
             f"{flux.shuffled_mae:.15g}",
             f"{flux.improvement:.15g}",
+        )
+
+        deformation = BoundaryDeformationPredictor(
+            train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "BOUNDARY_DEFORMATION",
+            seed,
+            deformation.samples,
+            f"{deformation.baseline_mae:.15g}",
+            f"{deformation.deformation_mae:.15g}",
+            f"{deformation.shuffled_mae:.15g}",
+            f"{deformation.improvement:.15g}",
         )
 
 
