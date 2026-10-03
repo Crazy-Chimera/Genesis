@@ -23,6 +23,7 @@ class MemoryRecord:
     gradient_patch: tuple[float, ...] = ()
     motion: tuple[float, ...] = ()
     boundary_flux: tuple[float, ...] = ()
+    boundary_deformation: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -58,6 +59,7 @@ class TemporalMemory:
                 gradient_patch=observation.gradient_patch,
                 motion=observation.motion,
                 boundary_flux=observation.boundary_flux,
+                boundary_deformation=observation.boundary_deformation,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
