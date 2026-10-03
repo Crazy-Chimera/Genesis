@@ -29,6 +29,10 @@ def main() -> None:
     print(f"records={len(records)}")
     print(f"identities={len({r.identity for r in records})}")
 
+    print(
+        "history_length samples persistence_mae history_mae "
+        "shuffled_mae mean_mae improvement"
+    )
     for history_length in (1, 2, 3, 5, 10):
         result = PredictiveEvaluator(
             history_length=history_length,
@@ -41,6 +45,7 @@ def main() -> None:
             f"{result.baseline_mae:.15g}",
             f"{result.history_mae:.15g}",
             f"{result.shuffled_mae:.15g}",
+            f"{result.mean_mae:.15g}",
             f"{result.improvement:.15g}",
         )
 
