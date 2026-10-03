@@ -31,6 +31,7 @@ class RegionObservation:
     motion: tuple[float, ...] = ()
     boundary_flux: tuple[float, ...] = ()
     boundary_deformation: tuple[float, ...] = ()
+    spatiotemporal_patch: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -272,6 +273,36 @@ class LocalStructureObserver:
         )
 
     @staticmethod
+    def spatiotemporal_patch(
+        previous_phase: np.ndarray | None,
+        current_phase: np.ndarray,
+        cluster: Cluster,
+        radius: int = 1,
+    ) -> tuple[float, ...]:
+        """Preserve a centroid-aligned local phase state and its one-step change."""
+        if previous_phase is None or not cluster.cells:
+            return ()
+        if radius < 0:
+            raise ValueError("radius must be >= 0")
+        rows, cols = current_phase.shape
+        center_r = int(round(sum(r for r, _ in cluster.cells) / len(cluster.cells)))
+        center_c = int(round(sum(c for _, c in cluster.cells) / len(cluster.cells)))
+        values: list[float] = []
+        for dr in range(-radius, radius + 1):
+            for dc in range(-radius, radius + 1):
+                r = (center_r + dr) % rows
+                c = (center_c + dc) % cols
+                current = current_phase[r, c]
+                previous = previous_phase[r, c]
+                values.extend((
+                    float(np.sin(current)),
+                    float(np.cos(current)),
+                    float(np.sin(current - previous)),
+                    float(np.cos(current - previous)),
+                ))
+        return tuple(values)
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -408,6 +439,7 @@ class RegionTracker:
                 motion=motion,
                 boundary_flux=self.observer.boundary_flux(cluster, phase),
                 boundary_deformation=self.observer.boundary_deformation(previous_cluster, cluster, previous_phase, phase),
+                spatiotemporal_patch=self.observer.spatiotemporal_patch(previous_phase, phase, cluster),
             ))
         self._previous = current
         self._previous_phase = phase.copy()
