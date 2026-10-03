@@ -259,3 +259,65 @@ GENESIS-1.7 therefore separates two observations:
 2. **The current aggregate region-structure representation does not explain that predictive advantage by itself.**
 
 No predictive output is fed back into the universe.
+
+
+## GENESIS-1.7b — per-feature structural isolation
+
+GENESIS-1.7b isolates the five observer-level structural inputs used by GENESIS-1.7. The purpose is to determine whether the failure of the aggregate structure-only model is caused by one particular feature, by their combination, or by the representation/model class as a whole.
+
+The tested feature sets are:
+
+- size
+- boundary_contrast
+- lifetime
+- persistence
+- overlap
+- all five together
+
+Coherence is excluded from every structural predictor. The evaluation uses the same chronological holdout and exact-consecutive-tick protocol as GENESIS-1.6b. A deterministic shuffled structural control is evaluated alongside each ordered predictor.
+
+### Clean CI result
+
+Run: PW-001 experiment #7  
+Commit: 4a20f186c2e35cc8ee30371830ef109c70e518af
+
+| seed | feature set | samples | persistence MAE | structural MAE | shuffled MAE | improvement |
+|---:|---|---:|---:|---:|---:|---:|
+| 390001 | size | 103931 | 0.000120569452 | 0.057199585985 | 0.054984347729 | -0.057079016533 |
+| 390001 | boundary_contrast | 103931 | 0.000120569452 | 0.049412267523 | 0.064658559774 | -0.049291698070 |
+| 390001 | lifetime | 103931 | 0.000120569452 | 0.051418189842 | 0.055048264973 | -0.051297620390 |
+| 390001 | persistence | 103931 | 0.000120569452 | 0.051418189842 | 0.055048264973 | -0.051297620390 |
+| 390001 | overlap | 103931 | 0.000120569452 | 0.053653946617 | 0.053693731953 | -0.053533377165 |
+| 390001 | all five | 103931 | 0.000120569452 | 0.043121575274 | 0.065012893657 | -0.043001005822 |
+| 390002 | size | 93990 | 0.000097287754 | 0.051237922991 | 0.051296161240 | -0.051140635237 |
+| 390002 | boundary_contrast | 93990 | 0.000097287754 | 0.044191604450 | 0.061039098378 | -0.044094316696 |
+| 390002 | lifetime | 93990 | 0.000097287754 | 0.054404354304 | 0.058205446404 | -0.054307066550 |
+| 390002 | persistence | 93990 | 0.000097287754 | 0.054404354304 | 0.058205446404 | -0.054307066550 |
+| 390002 | overlap | 93990 | 0.000097287754 | 0.051161773297 | 0.051186657764 | -0.051064485543 |
+| 390002 | all five | 93990 | 0.000097287754 | 0.043784649967 | 0.062749533591 | -0.043687362213 |
+| 390003 | size | 86979 | 0.000107119591 | 0.057716891673 | 0.058759001549 | -0.057609772083 |
+| 390003 | boundary_contrast | 86979 | 0.000107119591 | 0.049483490406 | 0.062099979025 | -0.049376370816 |
+| 390003 | lifetime | 86979 | 0.000107119591 | 0.056430813483 | 0.059380056509 | -0.056323693892 |
+| 390003 | persistence | 86979 | 0.000107119591 | 0.056430813483 | 0.059380056509 | -0.056323693892 |
+| 390003 | overlap | 86979 | 0.000107119591 | 0.058399288586 | 0.058416556382 | -0.058292168996 |
+| 390003 | all five | 86979 | 0.000107119591 | 0.046144387078 | 0.063992656782 | -0.046037267488 |
+
+The per-feature result is consistent across all three seeds: no isolated structural feature beats persistence, and the five-feature combination also remains far above the persistence error. The best aggregate structural MAE in each seed is approximately 0.043–0.046, whereas persistence remains approximately 0.000097–0.000121.
+
+The shuffled controls are not uniformly worse than the ordered predictors for every isolated feature. Therefore the shuffled comparison should be treated only as a diagnostic control, not as proof that every feature carries independently ordered temporal information.
+
+### Interpretation
+
+GENESIS-1.7b strengthens the negative result from GENESIS-1.7. Under the tested linear structural model and representation:
+
+1. no individual measured structural feature explains the GENESIS-1.6b coherence prediction advantage;
+2. combining all five measured structural features does not explain it either;
+3. the predictive signal therefore remains associated with the measured coherence history rather than with these aggregate region statistics under the tested model.
+
+This still does not identify the physical source of the predictive signal. It leaves open spatially local variables, phase-derived quantities other than global coherence, alternative temporal horizons, nonlinear predictors, and other observer representations.
+
+The result also does not establish causality: all structural quantities are observer measurements derived from the same underlying universe trajectory.
+
+No predictive output is fed back into GenesisUniverse.
+
+Reproduction entry point: experiments/pw001_structural_eval.py.
