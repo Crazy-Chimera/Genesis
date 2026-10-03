@@ -45,3 +45,29 @@ def test_coherence_is_bounded():
     universe = GenesisUniverse(GenesisConfig())
     coherence = GenesisObserver().coherence(universe.phase)
     assert 0.0 <= coherence <= 1.0
+
+
+from genesis import LocalStructureObserver
+
+
+def test_local_coherence_is_bounded():
+    universe = GenesisUniverse(GenesisConfig(size=4))
+    local = LocalStructureObserver().local_coherence(universe.phase)
+    assert local.shape == universe.phase.shape
+    assert np.all((local >= 0.0) & (local <= 1.0))
+
+
+def test_uniform_phase_forms_one_periodic_cluster():
+    phase = np.zeros((4, 4))
+    clusters = LocalStructureObserver(threshold=0.99).detect(phase)
+    assert len(clusters) == 1
+    assert len(clusters[0].cells) == 16
+    assert clusters[0].coherence == pytest.approx(1.0)
+
+
+def test_cluster_detection_is_measurement_only():
+    universe = GenesisUniverse(GenesisConfig(size=4))
+    observer = LocalStructureObserver()
+    before = universe.phase.copy()
+    observer.detect(universe.phase)
+    np.testing.assert_array_equal(before, universe.phase)
