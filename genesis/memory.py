@@ -25,6 +25,7 @@ class MemoryRecord:
     boundary_flux: tuple[float, ...] = ()
     boundary_deformation: tuple[float, ...] = ()
     spatiotemporal_patch: tuple[float, ...] = ()
+    spatial_field: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -62,6 +63,7 @@ class TemporalMemory:
                 boundary_flux=observation.boundary_flux,
                 boundary_deformation=observation.boundary_deformation,
                 spatiotemporal_patch=observation.spatiotemporal_patch,
+                spatial_field=observation.spatial_field,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
