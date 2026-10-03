@@ -38,7 +38,8 @@ def _quadratic_features(rows: np.ndarray) -> np.ndarray:
         raise ValueError("rows must be a 2D array")
     linear = rows
     quadratic = rows[:, :, None] * rows[:, None, :]
-    upper = quadratic[:, np.triu_indices(rows.shape[1])]
+    upper_indices = np.triu_indices(rows.shape[1])
+    upper = quadratic[:, upper_indices[0], upper_indices[1]]
     return np.column_stack((np.ones(len(rows)), linear, upper))
 
 
