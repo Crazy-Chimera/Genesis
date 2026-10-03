@@ -29,7 +29,7 @@ def test_relational_predictor_beats_baseline_on_synthetic_relation():
 
 def test_relational_requires_exact_consecutive_ticks():
     rows = [(0.0,) * 16] * 10
-    records = [rec(t, 0.1, row) for t, row in zip((0, 1, 3, 4, 6, 7, 9, 10, 12, 13), rows)]
+    records = [rec(t, 0.1, row) for t, row in zip((0, 2, 4, 6, 8, 10, 12, 14, 16, 18), rows)]
     assert CrossRegionRelationalPredictor().evaluate(records).samples == 0
 
 
