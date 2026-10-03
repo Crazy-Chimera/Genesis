@@ -6,6 +6,7 @@ on:
     paths:
       - "genesis/**"
       - "experiments/pw001_predictive_eval.py"
+      - "experiments/pw001_robustness.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -18,7 +19,10 @@ jobs:
           python-version: "3.12"
       - run: pip install .
       - run: python experiments/pw001_predictive_eval.py | tee pw001-results.txt
+      - run: python experiments/pw001_robustness.py | tee pw001-robustness.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
-          path: pw001-results.txt
+          path: |
+            pw001-results.txt
+            pw001-robustness.txt
