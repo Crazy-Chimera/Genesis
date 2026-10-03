@@ -85,3 +85,26 @@ def test_structure_only_predictor_requires_consecutive_records():
     ]
     result = StructuralPredictor(require_consecutive=True).evaluate(records)
     assert result.samples == 0
+
+
+def test_structure_only_predictor_accepts_single_feature():
+    records = [
+        record(
+            tick=t,
+            coherence=0.1 + 0.02 * (t % 4),
+            size=1 + (t % 4),
+            boundary=0.1,
+            lifetime=1,
+            persistence=1,
+            overlap=1.0,
+        )
+        for t in range(40)
+    ]
+    result = StructuralPredictor(train_fraction=0.5).evaluate(records, ("size",))
+    assert result.samples > 0
+    assert result.feature_names == ("size",)
+
+
+def test_structure_only_predictor_rejects_unknown_feature():
+    with pytest.raises(ValueError):
+        StructuralPredictor().evaluate([record(0, 0.1)], ("unknown",))
