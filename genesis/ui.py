@@ -92,13 +92,13 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>7. Structural probes · 1.7–2.8</div>
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9</div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11</div>
-      <div class="stage"><span class="dot pending"></span>10. State trajectory · 2.12</div>
+      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>CURRENT RESEARCH QUESTION · GENESIS-2.12</h2>
-    <p><b>Can a trajectory of non-coherence state predict the next coherence innovation?</b></p>
+    <h2>RESULT · GENESIS-2.12</h2>
+    <p><b>State trajectory did not beat the zero-change baseline in 12/12 tested seed × history combinations.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">state(t-k) … state(t)</span><br><span class="muted">193D combined observer state</span></div>
       <div class="card span-6"><h2>EXCLUDED</h2><span class="pending">coherence history</span><br><span class="muted">no direct ΔC input</span></div>
@@ -117,9 +117,10 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 
   <div class="card span-6">
     <h2>EVIDENCE · 2.10–2.11</h2>
-    <div class="row"><span>single state</span><span class="badge pending">not robust</span></div>
-    <div class="row"><span>combined 193D state</span><span class="badge pending">not reconstructed</span></div>
-    <p class="muted">No tested current non-coherence representation robustly explains the 2.9 innovation signal across all three seeds.</p>
+    <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
+    <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
+    <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
+    <p class="muted">Neither a single state, combined 193D state, nor short state trajectory reconstructs the 2.9 innovation signal under the tested linear protocol.</p>
   </div>
 
   <div class="card span-12">
