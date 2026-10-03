@@ -39,3 +39,7 @@ def test_predictive_memory_does_not_mutate_records():
 def test_predictive_memory_rejects_invalid_history_length():
     with pytest.raises(ValueError):
         PredictiveMemory().evaluate([record(0, 0.2)], history_length=0)
+
+def test_persistence_predictor_supports_custom_feature():
+    history = [record(0, 0.2), record(1, 0.4)]
+    assert persistence_predict(history, lambda item: float(item.lifetime)) == pytest.approx(2.0)
