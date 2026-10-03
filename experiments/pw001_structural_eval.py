@@ -242,6 +242,17 @@ def main() -> None:
                 f"{state_innovation.improvement:.15g}",
             )
 
+        combined = StateInnovationPredictor(
+            "combined", train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "STATE_INNOVATION", "combined", seed, combined.samples,
+            f"{combined.zero_mae:.15g}",
+            f"{combined.state_mae:.15g}",
+            f"{combined.shuffled_mae:.15g}",
+            f"{combined.improvement:.15g}",
+        )
+
         graph = GraphRelationalPredictor(
             max_peers=8, train_fraction=0.5, require_consecutive=True
         ).evaluate(records)
