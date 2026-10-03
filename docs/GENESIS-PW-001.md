@@ -516,3 +516,44 @@ Další experimentální krok proto dává větší smysl zaměřit na **lokáln
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
 
 Reprodukční vstup: experiments/pw001_structural_eval.py (řádek LOCAL_MOTION).
+
+
+## GENESIS-2.1 — Boundary Flux / hranice regionu
+
+GENESIS-2.1 testuje informaci na hranici regionu namísto centroidového pohybu. Pro každou měřenou oblast se počítá:
+
+- průměrný podepsaný phase-flux přes horizontální hranice;
+- průměrný podepsaný phase-flux přes vertikální hranice;
+- průměrná absolutní velikost fluxu;
+- počet hraničních hran;
+- počet hraničních hran normalizovaný velikostí regionu.
+
+Phase flux používá lokální wrapped rozdíl a funkci sin(Δφ), tedy stejný lokální coupling term jako základní fázová interakce. Veličiny jsou observer-level a nejsou vraceny do GenesisUniverse.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #32  
+Commit: 9aba487af4bdaf4f4d46388a95e098fcefaaddb6
+
+| seed | samples | persistence MAE | boundary-flux MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.046877428501 | 0.059806772883 | -0.046756859049 |
+| 390002 | 93990 | 0.000097287754 | 0.043990439793 | 0.056204637128 | -0.043893152039 |
+| 390003 | 86979 | 0.000107119591 | 0.054710921230 | 0.063000259297 | -0.054603801639 |
+
+Boundary-flux model nepřekonal persistence v žádném ze tří seedů. Na rozdíl od GENESIS-2.0 je ordered flux konzistentně lepší než shuffled kontrola, což ukazuje, že tato reprezentace obsahuje nějakou časově uspořádanou informaci. Současně je však její predikční chyba stále přibližně dvě až tři řády větší než persistence baseline.
+
+### Interpretation
+
+GENESIS-2.1 tedy poskytuje první z posledních lokálních sond, kde je shuffled kontrola konzistentně horší než ordered reprezentace, ale samotná reprezentace stále nevysvětluje hlavní signál GENESIS-1.6b.
+
+To rozlišuje dvě otázky:
+
+1. obsahuje reprezentace časovou informaci? — v tomto protokolu ano, ordered flux je lepší než shuffled;
+2. vysvětluje tato reprezentace hlavní prediktivní výhodu coherence history? — ne, protože nepřekonává persistence.
+
+Další smysluplný krok je proto přejít od okamžité boundary reprezentace k její změně mezi rámci: boundary-flux derivative, změna permeability hranice a lokální topologická změna hranových vazeb. Tím se otestuje, zda je relevantní nikoli samotný stav hranice, ale její pohyb / přestavba.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+Reprodukční vstup: experiments/pw001_structural_eval.py (řádek BOUNDARY_FLUX).
