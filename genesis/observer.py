@@ -34,6 +34,7 @@ class RegionObservation:
     spatiotemporal_patch: tuple[float, ...] = ()
     spatial_field: tuple[float, ...] = ()
     multiscale_field: tuple[float, ...] = ()
+    multiscale_field: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -334,6 +335,29 @@ class LocalStructureObserver:
         )
 
     @staticmethod
+    def multiscale_field(
+        phase: np.ndarray,
+        cluster: Cluster,
+        radii: tuple[int, ...] = (1, 2),
+    ) -> tuple[float, ...]:
+        """Measure fixed-orientation phase fields at multiple spatial scales."""
+        if not cluster.cells:
+            return ()
+        rows, cols = phase.shape
+        center_r = int(round(sum(r for r, _ in cluster.cells) / len(cluster.cells)))
+        center_c = int(round(sum(c for _, c in cluster.cells) / len(cluster.cells)))
+        values: list[float] = []
+        for radius in radii:
+            if radius < 0:
+                raise ValueError("radii must be non-negative")
+            for dr in range(-radius, radius + 1):
+                for dc in range(-radius, radius + 1):
+                    r = (center_r + dr) % rows
+                    c = (center_c + dc) % cols
+                    values.extend((float(np.sin(phase[r, c])), float(np.cos(phase[r, c]))))
+        return tuple(values)
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -472,6 +496,7 @@ class RegionTracker:
                 boundary_deformation=self.observer.boundary_deformation(previous_cluster, cluster, previous_phase, phase),
                 spatiotemporal_patch=self.observer.spatiotemporal_patch(previous_phase, phase, cluster),
                 spatial_field=self.observer.spatial_field(phase, cluster),
+                multiscale_field=self.observer.multiscale_field(phase, cluster),
                 multiscale_field=self.observer.multiscale_field(phase, cluster),
             ))
         self._previous = current
