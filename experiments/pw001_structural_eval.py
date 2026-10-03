@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from genesis.core import GenesisConfig, GenesisUniverse
-from genesis.memory import TemporalMemory
 from genesis.local import LocalPatchPredictor
+from genesis.local_nonlinear import NonlinearLocalPatchPredictor
+from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
 
@@ -29,7 +30,14 @@ def main() -> None:
     for seed in (390001, 390002, 390003):
         records = collect(seed)
         predictor = StructuralPredictor(train_fraction=0.5, require_consecutive=True)
-        for feature_names in (("size",), ("boundary_contrast",), ("lifetime",), ("persistence",), ("overlap",), ("size", "boundary_contrast", "lifetime", "persistence", "overlap")):
+        for feature_names in (
+            ("size",),
+            ("boundary_contrast",),
+            ("lifetime",),
+            ("persistence",),
+            ("overlap",),
+            ("size", "boundary_contrast", "lifetime", "persistence", "overlap"),
+        ):
             result = predictor.evaluate(records, feature_names)
             print(
                 seed,
@@ -40,11 +48,31 @@ def main() -> None:
                 f"{result.shuffled_mae:.15g}",
                 f"{result.improvement:.15g}",
             )
-        local = LocalPatchPredictor(train_fraction=0.5, require_consecutive=True, radius=1).evaluate(records)
+
+        local = LocalPatchPredictor(
+            train_fraction=0.5, require_consecutive=True, radius=1
+        ).evaluate(records)
         print(
-            "LOCAL_PATCH", seed, local.samples,
-            f"{local.baseline_mae:.15g}", f"{local.local_mae:.15g}",
-            f"{local.shuffled_mae:.15g}", f"{local.improvement:.15g}",
+            "LOCAL_PATCH",
+            seed,
+            local.samples,
+            f"{local.baseline_mae:.15g}",
+            f"{local.local_mae:.15g}",
+            f"{local.shuffled_mae:.15g}",
+            f"{local.improvement:.15g}",
+        )
+
+        nonlinear = NonlinearLocalPatchPredictor(
+            train_fraction=0.5, require_consecutive=True, radius=1
+        ).evaluate(records)
+        print(
+            "LOCAL_QUADRATIC",
+            seed,
+            nonlinear.samples,
+            f"{nonlinear.baseline_mae:.15g}",
+            f"{nonlinear.nonlinear_mae:.15g}",
+            f"{nonlinear.shuffled_mae:.15g}",
+            f"{nonlinear.improvement:.15g}",
         )
 
 
