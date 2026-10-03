@@ -734,3 +734,25 @@ GENESIS-2.5 nepodporuje hypotézu, že hlavní coherence-history signál lze vys
 Tím se uzavírá další třída hypotéz založených na statickém lokálním prostorovém poli. Další krok by měl testovat **vícekrokovou lokální trajektorii**, nikoli pouze rozšiřovat prostorový receptive field: stejnou lokální reprezentaci zachovat pro několik po sobě jdoucích minulých rámců a zachovat orientaci i pořadí těchto rámců.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.5 — Víceškálové prostorové pole
+
+GENESIS-2.5 rozšiřuje pevně orientované lokální pole z 3×3 na dvě současné prostorové škály: radius 1 a radius 2. Každá pozice je reprezentována sin/cos fáze. Celková reprezentace má 68 hodnot.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #52  
+Commit: 2800b40e872c82922c547091db749450b9dfb14e
+
+| seed | samples | persistence MAE | multiscale MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.054723868128 | 0.054580002685 | -0.054603298676 |
+| 390002 | 93990 | 0.000097287754 | 0.052144416433 | 0.052125091097 | -0.052047128679 |
+| 390003 | 86979 | 0.000107119591 | 0.058938777842 | 0.059084851468 | -0.058831658251 |
+
+Víceškálové pole nepřekonalo persistence v žádném ze tří seedů. Ordered reprezentace je navíc prakticky shodná se shuffled kontrolou, takže tato reprezentace neposkytuje přesvědčivý důkaz využitelné časové informace.
+
+Výsledek společně s 2.4 ukazuje, že jednoduché pevně orientované lokální phase fields — ani na jedné, ani na dvou prostorových škálách — nevysvětlují hlavní prediktivní výhodu coherence history.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
