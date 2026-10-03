@@ -95,6 +95,39 @@ The result is feature-specific. Coherence contained measurable short-history pre
 
 The experiment remains external to the universe rules. No prediction is fed back into GenesisUniverse, GenesisConfig, phase, omega, or the coupling rule.
 
+### GENESIS-1.6 — predictive evaluation protocol
+
+GENESIS-1.6 separates **model selection from evaluation** by using a chronological walk-forward holdout.
+
+Protocol:
+
+1. Sort observer records chronologically within each observer identity.
+2. Define a future holdout boundary from the configured chronological split.
+3. Evaluate only targets at or after that boundary.
+4. By default, require the target and its history window to occupy exact consecutive ticks. Missing observations are therefore not silently treated as adjacent.
+5. Compare three predictors:
+   - persistence baseline — repeat the latest observed value;
+   - linear history predictor — extrapolate the recent bounded history;
+   - shuffled-history null — apply the same linear predictor after a deterministic permutation of the history values.
+6. Report MAE for each predictor and the history predictor's improvement over persistence.
+7. Keep the evaluation entirely external to GenesisUniverse and TemporalMemory.
+
+The shuffled-history null is not a statistical proof by itself. It is a diagnostic control: if the ordered history predictor cannot outperform a permutation of the same observed values, the apparent temporal advantage is weakened.
+
+The evaluation result records:
+
+- sample count
+- persistence MAE
+- ordered-history MAE
+- shuffled-history MAE
+- chronological holdout boundary
+- history length
+
+This protocol addresses the principal GENESIS-1.5 limitation: the earlier experiment evaluated next-record transitions across possible observation gaps and did not isolate a future holdout interval.
+
+GENESIS-1.6 still does **not** introduce learning objectives, rewards, agency, endogenous memory, meaning, language, or self-modeling. It only strengthens the measurement of predictive information.
+
+
 ## Measurement rule
 
 For regions A and B:
@@ -107,7 +140,7 @@ Lifecycle events are then derived from the overlap graph between consecutive obs
 
 ## Non-interference rule
 
-GENESIS-1.4 must not:
+GENESIS-1.6 must not:
 
 - write identities, lifecycle events, or memory records into GenesisUniverse
 - modify phase, frequency, amplitude, coupling, or noise
