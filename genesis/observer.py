@@ -35,6 +35,7 @@ class RegionObservation:
     spatial_field: tuple[float, ...] = ()
     multiscale_field: tuple[float, ...] = ()
     relational: tuple[float, ...] = ()
+    graph_relational: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -421,6 +422,61 @@ class LocalStructureObserver:
             values.append(1.0)
         return tuple(values)
 
+
+    @staticmethod
+    def graph_relational_features(
+        target: Cluster,
+        peers: list[Cluster],
+        phase: np.ndarray,
+        local: np.ndarray,
+        max_peers: int = 8,
+    ) -> tuple[float, ...]:
+        """Aggregate relations to a wider peer graph into a fixed-width vector."""
+        if max_peers < 1:
+            raise ValueError("max_peers must be >= 1")
+        if not target.cells:
+            return (0.0,) * 33
+        rows, cols = phase.shape
+
+        def centroid(cluster: Cluster) -> tuple[float, float]:
+            return (
+                sum(r for r, _ in cluster.cells) / len(cluster.cells),
+                sum(c for _, c in cluster.cells) / len(cluster.cells),
+            )
+
+        def mean_phase(cluster: Cluster) -> float:
+            z = np.mean(np.exp(1j * np.asarray([phase[r, c] for r, c in cluster.cells])))
+            return float(np.angle(z))
+
+        tr, tc = centroid(target)
+        tp = mean_phase(target)
+        target_boundary = LocalStructureObserver.boundary_contrast(target, local)
+        candidates = []
+        for peer in peers:
+            if peer is target:
+                continue
+            pr, pc = centroid(peer)
+            dr = pr - tr - round((pr - tr) / rows) * rows
+            dc = pc - tc - round((pc - tc) / cols) * cols
+            distance = float(np.hypot(dr / rows, dc / cols))
+            phase_delta = float(np.angle(np.exp(1j * (mean_phase(peer) - tp))))
+            size_ratio = float(np.log((len(peer.cells) + 1.0) / (len(target.cells) + 1.0)))
+            boundary_delta = LocalStructureObserver.boundary_contrast(peer, local) - target_boundary
+            candidates.append((distance, tuple(peer.cells), (
+                dr / rows, dc / cols, np.sin(phase_delta), np.cos(phase_delta),
+                size_ratio, boundary_delta, distance, 1.0,
+            )))
+        candidates.sort(key=lambda item: (item[0], item[1]))
+        selected = [item[2] for item in candidates[:max_peers]]
+        if not selected:
+            return (0.0,) * 33
+        values = np.asarray(selected, dtype=np.float64)
+        mean = values.mean(axis=0)
+        std = values.std(axis=0)
+        minimum = values.min(axis=0)
+        maximum = values.max(axis=0)
+        return tuple(np.concatenate((mean, std, minimum, maximum, np.asarray([len(selected) / max_peers]))))
+
     @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
@@ -563,6 +619,7 @@ class RegionTracker:
                 spatial_field=self.observer.spatial_field(phase, cluster),
                 multiscale_field=self.observer.multiscale_field(phase, cluster),
                 relational=self.observer.relational_features(cluster, assigned_clusters, phase, local),
+                graph_relational=self.observer.graph_relational_features(cluster, assigned_clusters, phase, local),
             ))
         self._previous = current
         self._previous_phase = phase.copy()
