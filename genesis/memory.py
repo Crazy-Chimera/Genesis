@@ -28,6 +28,7 @@ class MemoryRecord:
     spatial_field: tuple[float, ...] = ()
     multiscale_field: tuple[float, ...] = ()
     relational: tuple[float, ...] = ()
+    graph_relational: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -68,6 +69,7 @@ class TemporalMemory:
                 spatial_field=observation.spatial_field,
                 multiscale_field=observation.multiscale_field,
                 relational=observation.relational,
+                graph_relational=observation.graph_relational,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
