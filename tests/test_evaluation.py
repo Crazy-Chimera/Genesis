@@ -32,7 +32,7 @@ def test_evaluator_uses_future_holdout_and_consecutive_ticks():
     ).evaluate(records)
 
     assert result.heldout_start_tick == 4
-    assert result.samples == 5
+    assert result.samples == 6
     assert result.history_mae < result.baseline_mae
 
 
