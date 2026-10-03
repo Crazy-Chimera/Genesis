@@ -5,6 +5,7 @@ from genesis.local import LocalPatchPredictor
 from genesis.local_nonlinear import NonlinearLocalPatchPredictor
 from genesis.local_phase import PhasePatchPredictor
 from genesis.local_gradient import LocalGradientPredictor
+from genesis.local_motion import MotionPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -101,6 +102,19 @@ def main() -> None:
             f"{gradient.gradient_mae:.15g}",
             f"{gradient.shuffled_mae:.15g}",
             f"{gradient.improvement:.15g}",
+        )
+
+        motion = MotionPredictor(
+            train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "LOCAL_MOTION",
+            seed,
+            motion.samples,
+            f"{motion.baseline_mae:.15g}",
+            f"{motion.motion_mae:.15g}",
+            f"{motion.shuffled_mae:.15g}",
+            f"{motion.improvement:.15g}",
         )
 
 
