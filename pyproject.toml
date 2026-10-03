@@ -15,5 +15,8 @@ test = ["pytest>=8"]
 [project.scripts]
 genesis = "genesis.__main__:main"
 
+[tool.setuptools.packages.find]
+include = ["genesis*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
