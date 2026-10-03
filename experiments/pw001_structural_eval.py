@@ -13,6 +13,7 @@ from genesis.spatial_field import SpatialFieldPredictor
 from genesis.multiscale import MultiscaleFieldPredictor
 from genesis.trajectory import LocalTrajectoryPredictor
 from genesis.relational import CrossRegionRelationalPredictor
+from genesis.graph_relational import GraphRelationalPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -214,6 +215,20 @@ def main() -> None:
             f"{relational.shuffled_mae:.15g}",
             f"{relational.improvement:.15g}",
         )
+
+        graph = GraphRelationalPredictor(
+            max_peers=8, train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "GRAPH_RELATIONAL",
+            seed,
+            graph.samples,
+            f"{graph.baseline_mae:.15g}",
+            f"{graph.graph_mae:.15g}",
+            f"{graph.shuffled_mae:.15g}",
+            f"{graph.improvement:.15g}",
+        )
+
 
 
 if __name__ == "__main__":
