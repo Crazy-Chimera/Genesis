@@ -151,6 +151,55 @@ The shuffled-history control also does not rescue the linear predictor: its erro
 Reproduction entry point: experiments/pw001_predictive_eval.py.
 
 
+
+### GENESIS-1.6b — baseline suite and seed robustness
+
+GENESIS-1.6b extends the strict next-tick evaluation with a second naive baseline and tests whether the observed result depends on the initial random seed.
+
+The evaluation compares:
+
+- **persistence** — repeat the latest value;
+- **mean history** — predict the arithmetic mean of the recent history window;
+- **ordered linear history** — extrapolate the recent history;
+- **shuffled linear history** — apply the same linear predictor after a deterministic permutation of the same history.
+
+The PW-001 experiment was executed in a clean GitHub Actions environment for 10,000 ticks. The strict protocol remained unchanged: 50% chronological holdout and exact consecutive-tick histories.
+
+For the reference seed 390001:
+
+| history length | samples | persistence MAE | linear MAE | mean MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|---:|
+| 2 | 103,885 | 0.000120540651 | 0.000043602189 | 0.000180697755 | 0.000199595043 | +0.000076938461 |
+| 3 | 103,839 | 0.000120511918 | 0.000043305745 | 0.000240728909 | 0.000297553269 | +0.000077206174 |
+| 5 | 103,747 | 0.000120453902 | 0.000043119177 | 0.000360311497 | 0.000464316125 | +0.000077334724 |
+| 10 | 103,517 | 0.000120311442 | 0.000043049732 | 0.000656780671 | 0.000872442258 | +0.000077260974 |
+
+The result was reproduced with two additional initial seeds:
+
+| seed | history | persistence MAE | linear MAE | mean MAE | shuffled MAE |
+|---:|---:|---:|---:|---:|---:|
+| 390002 | 2 | 0.000097256523 | 0.000028650330 | 0.000145835352 | 0.000159368795 |
+| 390002 | 3 | 0.000097225676 | 0.000028320944 | 0.000194330659 | 0.000233506190 |
+| 390002 | 5 | 0.000097163027 | 0.000028180159 | 0.000291157521 | 0.000372050680 |
+| 390002 | 10 | 0.000097007272 | 0.000028230802 | 0.000532262674 | 0.000688440461 |
+| 390003 | 2 | 0.000107100653 | 0.000034457494 | 0.000160559202 | 0.000177287056 |
+| 390003 | 3 | 0.000107081617 | 0.000034143436 | 0.000213928813 | 0.000263198332 |
+| 390003 | 5 | 0.000107043112 | 0.000034009959 | 0.000320449550 | 0.000404884434 |
+| 390003 | 10 | 0.000106948247 | 0.000033802074 | 0.000584235188 | 0.000766197363 |
+
+Across all three seeds and all tested history lengths, the ordered linear predictor has lower MAE than both persistence and mean-history baselines, while the shuffled-history control has higher MAE than the ordered predictor.
+
+This is evidence that, under the stated measurement and evaluation protocol, the observed coherence trajectory contains reproducible short-history predictive structure. It remains a statement about the measured trajectory and the tested predictor, not evidence of intelligence, agency, self-modeling, or endogenous learning.
+
+The universe rules remain unchanged and prediction is not fed back into the universe.
+
+Reproduction entry points:
+
+- `experiments/pw001_predictive_eval.py`
+- `experiments/pw001_robustness.py`
+
+The experiment artifact was produced by the GitHub Actions workflow `PW-001 experiment` from commit `fdc5a098cfae53ea377c66892481ef24e7fbdec2`.
+
 ## Measurement rule
 
 For regions A and B:
