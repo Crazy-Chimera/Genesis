@@ -10,9 +10,9 @@ on:
       - "experiments/pw001_structural_eval.py"
       - "experiments/pw001_state_trajectory.py"
       - "experiments/pw001_state_delta_trajectory.py"
+      - "experiments/pw001_nonlinear_state.py"
       - ".github/workflows/pw001-experiment.yml"
 
-# GENESIS-2.13 benchmark pipeline
 jobs:
   experiment:
     runs-on: ubuntu-latest
@@ -27,6 +27,7 @@ jobs:
       - run: python experiments/pw001_structural_eval.py | tee pw001-structural.txt
       - run: python experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
       - run: python experiments/pw001_state_delta_trajectory.py | tee pw001-state-delta-trajectory.txt
+      - run: python experiments/pw001_nonlinear_state.py | tee pw001-nonlinear-state.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
@@ -36,3 +37,4 @@ jobs:
             pw001-structural.txt
             pw001-state-trajectory.txt
             pw001-state-delta-trajectory.txt
+            pw001-nonlinear-state.txt
