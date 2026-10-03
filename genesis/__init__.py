@@ -8,6 +8,7 @@ from .evaluation import (
 from .memory import MemoryRecord, TemporalMemory
 from .predictor import PredictiveMemory, PredictionResult, linear_history_predict, persistence_predict
 from .structural import StructuralEvaluationResult, StructuralPredictor, structural_features
+from .local import LocalEvaluationResult, LocalPatchPredictor
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -38,5 +39,7 @@ __all__ = [
     "StructuralEvaluationResult",
     "StructuralPredictor",
     "structural_features",
+    "LocalEvaluationResult",
+    "LocalPatchPredictor",
     "run",
 ]
