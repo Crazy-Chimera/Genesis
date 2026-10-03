@@ -758,9 +758,10 @@ Výsledek společně s 2.4 ukazuje, že jednoduché pevně orientované lokáln�
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
 
 
+
 ## GENESIS-2.6 — Lokální trajektorie
 
-GENESIS-2.6 testuje historii tří po sobě jdoucích lokálních pevně orientovaných 3×3 phase fields. Do predictoru vstupuje prostorový stav z posledních tří rámců; coherence history není součástí vstupu. Tím se testuje, zda by časová informace mohla být rozložena v krátké lokální trajektorii místo v agregované historii coherence.
+GENESIS-2.6 testuje tři po sobě jdoucí 3×3 pevně orientované lokální phase fields jako jediný prediktivní vstup. Celkem jde o 54 hodnot; coherence history není vstupem. Páry jsou přijímány pouze při přesně po sobě jdoucích tickech.
 
 ### Clean PW-001 result
 
@@ -771,32 +772,14 @@ Commit: 911966f05a4158f4759b907a25a24d91f0d8c52c
 |---:|---:|---:|---:|---:|---:|
 | 390001 | 103839 | 0.000120511918 | 0.095598945712 | 0.095445144645 | -0.095478433794 |
 | 390002 | 93912 | 0.000097225676 | 0.064810652413 | 0.064627208559 | -0.064713426737 |
-| 390003 | 86895 | 0.000107081618 | 0.058564593123 | 0.058571464367 | -0.058457511506 |
+| 390003 | 86895 | 0.000107081617 | 0.058564593123 | 0.058571464367 | -0.058457511506 |
 
-Lokální trajektorie nepřekonala persistence v žádném ze tří seedů. Ordered a shuffled výsledky jsou prakticky shodné. Krátká lokální trajectory reprezentace proto v tomto protokolu neposkytuje vysvětlení hlavního coherence-history signálu.
-
-Výsledek také naznačuje, že pouhé prodloužení lokálního receptive field v čase není dostačující. Další krok by měl testovat jiný typ časového vztahu, nikoli pouze concatenation několika statických patchů.
-
-Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
-
-
-## GENESIS-2.6 — Lokální trajektorie
-
-GENESIS-2.6 testuje tři po sobě jdoucí 3×3 pevně orientované lokální phase fields jako jediný prediktivní vstup. Celkem jde o 54 hodnot; coherence history není vstupem. Pairs jsou přijímány pouze při přesně po sobě jdoucích tickech.
-
-### Clean PW-001 result
-
-Run: PW-001 experiment #54  
-Commit: 911966f05a4158f4759b907a25a24d91f0d8c52c
-
-| seed | samples | persistence MAE | trajectory MAE | shuffled MAE | improvement |
-|---:|---:|---:|---:|---:|---:|
-| 390001 | 103839 | 0.000120511918 | 0.054936... | 0.054... | ... |
-| 390002 | 938... | ... | ... | ... | ... |
-| 390003 | 869... | ... | ... | ... | ... |
-
-Autoritativní experiment proběhl úspěšně; přesné numerické hodnoty musí být při publikaci převzaty přímo z artefaktu PW-001 #54, nikoli ručně rekonstruovány.
+Lokální trajektorie nepřekonala persistence v žádném ze tří seedů. Ordered trajectory navíc není lepší než shuffled kontrola; v seedech 390001 a 390002 je shuffled MAE dokonce mírně nižší. Neexistuje tedy v tomto protokolu důkaz, že hlavní coherence-history signál lze rekonstruovat z posledních tří lokálních prostorových stavů.
 
 ### Interpretation
 
-2.6 je první přímý test krátké lokální trajektorie. Nezavádí nový univerzální mechanismus ani zpětnou vazbu do GenesisUniverse. Výsledek je třeba interpretovat pouze podle skutečných MAE a shuffled control z artefaktu.
+GENESIS-2.6 uzavírá test jednoduché krátké lokální trajektorie. Rozšíření z jednoho rámce na tři po sobě jdoucí rámce nejen nepřineslo zlepšení, ale v testovaném lineárním modelu vedlo k výrazně vyšší chybě než persistence.
+
+To stále není důkaz, že veškerá lokální trajektorie je nepoužitelná. Testoval se konkrétní 3×3 pevně orientovaný phase field, tři kroky historie a lineární ridge predictor. Nezahrnoval větší časové okno, nelineární model ani jiné prostorové kotvení.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
