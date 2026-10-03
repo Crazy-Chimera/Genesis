@@ -783,3 +783,33 @@ GENESIS-2.6 uzavírá test jednoduché krátké lokální trajektorie. Rozšíř
 To stále není důkaz, že veškerá lokální trajektorie je nepoužitelná. Testoval se konkrétní 3×3 pevně orientovaný phase field, tři kroky historie a lineární ridge predictor. Nezahrnoval větší časové okno, nelineární model ani jiné prostorové kotvení.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.7 — Cross-region relational predictor
+
+GENESIS-2.7 testuje, zda prediktivní informace neleží uvnitř jediného regionu, ale ve vztazích mezi současně pozorovanými regiony. Pro každý cílový region jsou zvoleny dva nejbližší peer-regiony podle deterministické periodické vzdálenosti.
+
+Relational representation obsahuje pro každého peer-regionu relativní řádkovou a sloupcovou pozici, sinus a kosinus rozdílu střední fáze, logaritmický poměr velikostí, rozdíl boundary contrast a vzdálenost, doplněné maskou existence peeru. Celkem jde o 16 hodnot. **Koherence cílového ani peer-regionů není vstupem prediktoru.** Cíl je koherence cílového regionu v následujícím ticku.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #59  
+Commit: 3b8ff9a13f9f35dad39505e5bbd92d1bd79efa39
+
+| seed | samples | persistence MAE | relational MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.050121898680 | 0.063422266948 | -0.050001329227 |
+| 390002 | 93990 | 0.000097287754 | 0.045819253626 | 0.058142361628 | -0.045721965872 |
+| 390003 | 86979 | 0.000107119591 | 0.049063441833 | 0.063266603707 | -0.048956322242 |
+
+### Interpretation
+
+Cross-region relational representation nepřekonala persistence v žádném ze tří seedů. Relational MAE je přibližně o dva řády vyšší než persistence MAE.
+
+Současně je relational predictor ve všech třech seedech lepší než shuffled control. To znamená, že testovaná relational representation obsahuje měřitelnou časovou informaci, ale v tomto konkrétním lineárním modelu není tato informace dostatečná k predikci následující coherence na úrovni persistence baseline.
+
+Výsledek proto podporuje pouze slabší tvrzení: **současné vztahy mezi regiony nejsou čistě časově náhodnou reprezentací.** Nepodporuje tvrzení, že cross-region relations vysvětlují hlavní coherence-history prediktivní signál.
+
+Další experiment by měl rozlišit, zda je informace rozložena v samotné síti vztahů, a ne pouze v nejbližších dvou peerech. Vhodnou další sondou je proto graph-level relational predictor s deterministickou agregací většího počtu peer-regionů, stále bez coherence jako vstupu a se zachováním shuffled kontroly.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
