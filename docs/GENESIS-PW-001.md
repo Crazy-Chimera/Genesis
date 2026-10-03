@@ -393,3 +393,38 @@ Tento výsledek stále neříká, že lokální prostorová informace není rele
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení. Predikce zůstávají čistě externím měřením a nejsou zpětně vloženy do GenesisUniverse.
 
 Reprodukční vstup: `experiments/pw001_structural_eval.py` (řádek `LOCAL_QUADRATIC`).
+
+
+## GENESIS-1.8 — lokální relativní fáze
+
+GENESIS-1.8 mění pouze lokální reprezentaci měřeného stavu. Pro každý observer-detekovaný region se ukládá centroidově zarovnaný 3×3 patch relativních fází ve formě dvojic `(sin Δφ, cos Δφ)`, kde Δφ je fáze vůči středu patchu. Absolutní fáze tedy není prediktoru přímo předávána.
+
+Prediktor používá pouze předchozí `phase_patch`, ridge regresi a stejný chronologický 50% holdout s požadavkem na přesně po sobě jdoucí tick. Persistence zůstává baseline a zamíchaný patch je kontrola. Universe rules se nemění a prediktor neposílá žádnou zpětnou vazbu do `GenesisUniverse`.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #20  
+Commit: `20cb6e565b0a6cd4c1e54357b101736e40fd4fe4`
+
+| seed | samples | persistence MAE | phase-patch MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.048083425627 | 0.066787142627 | -0.047962856175 |
+| 390002 | 93990 | 0.000097287754 | 0.048990027315 | 0.062524097114 | -0.048892739562 |
+| 390003 | 86979 | 0.000107119591 | 0.053485890305 | 0.066156441546 | -0.053378770714 |
+
+Fázový patch v této reprezentaci nepřekonal persistence baseline v žádném ze tří seedů. Ordered phase patch byl současně lepší než shuffled control ve všech třech případech, takže reprezentace obsahuje časově strukturovanou informaci, ale testovaný lineární prediktor ji nedokáže využít k překonání persistence.
+
+### Interpretation
+
+GENESIS-1.8 dále zužuje vysvětlení signálu z GENESIS-1.6b:
+
+1. aggregate region statistics jej nevysvětlují v testovaných modelech;
+2. centroidově zarovnaný 3×3 coherence patch jej nevysvětluje;
+3. kvadratické rozšíření stejného coherence patchu jej nevysvětluje;
+4. relativní phase patch `(sin Δφ, cos Δφ)` jej v testovaném lineárním modelu rovněž nevysvětluje.
+
+To není důkaz, že prostorová nebo fázová informace není relevantní. Testována byla konkrétní lokální reprezentace, konkrétní velikost patchu a konkrétní lineární ridge model. Další experiment by měl proto před dalším zvyšováním modelové složitosti ověřit jinou **reprezentaci prostorového stavu**, například lokální gradient/flux nebo zachování orientované geometrie bez centroidové komprese.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení. Jde stále o externí predikční analýzu observer-level paměti.
+
+Reprodukční vstup: `experiments/pw001_structural_eval.py` (řádek `LOCAL_PHASE`).
