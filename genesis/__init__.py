@@ -10,6 +10,7 @@ from .predictor import PredictiveMemory, PredictionResult, linear_history_predic
 from .structural import StructuralEvaluationResult, StructuralPredictor, structural_features
 from .local import LocalEvaluationResult, LocalPatchPredictor
 from .relational import CrossRegionRelationalPredictor, RelationalEvaluationResult
+from .graph_relational import GraphRelationalPredictor, GraphRelationalEvaluationResult
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -44,5 +45,7 @@ __all__ = [
     "LocalPatchPredictor",
     "CrossRegionRelationalPredictor",
     "RelationalEvaluationResult",
+    "GraphRelationalPredictor",
+    "GraphRelationalEvaluationResult",
     "run",
 ]
