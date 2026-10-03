@@ -879,3 +879,91 @@ The result does **not** establish intelligence, agency, self-modeling, endogenou
 GENESIS-2.9 therefore changes the interpretation of GENESIS-1.6b in an important but bounded way: the observed coherence-history signal cannot be reduced entirely to a trivial last-value persistence baseline, because a model of recent coherence changes still improves prediction of the next change. The next experimental question is to identify the physical/observer representation that carries this innovation signal without supplying coherence history directly.
 
 The universe rules remain unchanged and all prediction remains external to GenesisUniverse.
+
+
+
+## GENESIS-2.10 — State-to-innovation source probe
+
+GENESIS-2.10 asks whether the coherence-innovation signal identified in GENESIS-2.9 can be reconstructed from the **current non-coherence observer state**, rather than from previous coherence changes.
+
+The predictor targets the next coherence change:
+
+`delta coherence = coherence(t+1) - coherence(t)`
+
+but receives only the current observer representation. Coherence itself is excluded from every predictor input. The tested representations are:
+
+- structure — size, boundary contrast, lifetime, persistence, overlap
+- local_patch
+- phase_patch
+- gradient_patch
+- motion
+- boundary_flux
+- spatial_field
+- multiscale_field
+- relational
+- graph_relational
+
+The same 50% chronological holdout and exact-consecutive-tick protocol is retained. The zero-change baseline predicts delta coherence = 0. A deterministic shuffled-state control tests whether the ordered state representation provides an advantage.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #70  
+Commit: `b0def8157a077f753304e2905725a2d4cb5ad310`  
+Artifact: `11268229198`  
+Artifact digest: `sha256:dbdc86bba337313a749e069aa137a0239c24fe963163e709e2634acb9c3468a2`
+
+| feature | seed | samples | zero-change MAE | state MAE | shuffled MAE | improvement |
+|---|---:|---:|---:|---:|---:|---:|
+| structure | 390001 | 103931 | 0.000120569452 | 0.000133870449 | 0.000158464540 | -0.000013300997 |
+| structure | 390002 | 93990 | 0.000097287754 | 0.000107885995 | 0.000126289027 | -0.000010598241 |
+| structure | 390003 | 86979 | 0.000107119591 | 0.000094175336 | 0.000115903304 | +0.000012944254 |
+| local_patch | 390001 | 103931 | 0.000120569452 | 0.000131120779 | 0.000127531024 | -0.000010551327 |
+| local_patch | 390002 | 93990 | 0.000097287754 | 0.000113949445 | 0.000108671741 | -0.000016661691 |
+| local_patch | 390003 | 86979 | 0.000107119591 | 0.000110112590 | 0.000110844244 | -0.000002993000 |
+| phase_patch | 390001 | 103931 | 0.000120569452 | 0.000133219234 | 0.000133055737 | -0.000012649782 |
+| phase_patch | 390002 | 93990 | 0.000097287754 | 0.000106904764 | 0.000106508163 | -0.000009617010 |
+| phase_patch | 390003 | 86979 | 0.000107119591 | 0.000110368552 | 0.000118869844 | -0.000003248961 |
+| gradient_patch | 390001 | 103931 | 0.000120569452 | 0.000126709089 | 0.000130852157 | -0.000006139637 |
+| gradient_patch | 390002 | 93990 | 0.000097287754 | 0.000106506987 | 0.000107075089 | -0.000009219233 |
+| gradient_patch | 390003 | 86979 | 0.000107119591 | 0.000110049700 | 0.000116059997 | -0.000002930109 |
+| motion | 390001 | 103885 | 0.000120540651 | 0.000120380734 | 0.000120396892 | +0.000000159917 |
+| motion | 390002 | 93951 | 0.000097256523 | 0.000097503738 | 0.000097513571 | -0.000000247215 |
+| motion | 390003 | 86937 | 0.000107100653 | 0.000107221899 | 0.000107229244 | -0.000000121245 |
+| boundary_flux | 390001 | 103931 | 0.000120569452 | 0.000124811892 | 0.000124168638 | -0.000004242439 |
+| boundary_flux | 390002 | 93990 | 0.000097287754 | 0.000101815807 | 0.000101068519 | -0.000004528053 |
+| boundary_flux | 390003 | 86979 | 0.000107119591 | 0.000110200389 | 0.000110400545 | -0.000003080798 |
+| spatial_field | 390001 | 103931 | 0.000120569452 | 0.000120965669 | 0.000121485704 | -0.000000396217 |
+| spatial_field | 390002 | 93990 | 0.000097287754 | 0.000099045225 | 0.000099135259 | -0.000001757467 |
+| spatial_field | 390003 | 86979 | 0.000107119591 | 0.000107457495 | 0.000107705605 | -0.000000337904 |
+| multiscale_field | 390001 | 103931 | 0.000120569452 | 0.000124621574 | 0.000126082643 | -0.000004052121 |
+| multiscale_field | 390002 | 93990 | 0.000097287754 | 0.000106331677 | 0.000105838218 | -0.000009043923 |
+| multiscale_field | 390003 | 86979 | 0.000107119591 | 0.000110435541 | 0.000111674519 | -0.000003315950 |
+| relational | 390001 | 103931 | 0.000120569452 | 0.000128506707 | 0.000130423949 | -0.000007937255 |
+| relational | 390002 | 93990 | 0.000097287754 | 0.000099367675 | 0.000103745442 | -0.000002079921 |
+| relational | 390003 | 86979 | 0.000107119591 | 0.000106338344 | 0.000109613740 | +0.000000781247 |
+| graph_relational | 390001 | 103931 | 0.000120569452 | 0.000135062276 | 0.000133060893 | -0.000014492824 |
+| graph_relational | 390002 | 93990 | 0.000097287754 | 0.000114740956 | 0.000112638409 | -0.000017453202 |
+| graph_relational | 390003 | 86979 | 0.000107119591 | 0.000118902909 | 0.000121446026 | -0.000011783314 |
+
+### Interpretation
+
+The state-to-innovation probe does **not** provide a robust reconstruction of the GENESIS-2.9 innovation signal.
+
+Most tested representations fail to beat the zero-change baseline in all or nearly all seeds. Three isolated positive cases occur:
+
+- structure in seed 390003: +0.000012944254
+- motion in seed 390001: +0.000000159917
+- relational in seed 390003: +0.000000781247
+
+None is reproduced consistently across all three seeds. The strongest positive structure result is therefore not sufficient to establish a general state-to-innovation relationship.
+
+The result is important because it separates two observations:
+
+1. **GENESIS-2.9:** recent coherence changes themselves contain reproducible predictive information about the next coherence change.
+2. **GENESIS-2.10:** the tested single-frame non-coherence observer representations do not robustly recover that information.
+
+This means the current evidence does not identify the physical/observer variable carrying the innovation signal. The signal may require a different representation, a multi-frame state, a nonlinear model, or a combination of variables not captured by the present probes. GENESIS-2.10 therefore narrows the hypothesis space rather than closing it.
+
+No predictor output is fed back into GenesisUniverse or TemporalMemory. The result provides no evidence of intelligence, agency, self-modeling, or endogenous learning.
+
+The next logical probe is a **state-trajectory innovation predictor**: preserve a short sequence of non-coherence states across consecutive ticks and predict the next coherence change, while continuing to exclude coherence history itself. This directly tests whether the missing information resides in the trajectory of the underlying state rather than in any single frame.
