@@ -1092,3 +1092,72 @@ Současná evidence tedy odděluje predikovatelnost od zdroje predikovatelnosti.
 Další nejčistší experimentální krok je proto GENESIS-2.12 — State-Trajectory Innovation Probe: místo jediného aktuálního state použít krátkou sekvenci několika po sobě jdoucích non-coherence state vektorů a z ní predikovat další coherence innovation, stále bez coherence jako vstupu. Tím se přímo otestuje hypotéza, že informace není ve snapshotu, ale v pohybu/trajectory samotného stavu.
 
 Ani tento výsledek neposkytuje důkaz inteligence, agentivity, self-modelu nebo endogenního učení.
+
+
+## GENESIS-2.12 — State-Trajectory Innovation Probe
+
+GENESIS-2.12 testuje, zda lze inovační signál z GENESIS-2.9 rekonstruovat z krátké trajektorie non-coherence observer-state namísto jediného snapshotu.
+
+Prediktor používá po sobě jdoucí stavové vektory:
+- structure
+- local_patch
+- phase_patch
+- gradient_patch
+- motion
+- boundary_flux
+- spatial_field
+- multiscale_field
+- relational
+- graph_relational
+
+Tyto reprezentace jsou deterministicky konkatenovány do 193D combined state. Pro každý vzorek se použije historie 2, 3, 5 nebo 10 po sobě jdoucích stavů. Coherence ani její historie nejsou vstupem prediktoru. Cíl je následující coherence innovation:
+
+`delta C(t+1) = C(t+1) - C(t)`
+
+Protokol zachovává 50% chronological holdout, exact-consecutive-tick požadavek, zero-change baseline a deterministický shuffled control.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #79  
+Commit: `4f116b5956f045ca9adc0f53f42c597572bdc889`  
+Artifact: `11273517588`  
+Artifact digest: `sha256:6ce5ebb2f745e392b440cb99db5e660d7e35aa61a0b70d6bef2d7937acaffc5c`
+
+| seed | history | samples | zero-change MAE | trajectory MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|---:|
+| 390001 | 2 | 103839 | 0.000120511918 | 0.000201674753 | 0.000275122472 | -0.000081162836 |
+| 390001 | 3 | 103793 | 0.000120482970 | 0.001072695877 | 0.001145938608 | -0.000952212907 |
+| 390001 | 5 | 103701 | 0.000120425430 | 0.002187077128 | 0.002259639940 | -0.002066651698 |
+| 390001 | 10 | 103471 | 0.000120283214 | 0.005539294907 | 0.005608232656 | -0.005419011694 |
+| 390002 | 2 | 93912 | 0.000097225676 | 0.000212086546 | 0.000238876421 | -0.000114860870 |
+| 390002 | 3 | 93873 | 0.000097194133 | 0.000511075599 | 0.000537938713 | -0.000413881465 |
+| 390002 | 5 | 93795 | 0.000097131766 | 0.000952412739 | 0.000978786125 | -0.000855280973 |
+| 390002 | 10 | 93600 | 0.000096976272 | 0.002518024373 | 0.002543454891 | -0.002421048101 |
+| 390003 | 2 | 86895 | 0.000107081617 | 0.000271723428 | 0.000309761540 | -0.000164641811 |
+| 390003 | 3 | 86853 | 0.000107062338 | 0.000689745169 | 0.000741134431 | -0.000582682831 |
+| 390003 | 5 | 86769 | 0.000107023787 | 0.001359062524 | 0.001410539648 | -0.001252038737 |
+| 390003 | 10 | 86559 | 0.000106929724 | 0.002842449886 | 0.002900076743 | -0.002735520162 |
+
+### Interpretation
+
+GENESIS-2.12 **nepřekonal zero-change baseline v žádné z 12 kombinací seed × history length**.
+
+Současně trajectory model ve všech 12 případech překonal shuffled trajectory control. To znamená, že model využívá určitou uspořádanou strukturu v trajectory vstupu, ale tato struktura není v testovaném lineárním ridge modelu dostatečná k přesné predikci následující coherence innovation.
+
+Důležitý je také trend s délkou historie: při historii 3, 5 a 10 se chyba trajectory modelu zvyšuje a odchyluje se od zero baseline. Pro tento konkrétní combined-state + ridge protokol tedy delší sekvence nepřinesla lepší rekonstrukci inovačního signálu.
+
+### Stav hypotézy po 2.12
+
+GENESIS-2.9 zůstává pozitivním výsledkem pro predikci coherence innovation z její vlastní krátké historie.
+
+GENESIS-2.10 ukázal, že jednotlivé aktuální non-coherence state reprezentace tento signál robustně nereprodukují.
+
+GENESIS-2.11 ukázal, že jednoduchá 193D kombinace všech deseti aktuálních reprezentací také nestačí.
+
+GENESIS-2.12 nyní testoval, zda chybějící informace spočívá v krátké trajektorii tohoto combined state. V testovaném modelu se tato hypotéza nepotvrdila: žádná z 12 kombinací nepřekonala zero-change baseline.
+
+To neznamená, že obecná prostorově-temporální informace v systému neexistuje. Znamená to pouze, že konkrétní 193D observer-state trajectory a lineární ridge model neposkytly požadovanou rekonstrukci.
+
+Další experiment proto nemá smysl definovat jako další ručně přidanou agregaci stejného state vectoru. Čistší další otázkou je metodologická kontrola **model class / representation bottlenecku**: oddělit, zda je negativní výsledek způsoben samotnou reprezentací, lineárním modelem, nebo ztrátou informace při agregaci do regionálních observer features.
+
+Experiment zůstává measurement-only. Žádný prediktivní výstup není vracen do `GenesisUniverse`; nejsou zavedeny cíle, odměny, agency, self-model ani endogenní učení.
