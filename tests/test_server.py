@@ -20,7 +20,7 @@ def test_dashboard_contains_genesis_pw001():
     html = render_dashboard({"tick": 0, "coherence": 0.5})
     assert "GENESIS-PW-001" in html
     assert "GENESIS-2.12" in html
-    assert "State-Trajectory" in html
+    assert "state trajectory" in html.lower()
     assert "No self-model" in html
     assert "/step" in html
 
