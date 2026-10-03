@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from genesis import (
+    Cluster,
     GenesisConfig,
     GenesisObserver,
     GenesisUniverse,
@@ -102,4 +103,59 @@ def test_region_tracking_is_measurement_only():
     tracker = RegionTracker(LocalStructureObserver())
     before = universe.phase.copy()
     tracker.observe(universe.phase)
+    np.testing.assert_array_equal(before, universe.phase)
+
+
+def test_region_events_birth_and_stable_frame():
+    tracker = RegionTracker(LocalStructureObserver(threshold=0.99))
+    phase = np.zeros((4, 4))
+    _, first_events = tracker.observe_events(phase)
+    _, second_events = tracker.observe_events(phase)
+    assert [(event.kind, event.identity) for event in first_events] == [("birth", 1)]
+    assert second_events == []
+
+
+def test_region_events_growth_and_death():
+    previous = {
+        1: Cluster(cells=((0, 0),), coherence=0.9),
+    }
+    current = {
+        1: Cluster(cells=((0, 0), (0, 1)), coherence=0.9),
+    }
+    events = RegionTracker.classify_events(previous, current)
+    assert events == [RegionTracker.classify_events(previous, current)[0]]
+    assert events[0].kind == "growth"
+    assert events[0].size_delta == 1
+
+    events = RegionTracker.classify_events(current, {})
+    assert events == [type(events[0])("death", 1, (), -2)]
+
+
+def test_region_events_split_and_merge():
+    previous = {
+        1: Cluster(cells=((0, 0), (0, 1)), coherence=0.9),
+        2: Cluster(cells=((1, 0), (1, 1)), coherence=0.9),
+    }
+    current = {
+        3: Cluster(cells=((0, 0), (0, 1)), coherence=0.9),
+        4: Cluster(cells=((1, 0), (1, 1)), coherence=0.9),
+    }
+    split_events = RegionTracker.classify_events(
+        {1: Cluster(cells=((0, 0), (0, 1), (1, 0), (1, 1)), coherence=0.9)},
+        current,
+    )
+    assert any(event.kind == "split" for event in split_events)
+
+    merge_events = RegionTracker.classify_events(
+        previous,
+        {3: Cluster(cells=((0, 0), (0, 1), (1, 0), (1, 1)), coherence=0.9)},
+    )
+    assert any(event.kind == "merge" for event in merge_events)
+
+
+def test_region_events_are_measurement_only():
+    universe = GenesisUniverse(GenesisConfig(size=4))
+    tracker = RegionTracker(LocalStructureObserver())
+    before = universe.phase.copy()
+    tracker.observe_events(universe.phase)
     np.testing.assert_array_equal(before, universe.phase)
