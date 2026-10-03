@@ -22,6 +22,7 @@ class MemoryRecord:
     phase_patch: tuple[float, ...] = ()
     gradient_patch: tuple[float, ...] = ()
     motion: tuple[float, ...] = ()
+    boundary_flux: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -56,6 +57,7 @@ class TemporalMemory:
                 phase_patch=observation.phase_patch,
                 gradient_patch=observation.gradient_patch,
                 motion=observation.motion,
+                boundary_flux=observation.boundary_flux,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
