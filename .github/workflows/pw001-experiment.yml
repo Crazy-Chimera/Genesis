@@ -12,6 +12,7 @@ on:
       - "experiments/pw001_state_delta_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
+# GENESIS-2.13 benchmark pipeline
 jobs:
   experiment:
     runs-on: ubuntu-latest
