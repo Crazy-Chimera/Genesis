@@ -33,12 +33,13 @@ def size_feature(record: MemoryRecord) -> float:
     return float(len(record.cells))
 
 
-def persistence_predict(history: Sequence[MemoryRecord]) -> float:
+def persistence_predict(
+    history: Sequence[MemoryRecord],
+    feature: Feature = coherence_feature,
+) -> float:
     if not history:
         raise ValueError("history must contain at least one record")
-    return float(history[-1].coherence)
-
-
+    return float(feature(history[-1]))
 def linear_history_predict(
     history: Sequence[MemoryRecord],
     feature: Feature = coherence_feature,
@@ -87,7 +88,7 @@ class PredictiveMemory:
             for index in range(1, len(ordered)):
                 target = ordered[index]
                 available = ordered[max(0, index - history_length):index]
-                baseline = persistence_predict(available)
+                baseline = persistence_predict(available, self.feature)
                 prediction = linear_history_predict(available, self.feature)
                 actual = self.feature(target)
                 baseline_errors.append(abs(actual - baseline))
