@@ -97,7 +97,6 @@ class LocalStructureObserver:
         return sorted(clusters, key=lambda c: (-len(c.cells), c.cells))
 
     @staticmethod
-    @staticmethod
     def local_patch(cluster: Cluster, local: np.ndarray, radius: int = 1) -> tuple[float, ...]:
         """Return a small centroid-centered local coherence patch."""
         if radius < 0:
