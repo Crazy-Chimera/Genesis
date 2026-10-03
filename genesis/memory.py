@@ -20,6 +20,7 @@ class MemoryRecord:
     overlap: float
     local_patch: tuple[float, ...] = ()
     phase_patch: tuple[float, ...] = ()
+    gradient_patch: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -52,6 +53,7 @@ class TemporalMemory:
                 overlap=observation.overlap,
                 local_patch=observation.local_patch,
                 phase_patch=observation.phase_patch,
+                gradient_patch=observation.gradient_patch,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
