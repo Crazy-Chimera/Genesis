@@ -33,6 +33,7 @@ class RegionObservation:
     boundary_deformation: tuple[float, ...] = ()
     spatiotemporal_patch: tuple[float, ...] = ()
     spatial_field: tuple[float, ...] = ()
+    multiscale_field: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -326,6 +327,13 @@ class LocalStructureObserver:
         return tuple(values)
 
     @staticmethod
+    def multiscale_field(phase: np.ndarray, cluster: Cluster) -> tuple[float, ...]:
+        """Measure concatenated fixed-orientation radius-1 and radius-2 phase fields."""
+        return LocalStructureObserver.spatial_field(phase, cluster, radius=1) + LocalStructureObserver.spatial_field(
+            phase, cluster, radius=2
+        )
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -464,6 +472,7 @@ class RegionTracker:
                 boundary_deformation=self.observer.boundary_deformation(previous_cluster, cluster, previous_phase, phase),
                 spatiotemporal_patch=self.observer.spatiotemporal_patch(previous_phase, phase, cluster),
                 spatial_field=self.observer.spatial_field(phase, cluster),
+                multiscale_field=self.observer.multiscale_field(phase, cluster),
             ))
         self._previous = current
         self._previous_phase = phase.copy()
