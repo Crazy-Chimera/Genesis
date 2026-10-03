@@ -358,3 +358,38 @@ The remaining result is therefore specifically about representation **and model 
 No predictive output is fed back into GenesisUniverse. GENESIS-1.7c therefore remains an external measurement experiment, not an endogenous learning mechanism.
 
 Reproduction entry point: `experiments/pw001_structural_eval.py` (the `LOCAL_PATCH` probe).
+
+
+## GENESIS-1.7d — nelineární lokální patch
+
+GENESIS-1.7d testuje, zda GENESIS-1.7c selhává pouze proto, že vztah mezi 3×3 lokálním coherence patchem a následující koherencí není lineární. K předchozímu lokálnímu patchi proto přidáváme kvadratické členy všech patchových složek a ridge regularizaci. Vstupem zůstává pouze předchozí lokální patch; coherence history ani aggregate region statistics nejsou použity jako prediktory.
+
+Protokol zůstává shodný s GENESIS-1.6b/1.7c: chronologický 50% holdout, přesně po sobě jdoucí tick a persistence baseline. Součástí je deterministicky zamíchaný lokální patch jako kontrola.
+
+### Clean CI result
+
+Run: PW-001 experiment #16  
+Commit: `f94bbf0d4c7eda89b48f91430a6e73aa4aebde86`
+
+| seed | samples | persistence MAE | nonlinear local MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103931 | 0.000120569452 | 0.024248702709 | 0.079331006662 | -0.024128133256 |
+| 390002 | 93990 | 0.000097287754 | 0.017138120905 | 0.071630001523 | -0.017040833151 |
+| 390003 | 86979 | 0.000107119591 | 0.027937330220 | 0.077322828039 | -0.027830210630 |
+
+Kvadratický lokální model v žádném ze tří seedů nepřekonal persistence baseline. Ve všech případech je jeho MAE řádově vyšší než persistence MAE. Ordered nonlinear patch je současně výrazně lepší než shuffled control, takže lokální patch obsahuje časově strukturovanou informaci, kterou model využívá; tato informace však v testovaném kvadratickém modelu nevysvětluje prediktivní výhodu coherence history z GENESIS-1.6b.
+
+### Interpretation
+
+GENESIS-1.7d zužuje hypotézu z GENESIS-1.7c:
+
+1. lineární ridge model lokálního 3×3 patche nepřekonává persistence;
+2. kvadratické rozšíření stejného 3×3 reprezentace také nepřekonává persistence;
+3. proto samotná nelinearita modelu není v tomto testu dostatečným vysvětlením rozdílu mezi lokálním patchem a coherence-history prediktorem;
+4. hlavní signál z GENESIS-1.6b zůstává v rámci tohoto experimentálního designu nevysvětlen.
+
+Tento výsledek stále neříká, že lokální prostorová informace není relevantní. Testována byla pouze konkrétní centroidově zarovnaná 3×3 coherence reprezentace a konkrétní kvadratický ridge model. Další rozumný krok je proto změna **reprezentace**, nikoli další zvyšování složitosti stejného modelu — například phase-derived local features nebo zachování lokální geometrie bez centroidové komprese.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení. Predikce zůstávají čistě externím měřením a nejsou zpětně vloženy do GenesisUniverse.
+
+Reprodukční vstup: `experiments/pw001_structural_eval.py` (řádek `LOCAL_QUADRATIC`).
