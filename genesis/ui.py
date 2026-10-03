@@ -92,7 +92,9 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>7. Structural probes · 1.7–2.8</div>
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9</div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11</div>
-      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span></div>
+      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span>
+      <div class="stage"><span class="dot"></span>11. Nonlinear model-class control · 2.13</div>
+      <div class="stage"><span class="dot pending"></span>12. Nonlinear state trajectory · 2.14 · <span class="pending">RUNNING</span></div></div>
     </div>
   </div>
 
@@ -116,17 +118,18 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-6">
-    <h2>EVIDENCE · 2.10–2.11</h2>
+    <h2>EVIDENCE · 2.10–2.13</h2>
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
-    <p class="muted">Neither a single state, combined 193D state, nor short state trajectory reconstructs the 2.9 innovation signal under the tested linear protocol.</p>
+    <div class="row"><span>nonlinear current-state · 2.13</span><span class="badge pending">model-class control</span></div>
+    <p class="muted">Neither a single state, combined 193D state, nor short state trajectory reconstructs the 2.9 innovation signal under the tested linear protocol. 2.13 tests whether the linear model class itself is the bottleneck.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT PROBE · GENESIS-2.13</h2>
-    <p><b>Model-class / representation bottleneck diagnostic.</b></p>
-    <p class="muted">Separate whether the 2.12 negative result comes from information loss in the 193D observer representation, the linear ridge model, or both. No new universe rule and no feedback.</p>
+    <h2>RUNNING · GENESIS-2.14</h2>
+    <p><b>Nonlinear state-trajectory control.</b></p>
+    <p class="muted">Same 193D non-coherence state trajectory as 2.12, now passed through a deterministic nonlinear random-feature map before ridge regression. This isolates model-class effects while preserving the same universe, holdout, seeds, and no-feedback invariant. Result is pending.</p>
   </div>
 
   <div class="card span-12">
