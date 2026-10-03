@@ -1,85 +1,58 @@
 # GENESIS-PW-001 — Primordial Emergence Experiment
 
-## Hypothesis
+## Purpose
 
-Test whether persistent relational structures can arise from local oscillator interactions without explicitly defining entities.
+Test whether persistent relational structures can emerge from local oscillator rules without hard-coding entities, language, goals, meaning, or intelligence.
 
-## Fixed universe rules
+## Universe
 
-- 256 oscillators
-- 16×16 periodic lattice
-- random initial phase
-- natural frequency Normal(1.0, 0.05)
-- amplitude 1.0
+The GENESIS universe contains only oscillator state and local interaction rules. The observer is external and measurement-only.
+
+### GENESIS-1.0
+
+- 16x16 periodic lattice = 256 oscillators
+- deterministic seed: 390001
 - local four-neighbour coupling
-- coupling strength 0.01
-- deterministic noise amplitude 0.001
-- seed 390001
+- deterministic noise
 - 100,000 ticks
+- global coherence measurement
 
-## Not encoded
+### GENESIS-1.1
 
-The universe does not contain explicit rules for:
+The external observer adds a local coherence field and connected-region detection.
 
-- entities
-- clusters as semantic objects
-- goals
-- language
-- culture
-- society
-- intelligence
-- meaning
-- self-model
-- Agent Ω
+A detected coherent region is **not an entity**. It is an observer measurement. The universe does not store cluster labels and detection does not modify oscillator phases.
 
-These belong to later observer, memory, prediction, and recursion experiments.
+### GENESIS-1.2
 
-## Observer
+The observer now measures:
 
-The observer measures the state without changing it. The first metric is global phase coherence:
+1. **Persistence** — number of observed frames for which the same region identity is maintained.
+2. **Lifetime** — consecutive observation count for a tracked region.
+3. **Boundary contrast** — difference between coherence inside a region and coherence immediately outside its boundary.
+4. **Identity overlap** — Jaccard overlap between the current and previous cell sets.
 
-Z = | mean(exp(i θ_i)) |
+Region identity is assigned by the observer using spatial overlap only. It is not part of the universe state.
 
-This is a measurement, not a control variable.
+The resulting RegionObservation is still an external measurement record, not an endogenous entity.
 
-## GENESIS-1.1 — External local structure observer
+## Measurement rule
 
-The observer now computes a local coherence field over each cell and its four periodic neighbours. Cells above a configurable threshold are grouped into four-neighbour connected components.
+For regions A and B:
 
-A component is a **detected coherent region**, not an entity. No entity state is written into the universe and detection does not alter oscillator phases.
+J(A,B) = |A intersection B| / |A union B|
 
-The next measurement layer will track component persistence across ticks, lifetime, boundary contrast, and identity overlap. Only after those measurements exist should an entity-candidate criterion be evaluated.
+A current region inherits the previous identity when J(A,B) >= overlap_threshold and that previous identity has not already been assigned in the current frame.
 
-## GENESIS-1.1 — External local structure observer
+New regions receive a new observer-local identity.
 
-The observer now computes a local coherence field over each cell and its four periodic neighbours. Cells above a configurable threshold are grouped into four-neighbour connected components.
+## Non-interference rule
 
-A component is a **detected coherent region**, not an entity. No entity state is written into the universe and detection does not alter oscillator phases.
+GENESIS-1.2 must not:
 
-The next measurement layer will track component persistence across ticks, lifetime, boundary contrast, and identity overlap. Only after those measurements exist should an entity-candidate criterion be evaluated.
+- write identities into GenesisUniverse
+- modify phase, frequency, amplitude, coupling, or noise
+- introduce memory into the universe
+- introduce goals, meaning, language, agency, or self-models
 
-## Evolution path
-
-GENESIS-0 → no coupling
-
-GENESIS-1 → fixed local coupling (PW-001)
-
-GENESIS-2 → adaptive coupling
-
-GENESIS-3 → functional memory
-
-GENESIS-4 → prediction
-
-GENESIS-5 → self-model
-
-GENESIS-6 → recursive self-model
-
-GENESIS-7 → multi-entity interaction
-
-GENESIS-Ω → autonomous computational processes
-
-## Interpretation rule
-
-A successful run is not defined as “Agent Ω appeared”. The experiment is successful if it produces reproducible measurements that distinguish the behavior of the tested rules from the baselines.
-
-If only disorder appears, that is a valid result.
+The next experimental question is whether measured persistence and identity continuity provide a useful empirical basis for a later memory layer.
