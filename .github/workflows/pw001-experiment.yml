@@ -11,6 +11,7 @@ on:
       - "experiments/pw001_state_trajectory.py"
       - "experiments/pw001_state_delta_trajectory.py"
       - "experiments/pw001_nonlinear_state.py"
+      - "experiments/pw001_compressed_state_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -28,6 +29,7 @@ jobs:
       - run: python experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
       - run: python experiments/pw001_state_delta_trajectory.py | tee pw001-state-delta-trajectory.txt
       - run: python experiments/pw001_nonlinear_state.py | tee pw001-nonlinear-state.txt
+      - run: python experiments/pw001_compressed_state_trajectory.py | tee pw001-compressed-state-trajectory.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
@@ -38,3 +40,4 @@ jobs:
             pw001-state-trajectory.txt
             pw001-state-delta-trajectory.txt
             pw001-nonlinear-state.txt
+            pw001-compressed-state-trajectory.txt
