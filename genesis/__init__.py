@@ -13,6 +13,7 @@ from .relational import CrossRegionRelationalPredictor, RelationalEvaluationResu
 from .graph_relational import GraphRelationalPredictor, GraphRelationalEvaluationResult
 from .innovation import InnovationPredictor, InnovationEvaluationResult
 from .state_innovation import StateFeatureSpec, StateInnovationEvaluationResult, StateInnovationPredictor
+from .state_trajectory import StateTrajectoryEvaluationResult, StateTrajectoryPredictor
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -54,5 +55,7 @@ __all__ = [
     "StateFeatureSpec",
     "StateInnovationEvaluationResult",
     "StateInnovationPredictor",
+    "StateTrajectoryEvaluationResult",
+    "StateTrajectoryPredictor",
     "run",
 ]
