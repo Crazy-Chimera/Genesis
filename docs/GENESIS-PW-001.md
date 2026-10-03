@@ -567,6 +567,14 @@ Clean PW-001 experiment #36, commit 10eec0af631b7b0f49f40e22baf92b3e819f85f2, pr
 
 Autoritativní artifact: 11262560049, digest sha256:62d2cb6c4be0005ae1bf254216d73498082b7c293281216d14c5913c25956e29.
 
-Přesné hodnoty jsou uloženy v reprodukčním artifactu; tento experiment potvrzuje běh, testy a generování výsledku. Interpretace se řídí výhradně naměřeným MAE a shuffled kontrolou, nikoli hypotézou.
+| seed | samples | persistence MAE | deformation MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103885 | 0.000120540651 | 0.053672841565 | 0.053675879601 | -0.053552300914 |
+| 390002 | 93951 | 0.000097256523 | 0.051169762144 | 0.051182149632 | -0.051072505621 |
+| 390003 | 86937 | 0.000107100653 | 0.058421959737 | 0.058432728087 | -0.058314859084 |
+
+Boundary deformation nepřekonala persistence v žádném ze tří seedů. Ordered a shuffled výsledky jsou prakticky shodné, takže tento konkrétní sedmiprvkový popis změny hranice neposkytuje důkaz o užitečné časové predikční informaci.
+
+Výsledek tedy nepodporuje hypotézu, že hlavní signál GENESIS-1.6b je vysvětlitelný touto jednoduchou boundary-deformation reprezentací.
 
 Další krok: pokud deformace nepřekoná persistence, je vhodné přestat přidávat další ručně navržené regionální reprezentace a přejít k systematickému rozlišení, zda je 1.6b signál artefaktem měřicího protokolu, nebo skutečně využitelnou krátkodobou predikční strukturou.
