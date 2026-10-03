@@ -4,6 +4,7 @@ from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.local import LocalPatchPredictor
 from genesis.local_nonlinear import NonlinearLocalPatchPredictor
 from genesis.local_phase import PhasePatchPredictor
+from genesis.local_gradient import LocalGradientPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -87,6 +88,19 @@ def main() -> None:
             f"{phase.phase_mae:.15g}",
             f"{phase.shuffled_mae:.15g}",
             f"{phase.improvement:.15g}",
+        )
+
+        gradient = LocalGradientPredictor(
+            train_fraction=0.5, require_consecutive=True, radius=1
+        ).evaluate(records)
+        print(
+            "LOCAL_GRADIENT",
+            seed,
+            gradient.samples,
+            f"{gradient.baseline_mae:.15g}",
+            f"{gradient.gradient_mae:.15g}",
+            f"{gradient.shuffled_mae:.15g}",
+            f"{gradient.improvement:.15g}",
         )
 
 
