@@ -9,6 +9,7 @@ from .memory import MemoryRecord, TemporalMemory
 from .predictor import PredictiveMemory, PredictionResult, linear_history_predict, persistence_predict
 from .structural import StructuralEvaluationResult, StructuralPredictor, structural_features
 from .local import LocalEvaluationResult, LocalPatchPredictor
+from .relational import CrossRegionRelationalPredictor, RelationalEvaluationResult
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -41,5 +42,7 @@ __all__ = [
     "structural_features",
     "LocalEvaluationResult",
     "LocalPatchPredictor",
+    "CrossRegionRelationalPredictor",
+    "RelationalEvaluationResult",
     "run",
 ]
