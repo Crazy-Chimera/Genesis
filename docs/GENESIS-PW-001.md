@@ -42,6 +42,26 @@ The observer adds a lifecycle event stream:
 
 These are observer-level classifications of measured region sets. They are not causal mechanisms inside the universe.
 
+### GENESIS-1.4
+
+An external temporal memory records measured region observations and lifecycle events.
+
+Each memory record contains:
+
+- tick
+- observer identity
+- cells
+- coherence
+- boundary contrast
+- lifetime
+- persistence
+- overlap
+- lifecycle event kinds
+
+TemporalMemory is append-only observer state. It does not write anything into GenesisUniverse, alter oscillator state, or create endogenous memory.
+
+This layer is deliberately descriptive. Recording history does not imply that the universe itself remembers.
+
 ## Measurement rule
 
 For regions A and B:
@@ -54,11 +74,11 @@ Lifecycle events are then derived from the overlap graph between consecutive obs
 
 ## Non-interference rule
 
-GENESIS-1.3 must not:
+GENESIS-1.4 must not:
 
-- write identities or lifecycle events into GenesisUniverse
+- write identities, lifecycle events, or memory records into GenesisUniverse
 - modify phase, frequency, amplitude, coupling, or noise
 - introduce endogenous memory
 - introduce goals, meaning, language, agency, or self-models
 
-The next experimental question is whether lifecycle traces provide a useful substrate for an external memory layer and later predictive measurements.
+The next experimental question is predictive value: whether the temporal trace contains information about a future region state beyond a suitable baseline.
