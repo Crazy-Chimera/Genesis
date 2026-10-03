@@ -34,7 +34,7 @@ class RegionObservation:
     spatiotemporal_patch: tuple[float, ...] = ()
     spatial_field: tuple[float, ...] = ()
     multiscale_field: tuple[float, ...] = ()
-    multiscale_field: tuple[float, ...] = ()
+    relational: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -358,6 +358,70 @@ class LocalStructureObserver:
         return tuple(values)
 
     @staticmethod
+    def relational_features(
+        target: Cluster,
+        peers: list[Cluster],
+        phase: np.ndarray,
+        local: np.ndarray,
+        max_peers: int = 2,
+    ) -> tuple[float, ...]:
+        """Measure deterministic cross-region relations; coherence itself is excluded."""
+        if max_peers < 1:
+            raise ValueError("max_peers must be >= 1")
+        if not target.cells:
+            return (0.0,) * (max_peers * 7 + max_peers)
+        rows, cols = phase.shape
+
+        def centroid(cluster: Cluster) -> tuple[float, float]:
+            return (
+                sum(r for r, _ in cluster.cells) / len(cluster.cells),
+                sum(c for _, c in cluster.cells) / len(cluster.cells),
+            )
+
+        def mean_phase(cluster: Cluster) -> float:
+            z = np.mean(np.exp(1j * np.asarray([phase[r, c] for r, c in cluster.cells])))
+            return float(np.angle(z))
+
+        tr, tc = centroid(target)
+        tp = mean_phase(target)
+        candidates = []
+        for peer in peers:
+            if peer is target:
+                continue
+            pr, pc = centroid(peer)
+            dr = pr - tr
+            dc = pc - tc
+            dr -= round(dr / rows) * rows
+            dc -= round(dc / cols) * cols
+            distance = float(np.hypot(dr / rows, dc / cols))
+            candidates.append((distance, tuple(peer.cells), peer, dr, dc))
+        candidates.sort(key=lambda item: (item[0], item[1]))
+
+        values: list[float] = []
+        target_boundary = LocalStructureObserver.boundary_contrast(target, local)
+        for index in range(max_peers):
+            if index >= len(candidates):
+                values.extend((0.0,) * 7)
+                values.append(0.0)
+                continue
+            distance, _, peer, dr, dc = candidates[index]
+            phase_delta = mean_phase(peer) - tp
+            phase_delta = float(np.angle(np.exp(1j * phase_delta)))
+            size_ratio = np.log((len(peer.cells) + 1.0) / (len(target.cells) + 1.0))
+            boundary_delta = LocalStructureObserver.boundary_contrast(peer, local) - target_boundary
+            values.extend((
+                float(dr / rows),
+                float(dc / cols),
+                float(np.sin(phase_delta)),
+                float(np.cos(phase_delta)),
+                float(size_ratio),
+                float(boundary_delta),
+                distance,
+            ))
+            values.append(1.0)
+        return tuple(values)
+
+    @staticmethod
     def boundary_contrast(cluster: Cluster, local: np.ndarray) -> float:
         """Measure inside-vs-outside coherence across the region boundary."""
         cells = set(cluster.cells)
@@ -472,6 +536,7 @@ class RegionTracker:
         observations = []
         current: dict[int, Cluster] = {}
         previous_phase = getattr(self, "_previous_phase", None)
+        assigned_clusters = [cluster for _, cluster, _ in assignments]
         for identity, cluster, overlap in assignments:
             lifetime = self._lifetimes.get(identity, 0) + 1
             persistence = self._persistence.get(identity, 0) + 1
@@ -497,6 +562,7 @@ class RegionTracker:
                 spatiotemporal_patch=self.observer.spatiotemporal_patch(previous_phase, phase, cluster),
                 spatial_field=self.observer.spatial_field(phase, cluster),
                 multiscale_field=self.observer.multiscale_field(phase, cluster),
+                relational=self.observer.relational_features(cluster, assigned_clusters, phase, local),
             ))
         self._previous = current
         self._previous_phase = phase.copy()
