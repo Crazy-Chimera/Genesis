@@ -1037,3 +1037,58 @@ GENESIS-2.9 ukázal reprodukovatelnou predikovatelnost změny koherence z její 
 Další experimentální krok proto bude systematická multi-state innovation reconstruction: kombinovat několik aktuálních stavových reprezentací současně, ale stále bez coherence jako vstupu, a ověřit, zda kombinace nese inovační informaci, kterou jednotlivé reprezentace samostatně neodhalily.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.11 — Combined-state innovation probe
+
+GENESIS-2.11 testuje, zda lze inovační predikční signál z GENESIS-2.9 rekonstruovat kombinací všech deseti aktuálních non-coherence observer-state reprezentací současně.
+
+K jednotlivým reprezentacím z GENESIS-2.10 byla přidána jedna deterministicky konkatenovaná reprezentace:
+
+- structure
+- local_patch
+- phase_patch
+- gradient_patch
+- motion
+- boundary_flux
+- spatial_field
+- multiscale_field
+- relational
+- graph_relational
+
+Výsledný combined state má 193 dimenzí. Coherence ani její historie nejsou vstupem. Cílem zůstává predikce následující změny coherence. Použit je stejný chronological 50% holdout, exact-consecutive-tick protokol, zero-change baseline a deterministický shuffled control.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #73  
+Commit: 57c48a5ddc7da96581955c433c5de6f83f2345f4  
+Artifact: 11269496932  
+Artifact digest: sha256:9358810bfc213404c9c5b0645e6c92144242ca359d25c183536c538aeeca820a
+
+| seed | samples | zero-change MAE | combined-state MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103885 | 0.000120540651 | 0.000198448891 | 0.000223187402 | -0.000077908240 |
+| 390002 | 93951 | 0.000097256523 | 0.000209481110 | 0.000221890187 | -0.000112224588 |
+| 390003 | 86937 | 0.000107100653 | 0.000200379299 | 0.000229214496 | -0.000093278645 |
+
+### Interpretation
+
+Kombinace všech deseti současných observer-state reprezentací nepřekonala zero-change baseline v žádném ze tří seedů. Naopak její MAE byla ve všech případech výrazně vyšší než baseline.
+
+Shuffled control má v každém seedu ještě vyšší MAE než ordered combined-state model. To ukazuje, že kombinovaná reprezentace obsahuje určitou strukturu využitelnou testovaným modelem, ale tato struktura nestačí k rekonstrukci inovačního signálu z GENESIS-2.9.
+
+Výsledek proto zpřesňuje stav hypotézy:
+
+1. GENESIS-2.9 stále poskytuje reprodukovatelný důkaz krátkodobé predikovatelnosti coherence innovation z její vlastní historie.
+2. GENESIS-2.10 neukázal robustní rekonstrukci z žádné jednotlivé non-coherence reprezentace.
+3. GENESIS-2.11 nyní ukazuje, že ani jednoduchá kombinace všech deseti aktuálních reprezentací tento signál v testovaném lineárním modelu nereprodukuje.
+
+Negativní výsledek není důkazem, že inovační informace není přítomna v underlying state. Testujeme konkrétní 193D reprezentaci, lineární ridge model a one-frame anchoring. Stále jsou otevřené zejména časová trajektorie stavu, nelineární kombinace a jiné latentní reprezentace.
+
+### Stav hypotézy po 2.11
+
+Současná evidence tedy odděluje predikovatelnost od zdroje predikovatelnosti. Umíme reprodukovatelně předpovídat část následující změny coherence z její vlastní historie, ale zatím jsme neidentifikovali aktuální non-coherence observer-state reprezentaci, která by tento signál robustně rekonstruovala.
+
+Další nejčistší experimentální krok je proto GENESIS-2.12 — State-Trajectory Innovation Probe: místo jediného aktuálního state použít krátkou sekvenci několika po sobě jdoucích non-coherence state vektorů a z ní predikovat další coherence innovation, stále bez coherence jako vstupu. Tím se přímo otestuje hypotéza, že informace není ve snapshotu, ale v pohybu/trajectory samotného stavu.
+
+Ani tento výsledek neposkytuje důkaz inteligence, agentivity, self-modelu nebo endogenního učení.
