@@ -18,6 +18,7 @@ class MemoryRecord:
     lifetime: int
     persistence: int
     overlap: float
+    local_patch: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -48,6 +49,7 @@ class TemporalMemory:
                 lifetime=observation.lifetime,
                 persistence=observation.persistence,
                 overlap=observation.overlap,
+                local_patch=observation.local_patch,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
