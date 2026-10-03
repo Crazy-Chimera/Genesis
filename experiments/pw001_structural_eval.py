@@ -12,6 +12,7 @@ from genesis.spatiotemporal import SpatiotemporalPredictor
 from genesis.spatial_field import SpatialFieldPredictor
 from genesis.multiscale import MultiscaleFieldPredictor
 from genesis.trajectory import LocalTrajectoryPredictor
+from genesis.relational import CrossRegionRelationalPredictor
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.structural import StructuralPredictor
@@ -199,6 +200,19 @@ def main() -> None:
             f"{trajectory.trajectory_mae:.15g}",
             f"{trajectory.shuffled_mae:.15g}",
             f"{trajectory.improvement:.15g}",
+        )
+
+        relational = CrossRegionRelationalPredictor(
+            max_peers=2, train_fraction=0.5, require_consecutive=True
+        ).evaluate(records)
+        print(
+            "CROSS_REGION_RELATIONAL",
+            seed,
+            relational.samples,
+            f"{relational.baseline_mae:.15g}",
+            f"{relational.relational_mae:.15g}",
+            f"{relational.shuffled_mae:.15g}",
+            f"{relational.improvement:.15g}",
         )
 
 
