@@ -18,9 +18,11 @@ def record(tick: int, coherence: float, x: float) -> MemoryRecord:
 
 
 def test_nonlinear_predictor_beats_baseline_on_quadratic_relation():
+    # At tick t the local patch is x=t and the next coherence is a
+    # quadratic function of the previous patch: f(x) = 0.2 + 0.00005*(x+1)^2.
     records = [
-        record(t, 0.2 + 0.05 * ((t - 1) % 7) ** 2, float((t - 1) % 7))
-        for t in range(1, 81)
+        record(t, 0.2 + 0.00005 * t**2, float(t))
+        for t in range(81)
     ]
     result = NonlinearLocalPatchPredictor().evaluate(records)
     assert result.samples > 0
