@@ -756,3 +756,25 @@ Víceškálové pole nepřekonalo persistence v žádném ze tří seedů. Order
 Výsledek společně s 2.4 ukazuje, že jednoduché pevně orientované lokální phase fields — ani na jedné, ani na dvou prostorových škálách — nevysvětlují hlavní prediktivní výhodu coherence history.
 
 Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
+
+
+## GENESIS-2.6 — Lokální trajektorie
+
+GENESIS-2.6 testuje historii tří po sobě jdoucích lokálních pevně orientovaných 3×3 phase fields. Do predictoru vstupuje prostorový stav z posledních tří rámců; coherence history není součástí vstupu. Tím se testuje, zda by časová informace mohla být rozložena v krátké lokální trajektorii místo v agregované historii coherence.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #54  
+Commit: 911966f05a4158f4759b907a25a24d91f0d8c52c
+
+| seed | samples | persistence MAE | trajectory MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103839 | 0.000120511918 | 0.095598945712 | 0.095445144645 | -0.095478433794 |
+| 390002 | 93912 | 0.000097225676 | 0.064810652413 | 0.064627208559 | -0.064713426737 |
+| 390003 | 86895 | 0.000107081618 | 0.058564593123 | 0.058571464367 | -0.058457511506 |
+
+Lokální trajektorie nepřekonala persistence v žádném ze tří seedů. Ordered a shuffled výsledky jsou prakticky shodné. Krátká lokální trajectory reprezentace proto v tomto protokolu neposkytuje vysvětlení hlavního coherence-history signálu.
+
+Výsledek také naznačuje, že pouhé prodloužení lokálního receptive field v čase není dostačující. Další krok by měl testovat jiný typ časového vztahu, nikoli pouze concatenation několika statických patchů.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
