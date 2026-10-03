@@ -578,3 +578,33 @@ Boundary deformation nepřekonala persistence v žádném ze tří seedů. Order
 Výsledek tedy nepodporuje hypotézu, že hlavní signál GENESIS-1.6b je vysvětlitelný touto jednoduchou boundary-deformation reprezentací.
 
 Další krok: pokud deformace nepřekoná persistence, je vhodné přestat přidávat další ručně navržené regionální reprezentace a přejít k systematickému rozlišení, zda je 1.6b signál artefaktem měřicího protokolu, nebo skutečně využitelnou krátkodobou predikční strukturou.
+
+
+## GENESIS-2.2 — Boundary Deformation
+
+GENESIS-2.2 měří změnu hranice mezi dvěma po sobě jdoucími rámci. Reprezentace obsahuje změnu horizontálního a vertikálního phase fluxu, změnu absolutního fluxu, změnu počtu hraničních hran, změnu hustoty hranice a velikost/sazbu symetrického rozdílu regionů.
+
+### Clean PW-001 result
+
+Run: PW-001 experiment #36  
+Commit: 10eec0af631b7b0f49f40e22baf92b3e819f85f2
+
+| seed | samples | persistence MAE | deformation MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 103885 | 0.000120540651 | 0.053672841565 | 0.053675879601 | -0.053552300913 |
+| 390002 | 93951 | 0.000097256523 | 0.051169762144 | 0.051182149632 | -0.051072505622 |
+| 390003 | 86937 | 0.000107100653 | 0.058421959737 | 0.058432728086 | -0.058314859085 |
+
+Boundary deformation nepřekonala persistence v žádném ze tří seedů. Ordered a shuffled reprezentace jsou prakticky stejné, takže tento konkrétní popis změny hranice neposkytl přesvědčivý důkaz využitelné časové prediktivní informace.
+
+Robustnost základního coherence-history prediktoru zůstává zachována: ve všech 12 kombinacích seed × history length (2, 3, 5, 10) překonává lineární history model persistence, mean-history i shuffled control.
+
+### Interpretation
+
+2.2 tedy neposkytuje podporu hypotéze, že hlavní prediktivní signál GENESIS-1.6b vzniká z jednoduché lokální deformace pozorovaných regionálních hranic.
+
+V kombinaci s 2.1 vzniká přesnější rozlišení: samotná boundary flux reprezentace obsahovala časově uspořádanou informaci, ale její změna mezi rámci tuto vlastnost v testovaném modelu nezachovává.
+
+Další experiment by měl opustit další ručně agregované regionální atributy a testovat přímo **prostorově-temporální lokální stavovou reprezentaci**, přičemž je nutné zachovat stejné časové holdouty, shuffled control a observer-only invariantu.
+
+Výsledek neposkytuje důkaz inteligence, agentivity, self-modelu ani endogenního učení.
