@@ -1,13 +1,13 @@
-"""GENESIS: minimal experimental universe for emergent structure."""
-
-from .core import GenesisConfig, GenesisUniverse, GenesisObserver, run
-from .observer import Cluster, LocalStructureObserver
+from .core import GenesisConfig, GenesisObserver, GenesisUniverse, run
+from .observer import Cluster, LocalStructureObserver, RegionObservation, RegionTracker
 
 __all__ = [
     "Cluster",
     "GenesisConfig",
-    "GenesisUniverse",
     "GenesisObserver",
+    "GenesisUniverse",
     "LocalStructureObserver",
+    "RegionObservation",
+    "RegionTracker",
     "run",
 ]
