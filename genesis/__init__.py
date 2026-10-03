@@ -1,5 +1,10 @@
 from .core import GenesisConfig, GenesisObserver, GenesisUniverse, run
-from .evaluation import EvaluationResult, PredictiveEvaluator, shuffled_history_predict
+from .evaluation import (
+    EvaluationResult,
+    PredictiveEvaluator,
+    mean_history_predict,
+    shuffled_history_predict,
+)
 from .memory import MemoryRecord, TemporalMemory
 from .predictor import PredictiveMemory, PredictionResult, linear_history_predict, persistence_predict
 from .observer import (
@@ -26,6 +31,7 @@ __all__ = [
     "PredictiveMemory",
     "PredictionResult",
     "linear_history_predict",
+    "mean_history_predict",
     "persistence_predict",
     "shuffled_history_predict",
     "run",
