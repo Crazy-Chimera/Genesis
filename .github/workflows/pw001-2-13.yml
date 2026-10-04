@@ -1,0 +1,26 @@
+name: GENESIS 2.13 experiment
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/state_delta_trajectory.py"
+      - "experiments/pw001_state_delta_trajectory.py"
+      - "tests/test_state_delta_trajectory.py"
+      - ".github/workflows/pw001-2-13.yml"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: pytest -q tests/test_state_delta_trajectory.py
+      - run: python experiments/pw001_state_delta_trajectory.py | tee genesis-2.13-state-delta.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.13-state-delta
+          path: genesis-2.13-state-delta.txt
