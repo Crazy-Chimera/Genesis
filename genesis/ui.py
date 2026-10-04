@@ -93,14 +93,14 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9 · <span class="muted">12/12 positive</span></div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11 · <span class="muted">not robust</span></div>
       <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">7/54 zero-change wins</span></div>\n      <div class="stage"><span class="dot"></span>19. Leave-one-seed-out generalization · 2.21 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>20. Seed-invariant generalization · 2.22 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot pending"></span>21. Expanded cross-seed screening · 2.23 · <span class="muted">verification pending</span></div>
+      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">0/12 positive</span></div>
+      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">0/12 positive</span></div>
+      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening only</span></div>
+      <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
+      <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 positive; no shuffled win</span></div>
+      <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">0/12 positive</span></div>
+      <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
+      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">negative; 7/54 zero-change wins</span></div>\n      <div class="stage"><span class="dot"></span>19. Leave-one-seed-out generalization · 2.21 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>20. Seed-invariant generalization · 2.22 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot pending"></span>21. Expanded cross-seed generalization · 2.23 · <span class="muted">verification pending</span></div>
     </div>
   </div>
 
@@ -141,8 +141,8 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 
   <div class="card span-12">
     <h2>NEXT · GENESIS-2.23</h2>
-    <p><b>Expanded cross-seed screening is defined; verification is pending.</b></p>
-    <p class="muted">Six seeds (390001–390006), leave-one-seed-out training, histories 2/3/5, 500 ticks per seed, exact consecutive ticks, zero-change baseline and shuffled control. Positive evidence requires every tested case to beat both controls.</p>
+    <p><b>Expanded cross-seed generalization is defined; verification is pending.</b></p>
+    <p class="muted">Six seeds (390001–390006), leave-one-seed-out training, histories 2/3/5, 500 ticks per seed, exact consecutive ticks, zero-change baseline and shuffled control. Positive evidence requires every tested case to beat both controls. Positive evidence requires every tested case to beat both controls.</p>
   </div>
 
   <div class="card span-12">
