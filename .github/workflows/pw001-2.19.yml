@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install .
+      - run: pip install . pytest
       - run: pytest -q tests/test_population_compressed_trajectory.py
       - run: python experiments/pw001_population_compressed_trajectory.py | tee pw001-2.19.txt
       - uses: actions/upload-artifact@v4
