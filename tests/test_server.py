@@ -24,7 +24,7 @@ def test_dashboard_contains_genesis_pw001():
     assert "Nonlinear state trajectory · 2.14" in html
     assert "Cross-seed representation transfer · 2.20" in html
     assert "7/54 positive" in html
-    assert 'data-ui-version="2.21"' in html
+    assert 'data-ui-version="2.22"' in html
     assert "state trajectory" in html.lower()
     assert "No self-model" in html
     assert "/step" in html
