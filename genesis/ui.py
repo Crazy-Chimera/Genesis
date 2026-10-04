@@ -92,7 +92,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>7. Structural probes · 1.7–2.8</div>
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9</div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11</div>
-      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span></div>
+      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · NOT CONFIRMED · <span class="muted">negative vs zero baseline</span></div>
       <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">12/12 below zero baseline</span></div>
       <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">12/12 below zero baseline</span></div>
       <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening positive, not robust</span></div>
@@ -145,7 +145,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> No AGI claim</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.12 negative result recorded</div>
     </div>
   </div>
 
