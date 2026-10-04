@@ -6,7 +6,7 @@ from typing import Iterable
 import numpy as np
 
 from .memory import MemoryRecord
-from .state_innovation import combined_state
+from .state_innovation import combined_state, STATE_FEATURES_WITH_COMBINED
 
 
 @dataclass(frozen=True)
@@ -38,6 +38,7 @@ def _windows(records: Iterable[MemoryRecord], history_length: int):
     for item in records:
         groups.setdefault(item.identity, []).append(item)
 
+    expected_width = next(spec.width for spec in STATE_FEATURES_WITH_COMBINED if spec.name == "combined")
     rows = []
     for items in groups.values():
         items.sort(key=lambda x: x.tick)
@@ -47,9 +48,12 @@ def _windows(records: Iterable[MemoryRecord], history_length: int):
             ticks = [x.tick for x in window] + [target.tick]
             if any(ticks[j + 1] != ticks[j] + 1 for j in range(len(ticks) - 1)):
                 continue
+            states = [np.asarray(combined_state(x), dtype=float) for x in window]
+            if any(state.ndim != 1 or state.size != expected_width for state in states):
+                continue
             rows.append((
                 target.tick,
-                [np.asarray(combined_state(x), dtype=float) for x in window],
+                states,
                 target.coherence - window[-1].coherence,
             ))
     return sorted(rows, key=lambda x: x[0])
