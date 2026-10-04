@@ -1416,3 +1416,51 @@ The population representation bottleneck hypothesis is not supported by this scr
 The evidence now favors testing **representation transfer/stability across seeds** rather than continuing to increase model complexity or representation dimensionality. GENESIS-2.16 produced a seed-dependent positive compressed result, while 2.18 and 2.19 did not reproduce a robust population-level effect. A clean next probe is therefore to learn an observer representation on one seed and evaluate the same representation on a different seed without refitting it to the target seed.
 
 All experiments remain measurement-only. No prediction is fed back into `GenesisUniverse`; there are no goals, rewards, agency, self-model, or endogenous learning.
+
+
+
+## GENESIS-2.20 — Cross-Seed Representation Transfer
+
+GENESIS-2.20 tests whether an observer representation that is fit on one seed transfers to a different seed without refitting. The purpose is to distinguish a stable representation of the observer process from seed-specific statistical structure.
+
+The benchmark uses seeds 390001, 390002, and 390003 as source/target pairs, PCA dimensions 2, 4, and 8, history lengths 2, 3, and 5, 2,000 ticks per seed, chronological holdout, exact-consecutive ticks, zero-change baseline, and deterministic shuffled control.
+
+The representation is learned on the source seed and evaluated on the target seed. Coherence history is excluded from the transferred representation. The benchmark is fail-closed: the positive decision requires every tested transfer case to beat both the zero-change and shuffled controls.
+
+### Verified result
+
+Run: PW-001 GENESIS-2.20 representation transfer #4  
+Commit: `570438706a710220603a285fcad6afbf15e6cbdd`  
+Artifact: `11302665361`  
+Artifact digest: `sha256:55a8c6cf66e179ef741c184b50cea67795b43e8ebc393306aacbecc825186fc2`
+
+Across **54 source→target × PCA-dimension × history combinations**:
+
+- **7/54** beat the zero-change baseline.
+- **24/54** beat the shuffled control.
+- Mean zero-change MAE: **0.0001015994953**
+- Mean transfer MAE: **0.0001061349863**
+- Mean shuffled MAE: **0.0001061069052**
+- Mean improvement: **−0.0000045354910**
+- Decision: **negative**
+
+The strongest isolated positive transfer case was seed 390003 → 390001 with PCA dimension 4, where histories 2, 3, and 5 all beat zero-change. However, this effect does not transfer consistently across source/target pairs, dimensions, and histories.
+
+### Interpretation
+
+GENESIS-2.20 does **not** establish a seed-stable predictive representation. The cross-seed transfer benchmark therefore rejects the hypothesis under the stated fail-closed criterion.
+
+The result is important because it distinguishes **within-seed predictive structure** from **cross-seed representation stability**. Earlier experiments produced isolated seed-dependent positive cases, but GENESIS-2.20 shows that these cases do not form a robust representation that can be learned on one seed and reused on another without refitting.
+
+The negative result does not establish that no stable representation exists. It establishes only that the tested PCA-based representation transfer protocol did not recover one.
+
+### Research frontier after 2.20
+
+The evidence now supports a methodological pivot rather than further unconstrained model expansion:
+
+1. preserve the measurement-only universe and observer invariants;
+2. treat seed-specific positive cases as hypotheses, not mechanisms;
+3. require cross-seed transfer or another explicit stability criterion for a representation to be considered robust;
+4. avoid promoting isolated in-sample or single-seed improvements into claims about the underlying process.
+
+No prediction is fed back into `GenesisUniverse` or `TemporalMemory`. No goals, rewards, agency, self-model, or endogenous learning are introduced.
