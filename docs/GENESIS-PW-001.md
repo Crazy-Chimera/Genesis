@@ -1272,3 +1272,54 @@ The evidence now separates the observations more sharply:
 The next methodological question is therefore not whether to keep increasing model complexity. A cleaner next probe is a **representation bottleneck**: reduce the observer state to a deterministic low-dimensional representation before prediction and test whether the predictive signal is being obscured by the 193D regional aggregation.
 
 The experiment remains measurement-only. No predictive output is returned to GenesisUniverse; there are no goals, rewards, agency, self-model, or endogenous learning.
+
+
+## GENESIS-2.15 — Representation-Bottleneck Screening
+
+GENESIS-2.15 tested whether the 193D observer-state representation obscures predictive information when reduced to a deterministic low-dimensional PCA representation before trajectory prediction.
+
+The screening used 2,000 ticks per seed, a 50% chronological holdout, exact-consecutive ticks, zero-change baseline, deterministic shuffled control, seeds 390001, 390002, 390003, PCA dimensions 2, 4, 8, 16, and history lengths 2, 3, 5.
+
+The only screening-positive family was **seed 390001 at 2 PCA components**, where all three tested history lengths beat zero-change by approximately 5.64–5.72e-6. No 2D case for seeds 390002 or 390003 beat zero-change, and no higher-dimensional representation produced a positive result for those seeds.
+
+This was therefore an **isolated screening result**, not evidence of robust predictive structure. The purpose of GENESIS-2.15 was to identify a candidate representation for full-length validation, not to establish a cross-seed effect.
+
+## GENESIS-2.16 — Full-Length Dim-2 Validation
+
+GENESIS-2.16 reran the exact 2-component PCA representation identified in the GENESIS-2.15 screening over the full 10,000-tick PW-001 trajectory for all three seeds.
+
+Protocol:
+- PCA dimension: 2
+- history lengths: 2, 3, 5
+- 50% chronological holdout
+- exact-consecutive ticks
+- zero-change baseline
+- deterministic shuffled control
+- coherence excluded from predictor inputs
+- no feedback into GenesisUniverse
+
+### Verified result
+
+| seed | history | zero-change MAE | dim-2 MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 2 | 0.000120511918 | 0.000137423503 | 0.000159705043 | -0.000016911585 |
+| 390001 | 3 | 0.000120482970 | 0.000137423177 | 0.000159742130 | -0.000016940206 |
+| 390001 | 5 | 0.000120425430 | 0.000137422135 | 0.000159620684 | -0.000016996706 |
+| 390002 | 2 | 0.000097225676 | 0.000108757849 | 0.000127585207 | -0.000011532173 |
+| 390002 | 3 | 0.000097194133 | 0.000108737626 | 0.000127583202 | -0.000011543493 |
+| 390002 | 5 | 0.000097131766 | 0.000108695514 | 0.000127481666 | -0.000011563748 |
+| 390003 | 2 | 0.000107081617 | 0.000095877190 | 0.000115028641 | +0.000011204427 |
+| 390003 | 3 | 0.000107062338 | 0.000097416391 | 0.000116628263 | +0.000009645948 |
+| 390003 | 5 | 0.000107023787 | 0.000097420185 | 0.000116602284 | +0.000009603603 |
+
+The full-length validation therefore produced a positive result for **1 of 3 seeds**. Seed 390003 beat the zero-change baseline at all three tested history lengths, while seeds 390001 and 390002 did not.
+
+The dim-2 representation also beat the shuffled control in all 9 combinations. This indicates that the ordered compressed trajectory contains measurable structure, but the cross-seed failure prevents treating it as a robust predictive mechanism.
+
+### Interpretation
+
+GENESIS-2.16 does not validate the GENESIS-2.15 screening candidate as a robust cross-seed effect. The result is best classified as **seed-dependent predictive structure requiring further investigation**.
+
+The important methodological consequence is that model complexity should not be increased merely to force a positive result. The next experiment should instead test representation stability, cross-seed generalization, or whether the compressed coordinates correspond to a stable observer property rather than a seed-specific statistical configuration.
+
+The experiment remains measurement-only. No prediction is fed back into GenesisUniverse, and no goals, rewards, agency, self-model, or endogenous learning are introduced.
