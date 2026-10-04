@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import numpy as np
+
 from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.rule_native import RuleNativePredictor, rule_native_features
 
@@ -13,7 +15,7 @@ def collect(seed: int):
     previous = None
     for _ in range(TICKS + 1):
         features = rule_native_features(u.phase, u.omega)
-        coherence = float(abs((__import__("numpy").mean(__import__("numpy").exp(1j * u.phase)))))
+        coherence = float(abs(np.mean(np.exp(1j * u.phase))))
         if previous is not None:
             rows.append((features, coherence - previous))
         previous = coherence
