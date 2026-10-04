@@ -7,7 +7,7 @@ from genesis.state_innovation import STATE_FEATURES
 from genesis.state_trajectory import StateTrajectoryPredictor
 
 
-def collect(seed: int, ticks: int = 10_000):
+def collect(seed: int, ticks: int = 2_000):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     observer = LocalStructureObserver()
     tracker = RegionTracker(observer)
