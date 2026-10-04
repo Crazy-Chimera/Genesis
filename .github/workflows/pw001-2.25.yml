@@ -1,0 +1,26 @@
+name: PW-001 GENESIS-2.25 rule-update screening
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/rule_update.py"
+      - "experiments/pw001_rule_update.py"
+      - "tests/test_rule_update.py"
+      - ".github/workflows/pw001-2.25.yml"
+
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: pytest -q tests/test_rule_update.py
+      - run: python experiments/pw001_rule_update.py | tee pw001-2.25-rule-update.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-2.25-rule-update
+          path: pw001-2.25-rule-update.txt
