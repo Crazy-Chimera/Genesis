@@ -77,10 +77,15 @@ class StateTrajectoryPredictor:
         tx, ty, vx, vy = [], [], [], []
         for items in groups.values():
             items.sort(key=lambda x: x.tick)
-            for i in range(self.history_length, len(items)):
+            start = self.history_length + 1 if self.differences else self.history_length
+            for i in range(start, len(items)):
                 window = items[i - self.history_length:i]
                 target = items[i]
-                ticks = [x.tick for x in window] + [target.tick]
+                source_window = (
+                    items[i - self.history_length - 1:i]
+                    if self.differences else window
+                )
+                ticks = [x.tick for x in source_window] + [target.tick]
                 if self.require_consecutive and any(
                     ticks[j + 1] != ticks[j] + 1 for j in range(len(ticks) - 1)
                 ):
@@ -88,13 +93,13 @@ class StateTrajectoryPredictor:
 
                 vectors = [
                     np.asarray(tuple(float(v) for v in self.spec.feature(x)), dtype=float)
-                    for x in window
+                    for x in source_window
                 ]
                 if any(len(v) != self.spec.width for v in vectors):
                     continue
 
                 if self.differences:
-                    vectors = [vectors[j + 1] - vectors[j] for j in range(len(vectors) - 1)]
+                    vectors = [vectors[j + 1] - vectors[j] for j in range(self.history_length)]
 
                 row = tuple(float(v) for vector in vectors for v in vector)
                 delta = target.coherence - window[-1].coherence
