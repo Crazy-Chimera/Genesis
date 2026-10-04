@@ -99,18 +99,19 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
       <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 positive; no shuffled win</span></div>
       <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot pending"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
+      <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
+      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">7/54 positive</span></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.19</h2>
-    <p><b>Population representation bottleneck is complete.</b></p>
+    <h2>RESULT · GENESIS-2.20</h2>
+    <p><b>Cross-seed representation transfer is complete.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">population-state trajectory → PCA(2/4/8)</span><br><span class="muted">deterministic low-dimensional observer representation</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/24 combinations beat zero-change</span></div>
-      <div class="card span-6"><h2>TARGET</h2><span>next population-mean coherence innovation</span></div>
-      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory · PCA dimensions 2/4/8</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">source-seed representation → target-seed transfer</span><br><span class="muted">PCA(2/4/8) without refitting on the target seed</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">7/54 beat zero-change · 24/54 beat shuffled</span></div>
+      <div class="card span-6"><h2>TARGET</h2><span>target-seed coherence innovation</span></div>
+      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled transfer · PCA dimensions 2/4/8</span></div>
     </div>
   </div>
 
@@ -134,13 +135,14 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>population-state innovation · 2.17</span><span class="badge pending">1/3 positive; no shuffled win</span></div>
     <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
-    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. The strongest exceptions remain seed-dependent: 2.15 produced a screening candidate, 2.16 validated it for only seed 390003, and 2.17 produced a tiny seed-specific improvement that did not beat shuffled. These are not robust mechanisms.</p>
+    <div class="row"><span>cross-seed transfer · 2.20</span><span class="badge pending">7/54 positive</span></div>
+    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. GENESIS-2.20 adds the stronger cross-seed test: 7/54 transfer cases beat zero-change, so the representation is not stable enough under the fail-closed criterion.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · REPRESENTATION TRANSFER / STABILITY</h2>
-    <p><b>Test whether an observer representation learned or fitted on one seed transfers to another seed without refitting.</b></p>
-    <p class="muted">The next clean question follows directly from 2.16 and 2.19: distinguish seed-specific statistical structure from a stable representation of the underlying observer process. Preserve chronological holdout, exact-consecutive ticks, zero-change and shuffled controls, and keep all prediction external to GenesisUniverse.</p>
+    <h2>NEXT · POST-2.20 FRONTIER</h2>
+    <p><b>Cross-seed transfer did not establish a stable representation.</b></p>
+    <p class="muted">The next research step should preserve the fail-closed stability criterion and investigate representation invariants rather than increasing model complexity solely to obtain positive in-seed scores.</p>
   </div>
 
   <div class="card span-12">
@@ -153,7 +155,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.19 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.20 results recorded</div>
     </div>
   </div>
 
