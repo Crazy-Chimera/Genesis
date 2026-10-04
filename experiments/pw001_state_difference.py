@@ -8,7 +8,7 @@ from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.state_trajectory import StateTrajectoryPredictor
 
 
-def collect(seed: int, ticks: int = 10_000):
+def collect(seed: int, ticks: int = 2_000):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     observer = LocalStructureObserver()
     tracker = RegionTracker(observer)
@@ -28,12 +28,13 @@ def collect(seed: int, ticks: int = 10_000):
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--ticks", type=int, default=2_000)
     args = parser.parse_args()
 
-    print("GENESIS-2.13 state-difference trajectory benchmark")
+    print(f"GENESIS-2.13 state-difference trajectory screening; ticks={args.ticks}")
     seeds = (args.seed,) if args.seed is not None else (390001, 390002, 390003)
     for seed in seeds:
-        records = collect(seed)
+        records = collect(seed, ticks=args.ticks)
         print(
             f"seed={seed} records={len(records)} "
             f"identities={len({r.identity for r in records})}"
