@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.12">
+<main data-ui-version="2.23">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -100,7 +100,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">not run</span></div>
       <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">not run</span></div>
       <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">not run</span></div>
-      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">7/54 zero-change wins</span></div>\n      <div class="stage"><span class="dot"></span>19. Leave-one-seed-out generalization · 2.21 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>20. Seed-invariant generalization · 2.22 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot pending"></span>21. Expanded cross-seed screening · 2.23 · <span class="muted">verification pending</span></div>
     </div>
   </div>
 
@@ -124,7 +124,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-6">
-    <h2>EVIDENCE · 2.10–2.19</h2>
+    <h2>EVIDENCE · 2.10–2.22</h2>
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">0/12 positive</span></div>
@@ -135,14 +135,14 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>population-state innovation · 2.17</span><span class="badge pending">1/3 positive; no shuffled win</span></div>
     <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
-    <div class="row"><span>cross-seed generalization · 2.21</span><span class="badge pending">0/9 positive</span></div>
-    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. GENESIS-2.20 found 7/54 transfer cases beating zero-change. GENESIS-2.12 is negative under the fail-closed criterion: 0/12 cases beat zero-change, while 12/12 beat shuffled.</p>
+    <div class="row"><span>cross-seed transfer · 2.20</span><span class="badge pending">7/54 positive</span></div>\n    <div class="row"><span>leave-one-seed-out · 2.21</span><span class="badge pending">0/9 positive</span></div>\n    <div class="row"><span>seed-invariant · 2.22</span><span class="badge pending">0/9 positive</span></div>
+    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. Cross-seed results through GENESIS-2.22 do not establish a stable predictive representation. The primary criterion remains held-out improvement over zero-change.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · POST-2.22 FRONTIER</h2>
-    <p><b>GENESIS-2.12 closes the state-trajectory hypothesis negatively.</b></p>
-    <p class="muted">The next research step is not yet selected. Any 2.13 extension should be defined from the failed mechanism and evaluated against the same zero-change and shuffled controls.</p>
+    <h2>NEXT · GENESIS-2.23</h2>
+    <p><b>Expanded cross-seed screening is defined; verification is pending.</b></p>
+    <p class="muted">Six seeds (390001–390006), leave-one-seed-out training, histories 2/3/5, 500 ticks per seed, exact consecutive ticks, zero-change baseline and shuffled control. Positive evidence requires every tested case to beat both controls.</p>
   </div>
 
   <div class="card span-12">
@@ -155,7 +155,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.12 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.22 results recorded</div>
     </div>
   </div>
 
