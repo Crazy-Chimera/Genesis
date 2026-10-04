@@ -6,10 +6,12 @@ from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.state_trajectory import StateTrajectoryPredictor
 
 
+RIDGES = (1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1.0, 10.0)
+
+
 def collect(seed: int, ticks: int = 10_000):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
-    observer = LocalStructureObserver()
-    tracker = RegionTracker(observer)
+    tracker = RegionTracker(LocalStructureObserver())
     memory = TemporalMemory()
     observations, events = tracker.observe_events(universe.phase)
     memory.record(universe.tick, observations, events)
@@ -21,11 +23,11 @@ def collect(seed: int, ticks: int = 10_000):
 
 
 def main() -> None:
-    print("GENESIS-2.12b state-trajectory ridge sensitivity")
+    print("GENESIS-2.13 ridge regularization sweep")
     for seed in (390001, 390002, 390003):
         records = collect(seed)
-        for history_length in (2, 3, 5):
-            for ridge in (1e-8, 1e-6, 1e-4, 1e-2, 1.0, 100.0):
+        for history_length in (2, 3, 5, 10):
+            for ridge in RIDGES:
                 result = StateTrajectoryPredictor(
                     feature_name="combined",
                     history_length=history_length,
@@ -42,6 +44,8 @@ def main() -> None:
                     f"{result.trajectory_mae:.15g}",
                     f"{result.shuffled_mae:.15g}",
                     f"{result.improvement:.15g}",
+                    result.beats_zero,
+                    result.beats_shuffled,
                 )
 
 
