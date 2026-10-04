@@ -28,6 +28,17 @@ def test_state_trajectory_reconstructs_linear_innovation():
     assert r.samples > 0 and r.trajectory_mae < r.zero_mae
 
 
+def test_state_difference_trajectory_reconstructs_innovation():
+    records = [
+        rec(t, 0.1 + 0.0001 * t**3, (float(t * t),) + (0.0,) * 17)
+        for t in range(81)
+    ]
+    r = StateTrajectoryPredictor(
+        history_length=3, feature_name="spatial_field", differences=True
+    ).evaluate(records)
+    assert r.samples > 0 and r.trajectory_mae < r.zero_mae
+
+
 def test_state_trajectory_requires_consecutive_ticks():
     records = [
         rec(t, 0.1, (float(t),) + (0.0,) * 17)
