@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.16">
+<main data-ui-version="2.17">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -95,8 +95,8 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span></div>
       <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">12/12 below zero baseline</span></div>
       <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">12/12 below zero baseline</span></div>
-      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">isolated dim-2 positive</span></div>
-      <div class="stage"><span class="dot pending"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">running</span></div>
+      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening positive, not robust</span></div>
+      <div class="stage"><span class="dot pending"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">not robust across seeds</span></div>
     </div>
   </div>
 
@@ -105,7 +105,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <p><b>Full-length validation of the isolated GENESIS-2.15 dim-2 positive case is running.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">state(t-k) … state(t)</span><br><span class="muted">PCA-compressed 193D observer state · 2 components</span></div>
-      <div class="card span-6"><h2>EXCLUDED</h2><span class="pending">coherence history</span><br><span class="muted">no direct ΔC input</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">not robust</span><br><span class="muted">only seed 390003 beat zero-change</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>ΔC(t+1) = C(t+1) − C(t)</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory</span></div>
     </div>
@@ -125,8 +125,8 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
     <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">12/12 below zero baseline</span></div>
-    <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">1 isolated positive</span></div>
-    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nor nonlinear trajectory reconstructs the 2.9 innovation signal robustly. 2.15 produced one isolated dim-2 positive case, so 2.16 tests whether it survives full-length validation across all seeds.</p>
+    <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">screening only</span></div>\n    <div class="row"><span>dim-2 full validation · 2.16</span><span class="badge pending">1/3 seeds positive</span></div>
+    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nor nonlinear trajectory reconstructs the 2.9 innovation signal robustly. 2.15 produced one screening-positive dim-2 case (seed 390001). 2.16 full-length validation found a positive result only for seed 390003; seeds 390001 and 390002 remained below the zero-change baseline.</p>
   </div>
 
   <div class="card span-12">
