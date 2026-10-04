@@ -1094,7 +1094,6 @@ Další nejčistší experimentální krok je proto GENESIS-2.12 — State-Traje
 Ani tento výsledek neposkytuje důkaz inteligence, agentivity, self-modelu nebo endogenního učení.
 
 
-## GENESIS-2.12 — State-Trajectory Innovation Probe
 
 GENESIS-2.12 testuje, zda lze inovační signál z GENESIS-2.9 rekonstruovat z krátké trajektorie non-coherence observer-state namísto jediného snapshotu.
 
@@ -1162,6 +1161,8 @@ Další experiment proto nemá smysl definovat jako další ručně přidanou ag
 
 Experiment zůstává measurement-only. Žádný prediktivní výstup není vracen do `GenesisUniverse`; nejsou zavedeny cíle, odměny, agency, self-model ani endogenní učení.
 
+
+## GENESIS-2.12 — State-Trajectory Prediction
 
 ## GENESIS-2.13 — State-Difference Trajectory Screening
 
@@ -1325,7 +1326,6 @@ The important methodological consequence is that model complexity should not be 
 The experiment remains measurement-only. No prediction is fed back into GenesisUniverse, and no goals, rewards, agency, self-model, or endogenous learning are introduced.
 
 
-## GENESIS-2.12 — State-Trajectory Result
 
 Run: PW-001 experiment #79  
 Commit: `4f116b5956f045ca9adc0f53f42c597572bdc889`  
@@ -1465,7 +1465,6 @@ The evidence now supports a methodological pivot rather than further unconstrain
 
 No prediction is fed back into `GenesisUniverse` or `TemporalMemory`. No goals, rewards, agency, self-model, or endogenous learning are introduced.
 
-## GENESIS-2.12 — State-Trajectory Prediction
 
 GENESIS-2.12 tests whether a short trajectory of consecutive **non-coherence observer state** can predict the next coherence innovation.
 
