@@ -7,6 +7,13 @@ on:
       - "genesis/**"
       - "experiments/pw001_predictive_eval.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_state_trajectory_ridge.py"
+      - "experiments/pw001_delta_state_trajectory.py"
+      - "experiments/pw001_state_feature_trajectory.py"
+      - "experiments/pw001_state_trajectory_regularization.py"
+      - "experiments/pw001_state_trajectory_isolated.py"
+      - "experiments/pw001_state_velocity.py"
+      - "experiments/pw001_state_trajectory_sweep.py"
       - "experiments/pw001_regularized_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
@@ -40,6 +47,96 @@ jobs:
         with:
           name: pw001-state-trajectory
           path: pw001-state-trajectory.txt
+
+  delta-state-trajectory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_delta_state_trajectory.py | tee pw001-delta-state-trajectory.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-delta-state-trajectory
+          path: pw001-delta-state-trajectory.txt
+
+  state-feature-trajectory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_state_feature_trajectory.py | tee pw001-state-feature-trajectory.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-state-feature-trajectory
+          path: pw001-state-feature-trajectory.txt
+
+  state-trajectory-regularization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_state_trajectory_regularization.py | tee pw001-state-trajectory-regularization.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-state-trajectory-regularization
+          path: pw001-state-trajectory-regularization.txt
+
+  state-trajectory-isolated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_state_trajectory_isolated.py | tee pw001-state-trajectory-isolated.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-state-trajectory-isolated
+          path: pw001-state-trajectory-isolated.txt
+
+  state-velocity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_state_velocity.py | tee pw001-state-velocity.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-state-velocity
+          path: pw001-state-velocity.txt
+
+  state-trajectory-sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_state_trajectory_sweep.py | tee pw001-state-trajectory-sweep.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-state-trajectory-sweep
+          path: pw001-state-trajectory-sweep.txt
 
   regularized-state-trajectory:
     runs-on: ubuntu-latest
