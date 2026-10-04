@@ -9,6 +9,7 @@ on:
       - "experiments/pw001_robustness.py"
       - "experiments/pw001_structural_eval.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_state_motion_trajectory.py"
       - "experiments/pw001_cross_seed.py"
       - "experiments/pw001_state_difference_trajectory.py"
       - "experiments/pw001_state_delta.py"
@@ -38,6 +39,7 @@ jobs:
       - run: python experiments/pw001_robustness.py | tee pw001-robustness.txt
       - run: python experiments/pw001_structural_eval.py | tee pw001-structural.txt
       - run: python experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
+      - run: python experiments/pw001_state_motion_trajectory.py | tee pw001-state-motion-trajectory.txt
       - run: python experiments/pw001_cross_seed.py | tee pw001-cross-seed.txt
       - run: python experiments/pw001_state_difference_trajectory.py | tee pw001-state-difference-trajectory.txt
       - run: python experiments/pw001_state_delta.py | tee pw001-state-delta.txt
@@ -60,6 +62,7 @@ jobs:
             pw001-robustness.txt
             pw001-structural.txt
             pw001-state-trajectory.txt
+            pw001-state-motion-trajectory.txt
             pw001-cross-seed.txt
             pw001-state-difference-trajectory.txt
             pw001-state-delta.txt
