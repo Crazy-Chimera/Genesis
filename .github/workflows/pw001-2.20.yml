@@ -19,7 +19,9 @@ jobs:
           python-version: "3.12"
       - run: pip install . pytest
       - run: pytest -q tests/test_representation_transfer.py
-      - run: python -u experiments/pw001_representation_transfer.py | tee pw001-2.20.txt
+      - run: |
+          set -o pipefail
+          python -u experiments/pw001_representation_transfer.py | tee pw001-2.20.txt
       - run: grep -q '^SUMMARY$' pw001-2.20.txt
       - run: grep -q '^decision=' pw001-2.20.txt
       - uses: actions/upload-artifact@v4
