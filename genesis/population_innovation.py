@@ -86,8 +86,8 @@ class PopulationInnovationPredictor:
 
         states = dict(population_state(by_tick[t]) for t in ticks)
         coherences = {
-            t: float(np.mean([r.coherence for r in by_tick[t]])
-        )
+            t: float(np.mean([r.coherence for r in by_tick[t]]))
+        }
         min_tick, max_tick = ticks[0], ticks[-1]
         heldout = min_tick + max(1, int((max_tick - min_tick) * self.train_fraction))
 
