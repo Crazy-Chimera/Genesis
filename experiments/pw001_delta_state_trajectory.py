@@ -6,7 +6,7 @@ from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.state_delta_trajectory import StateDeltaTrajectoryPredictor
 
 
-def collect(seed: int, ticks: int = 10_000):
+def collect(seed: int, ticks: int = 2_000):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     tracker = RegionTracker(LocalStructureObserver())
     memory = TemporalMemory()
