@@ -34,7 +34,6 @@ on:
       - "genesis/state_velocity.py"
       - "experiments/pw001_state_trajectory_compressed.py"
       - "experiments/pw001_state_velocity.py"
-      - "experiments/pw001_state_change.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -60,7 +59,6 @@ jobs:
       - run: python experiments/pw001_pca_innovation.py | tee pw001-pca-innovation.txt
       - run: python experiments/pw001_state_trajectory_compressed.py | tee pw001-state-trajectory-compressed.txt
       - run: python experiments/pw001_state_velocity.py | tee pw001-state-velocity.txt
-      - run: python experiments/pw001_state_change.py | tee pw001-state-change.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
@@ -79,4 +77,3 @@ jobs:
             pw001-pca-innovation.txt
             pw001-state-trajectory-compressed.txt
             pw001-state-velocity.txt
-            pw001-state-change.txt
