@@ -20,9 +20,10 @@ def test_dashboard_contains_genesis_pw001():
     html = render_dashboard({"tick": 0, "coherence": 0.5})
     assert "GENESIS-PW-001" in html
     assert "2.12" in html
-    assert "Nonlinear model-class control · 2.13" in html
+    assert "State-difference trajectory · 2.13" in html
+    assert "Nonlinear state trajectory · 2.14" in html
     assert 'data-ui-version="2.14"' in html
-    assert "RUNNING" in html
+    assert "READY / NOT RUN" in html
     assert "state trajectory" in html.lower()
     assert "No self-model" in html
     assert "/step" in html
