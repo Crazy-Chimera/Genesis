@@ -10,6 +10,7 @@ on:
       - ".github/workflows/pw001-2.22.yml"
 
 # Explicit benchmark trigger: keep the seed-invariant protocol independently runnable.
+# Verification rerun: 2026-10-04.
 
 jobs:
   benchmark:
