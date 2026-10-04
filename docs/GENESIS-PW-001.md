@@ -1464,3 +1464,56 @@ The evidence now supports a methodological pivot rather than further unconstrain
 4. avoid promoting isolated in-sample or single-seed improvements into claims about the underlying process.
 
 No prediction is fed back into `GenesisUniverse` or `TemporalMemory`. No goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+## GENESIS-2.12 — State-Trajectory Prediction
+
+GENESIS-2.12 tests whether a short trajectory of consecutive **non-coherence observer state** can predict the next coherence innovation.
+
+The predictor uses the 193-dimensional combined state representation:
+
+- structure
+- local patch
+- phase patch
+- gradient patch
+- motion
+- boundary flux
+- spatial field
+- multiscale field
+- relational state
+- graph-relational state
+
+Coherence history is excluded from the predictor input. The target is the next change in coherence:
+
+`ΔC = C(t+1) - C(t)`
+
+Evaluation uses chronological 50% holdout, exact consecutive ticks, ridge regression, a zero-change baseline, and a deterministic shuffled trajectory control.
+
+### Reproducible result
+
+CI run **#79**, commit `4f116b5956f045ca9adc0f53f42c597572bdc889`, completed successfully.
+
+Across seeds **390001, 390002, 390003** and history lengths **2, 3, 5, 10**, the state-trajectory predictor produced:
+
+- **0/12 wins against the zero-change baseline**
+- **12/12 wins against the shuffled trajectory control**
+
+Representative results:
+
+| Seed | History | Zero MAE | Trajectory MAE | Shuffled MAE | Improvement |
+|---|---:|---:|---:|---:|---:|
+| 390001 | 2 | 0.000120512 | 0.000201675 | 0.000275122 | -0.000081163 |
+| 390001 | 10 | 0.000120283 | 0.005539295 | 0.005608233 | -0.005419012 |
+| 390002 | 2 | 0.000097226 | 0.000212087 | 0.000238876 | -0.000114861 |
+| 390002 | 10 | 0.000096976 | 0.002518024 | 0.002543455 | -0.002421048 |
+| 390003 | 2 | 0.000107082 | 0.000271723 | 0.000309762 | -0.000164642 |
+| 390003 | 10 | 0.000106930 | 0.002842450 | 0.002900076 | -0.002735520 |
+
+### Interpretation
+
+The result does **not** establish predictive power from the state trajectory. The predictor fails the primary criterion because it never beats the zero-change baseline.
+
+The consistent shuffled-control advantage is nevertheless evidence that the ordered trajectory contains statistical structure distinct from a shuffled trajectory. Under the current model class, that structure is not sufficient to reconstruct the next coherence innovation.
+
+This closes GENESIS-2.12 as a **negative predictive result**, not as evidence of intelligence, agency, self-modeling, or endogenous learning.
+
+The next experiment should therefore test a more appropriate representation or model class rather than adding more dimensions to the same linear trajectory formulation.
