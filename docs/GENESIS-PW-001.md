@@ -1381,3 +1381,38 @@ The experiment remains measurement-only: no prediction is fed back into `Genesis
 
 The next clean probe is a short **population-state trajectory**: test whether the motion of the population state across consecutive ticks contains information that a single population snapshot does not.
 
+
+
+## GENESIS-2.18 — Population-State Trajectory Screening
+
+GENESIS-2.18 tested whether a short trajectory of the population-level observer state can predict the next population-mean local-coherence innovation. The protocol used seeds 390001, 390002, 390003, history lengths 2, 3, 5, 10, 2,000 ticks, chronological holdout, exact-consecutive ticks, zero-change baseline, and deterministic shuffled control.
+
+### Verified result
+
+Run: PW-001 GENESIS-2.18 population-state trajectory, completed successfully. Artifact: `11300786484`, digest: `sha256:6e45ea3ce73e9951cae690f09c3ec5eb91511d4c52a3daae0e838eef39f3dd3f`.
+
+No tested combination beat the zero-change baseline: **0/12 positive**. Seed 390003 beat the shuffled control for histories 2, 3, 5, and 10, but remained substantially worse than zero-change.
+
+### Interpretation
+
+Population-state motion contains measurable ordered structure in some cases, but it does not provide a robust predictor of the next population-mean coherence innovation under this protocol. This closes the population-state trajectory hypothesis as a positive mechanism in the current screening.
+
+## GENESIS-2.19 — Population Representation Bottleneck
+
+GENESIS-2.19 tested deterministic PCA compression of the population-state trajectory before prediction, using PCA dimensions 2, 4, and 8 and history lengths 2, 3, and 5 across seeds 390001, 390002, and 390003. The goal was to determine whether population-state information was obscured by the original representation rather than absent.
+
+### Verified result
+
+Run: PW-001 GENESIS-2.19 population PCA trajectory, run #2, completed successfully at commit `6828bd0abc726d8f3bbca3a766b2dcba1e26da46`. Artifact: `11301551110`, digest: `sha256:21ce467bd9ca8c3ba967a3f57b16de4be42454cad567e188a207f06bcb99c952`.
+
+Across **24 tested combinations**, **0/24** beat the zero-change baseline. Some low-dimensional cases beat the shuffled control, but none converted that ordered structure into a baseline-beating predictive mechanism.
+
+### Interpretation
+
+The population representation bottleneck hypothesis is not supported by this screening. Increasing or compressing the population representation does not, under the tested protocol, recover the predictive signal established in GENESIS-2.9.
+
+### Research frontier after 2.19
+
+The evidence now favors testing **representation transfer/stability across seeds** rather than continuing to increase model complexity or representation dimensionality. GENESIS-2.16 produced a seed-dependent positive compressed result, while 2.18 and 2.19 did not reproduce a robust population-level effect. A clean next probe is therefore to learn an observer representation on one seed and evaluate the same representation on a different seed without refitting it to the target seed.
+
+All experiments remain measurement-only. No prediction is fed back into `GenesisUniverse`; there are no goals, rewards, agency, self-model, or endogenous learning.
