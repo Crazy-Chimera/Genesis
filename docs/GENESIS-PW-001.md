@@ -1348,3 +1348,36 @@ Representative results:
 
 Interpretation: the measured non-coherence state trajectory contains reproducible ordered information (trajectory beats shuffled), but the tested linear trajectory representation does not reconstruct the next coherence innovation. This is a negative result for the 2.12 hypothesis, not evidence of intelligence, agency, or a self-model.
 
+
+
+## GENESIS-2.17 — Population-State Innovation Probe
+
+GENESIS-2.17 tests whether a deterministic population-level aggregate of observer measurements can predict the next population-mean local-coherence innovation.
+
+The population state contains 12 aggregate quantities derived from the measured regions at each tick: population count, size statistics, boundary contrast, lifetime, persistence, overlap, motion, boundary flux, relational magnitude, and maximum region size. The predictor uses the current population state only; coherence history is not an input. The protocol uses a 50% chronological holdout, exact-consecutive ticks, zero-change baseline, and deterministic shuffled control.
+
+### Verified result
+
+Run: PW-001 GENESIS-2.17 #2  
+Commit: `c2ccafe7ac5864c0c87c018801a20da1d8181e38`  
+Artifact: `11299979644`  
+Artifact digest: `sha256:622526814196da8039cb51b84bfd7a48c26783b2fba20d59fc3baae317148e10`
+
+| seed | samples | zero-change MAE | population MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 5001 | 0.000117656115 | 0.000148760918 | 0.000147344848 | -0.000031104803 |
+| 390002 | 5001 | 0.000110990109 | 0.000121147027 | 0.000117319779 | -0.000010156919 |
+| 390003 | 5001 | 0.000109938644 | 0.000109424891 | 0.000109281146 | +0.000000513753 |
+
+Only seed 390003 beats the zero-change baseline, and the improvement is approximately (5.14	imes10^{-7}). It does not beat the shuffled control.
+
+### Interpretation
+
+GENESIS-2.17 therefore does **not** establish a robust population-state predictive mechanism. The population representation contains at most a seed-dependent, very small signal under this protocol, and the only positive seed is not stronger than the shuffled control.
+
+The result is useful because it separates another possible observer-level representation from the previously tested regional state representations. It does not establish that the underlying universe lacks population-level predictive information.
+
+The experiment remains measurement-only: no prediction is fed back into `GenesisUniverse`, and no goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+The next clean probe is a short **population-state trajectory**: test whether the motion of the population state across consecutive ticks contains information that a single population snapshot does not.
+
