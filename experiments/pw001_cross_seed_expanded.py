@@ -7,9 +7,11 @@ from genesis.observer import LocalStructureObserver, RegionTracker
 
 
 SEEDS = (390001, 390002, 390003, 390004, 390005, 390006)
+TICKS = 500
+HISTORIES = (2, 3, 5)
 
 
-def collect(seed: int, ticks: int = 500):
+def collect(seed: int, ticks: int = TICKS):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     tracker = RegionTracker(LocalStructureObserver())
     memory = TemporalMemory()
@@ -25,10 +27,10 @@ def collect(seed: int, ticks: int = 500):
 def main() -> None:
     records = {seed: collect(seed) for seed in SEEDS}
     results = []
-    print("GENESIS-2.23 expanded cross-seed generalization; ticks=500")
+    print(f"GENESIS-2.23 expanded cross-seed generalization; seeds={SEEDS}; ticks={TICKS}; histories={HISTORIES}")
     for target in SEEDS:
         train = tuple(seed for seed in SEEDS if seed != target)
-        for history in (2, 3, 5):
+        for history in HISTORIES:
             result = CrossSeedGeneralizationPredictor(
                 history_length=history,
                 ridge=1e-6,
