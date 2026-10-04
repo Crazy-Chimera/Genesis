@@ -16,6 +16,7 @@ from .state_innovation import StateFeatureSpec, StateInnovationEvaluationResult,
 from .state_trajectory import StateTrajectoryEvaluationResult, StateTrajectoryPredictor
 from .compressed_trajectory import CompressedStateTrajectoryPredictor, CompressedTrajectoryResult
 from .state_velocity import StateVelocityEvaluationResult, StateVelocityPredictor
+from .cross_seed import CrossSeedTrajectoryResult, CrossSeedTrajectoryPredictor
 from .state_delta_trajectory import (
     StateDeltaTrajectoryEvaluationResult,
     StateDeltaTrajectoryPredictor,
@@ -69,5 +70,7 @@ __all__ = [
     "StateVelocityPredictor",
     "StateDeltaTrajectoryEvaluationResult",
     "StateDeltaTrajectoryPredictor",
+    "CrossSeedTrajectoryResult",
+    "CrossSeedTrajectoryPredictor",
     "run",
 ]
