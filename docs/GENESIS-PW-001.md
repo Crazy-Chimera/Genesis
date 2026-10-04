@@ -1323,3 +1323,28 @@ GENESIS-2.16 does not validate the GENESIS-2.15 screening candidate as a robust 
 The important methodological consequence is that model complexity should not be increased merely to force a positive result. The next experiment should instead test representation stability, cross-seed generalization, or whether the compressed coordinates correspond to a stable observer property rather than a seed-specific statistical configuration.
 
 The experiment remains measurement-only. No prediction is fed back into GenesisUniverse, and no goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+
+## GENESIS-2.12 — State-Trajectory Result
+
+Run: PW-001 experiment #79  
+Commit: `4f116b5956f045ca9adc0f53f42c597572bdc889`  
+Artifact: `pw001-predictive-results`  
+Digest: `sha256:6ce5ebb2f745e392b440cb99db5e660d7e35aa61a0b70d6bef2d7937acaffc5c`
+
+GENESIS-2.12 tested whether a short trajectory of the combined non-coherence state (193 dimensions) can predict the next coherence innovation. The predictor used histories of 2, 3, 5 and 10 consecutive states, chronological 50% holdout, ridge regression, exact consecutive ticks, and deterministic shuffled control. Coherence history was not used as an input feature.
+
+Result: the hypothesis was **not confirmed**. Across all 12 seed × history combinations (seeds 390001, 390002, 390003), trajectory MAE was worse than the zero-change baseline. The trajectory nevertheless beat the shuffled control in all 12 cases.
+
+Representative results:
+
+| Seed | History | Zero MAE | Trajectory MAE | Shuffled MAE | Improvement |
+|---|---:|---:|---:|---:|---:|
+| 390001 | 2 | 0.000120512 | 0.000201675 | 0.000275122 | -0.000081163 |
+| 390001 | 10 | 0.000120283 | 0.005539295 | 0.005608233 | -0.005419012 |
+| 390002 | 2 | 0.000097226 | 0.000212087 | 0.000238876 | -0.000114861 |
+| 390003 | 2 | 0.000107082 | 0.000271723 | 0.000309762 | -0.000164642 |
+| 390003 | 10 | 0.000106930 | 0.002842450 | 0.002900076 | -0.002735520 |
+
+Interpretation: the measured non-coherence state trajectory contains reproducible ordered information (trajectory beats shuffled), but the tested linear trajectory representation does not reconstruct the next coherence innovation. This is a negative result for the 2.12 hypothesis, not evidence of intelligence, agency, or a self-model.
+
