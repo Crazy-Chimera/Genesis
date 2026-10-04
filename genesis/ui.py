@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.21">
+<main data-ui-version="2.22">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -109,7 +109,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <p><b>Leave-one-seed-out cross-seed generalization is complete.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">pooled source seeds → held-out target seed</span><br><span class="muted">pooled representation; target seed remains unseen during fitting</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/9 beat zero-change · 9/9 beat shuffled</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/9 beat zero-change · 8/9 beat shuffled</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>held-out target-seed coherence innovation</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled pooled representation</span></div>
     </div>
@@ -136,12 +136,12 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
     <div class="row"><span>cross-seed generalization · 2.21</span><span class="badge pending">0/9 positive</span></div>
-    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. GENESIS-2.20 adds the stronger cross-seed test: 7/54 transfer cases beat zero-change, so the leave-one-seed-out pooled generalization is not stable enough under the fail-closed criterion: 0/9 cases beat zero-change.</p>
+    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. GENESIS-2.20 found 7/54 transfer cases beating zero-change. GENESIS-2.22 strengthens this with leave-one-seed-out seed-invariant evaluation: 0/9 cases beat zero-change, while 8/9 beat shuffled; the fail-closed decision remains negative.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · POST-2.20 FRONTIER</h2>
-    <p><b>Leave-one-seed-out generalization did not establish a stable representation.</b></p>
+    <h2>NEXT · POST-2.22 FRONTIER</h2>
+    <p><b>Seed-invariant leave-one-seed-out generalization did not establish a stable representation.</b></p>
     <p class="muted">The next research step should preserve the fail-closed stability criterion and investigate representation invariants rather than increasing model complexity solely to obtain positive in-seed scores.</p>
   </div>
 
@@ -155,7 +155,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.21 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.22 results recorded</div>
     </div>
   </div>
 
