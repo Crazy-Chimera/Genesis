@@ -1,48 +1,30 @@
 from __future__ import annotations
 
-import argparse
-
 from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
 from genesis.state_trajectory import StateTrajectoryPredictor
 
 
-def collect(seed: int, ticks: int = 2_000):
+def collect(seed: int, ticks: int = 10_000):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     observer = LocalStructureObserver()
     tracker = RegionTracker(observer)
     memory = TemporalMemory()
-
     observations, events = tracker.observe_events(universe.phase)
     memory.record(universe.tick, observations, events)
-
     for _ in range(ticks):
         universe.step()
         observations, events = tracker.observe_events(universe.phase)
         memory.record(universe.tick, observations, events)
-
     return memory.all()
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--seed", type=int, default=None)
-    parser.add_argument("--ticks", type=int, default=2_000)
-    args = parser.parse_args()
-
-    print(f"GENESIS-2.13 state-difference trajectory screening; ticks={args.ticks}")
-    seeds = (args.seed,) if args.seed is not None else (390001, 390002, 390003)
-    for seed in seeds:
-        records = collect(seed, ticks=args.ticks)
-        print(
-            f"seed={seed} records={len(records)} "
-            f"identities={len({r.identity for r in records})}"
-        )
-        print(
-            "seed history_length samples zero_mae difference_mae "
-            "shuffled_mae improvement beats_zero beats_shuffled"
-        )
+    print("GENESIS-2.13 state-difference trajectory benchmark")
+    for seed in (390001, 390002, 390003):
+        records = collect(seed)
+        print(f"seed={seed} records={len(records)} identities={len({r.identity for r in records})}")
         for history_length in (2, 3, 5, 10):
             result = StateTrajectoryPredictor(
                 feature_name="combined",
@@ -53,9 +35,7 @@ def main() -> None:
                 differences=True,
             ).evaluate(records)
             print(
-                seed,
-                history_length,
-                result.samples,
+                seed, history_length, result.samples,
                 f"{result.zero_mae:.15g}",
                 f"{result.trajectory_mae:.15g}",
                 f"{result.shuffled_mae:.15g}",
