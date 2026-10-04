@@ -23,8 +23,19 @@ def collect(seed: int, ticks: int = 10_000):
     return memory.all()
 
 
+def evaluate(records, history_length: int, differences: bool):
+    return StateTrajectoryPredictor(
+        feature_name="combined",
+        history_length=history_length,
+        train_fraction=0.5,
+        ridge=1e-6,
+        require_consecutive=True,
+        differences=differences,
+    ).evaluate(records)
+
+
 def main() -> None:
-    print("GENESIS-2.12 state-trajectory benchmark")
+    print("GENESIS-2.13 incremental state-delta benchmark")
     for seed in (390001, 390002, 390003):
         records = collect(seed)
         print(
@@ -32,28 +43,25 @@ def main() -> None:
             f"identities={len({r.identity for r in records})}"
         )
         print(
-            "seed history_length samples zero_mae trajectory_mae "
-            "shuffled_mae improvement beats_zero beats_shuffled"
+            "seed history_length representation samples zero_mae "
+            "trajectory_mae shuffled_mae improvement beats_zero beats_shuffled"
         )
         for history_length in (2, 3, 5, 10):
-            result = StateTrajectoryPredictor(
-                feature_name="combined",
-                history_length=history_length,
-                train_fraction=0.5,
-                ridge=1e-6,
-                require_consecutive=True,
-            ).evaluate(records)
-            print(
-                seed,
-                history_length,
-                result.samples,
-                f"{result.zero_mae:.15g}",
-                f"{result.trajectory_mae:.15g}",
-                f"{result.shuffled_mae:.15g}",
-                f"{result.improvement:.15g}",
-                result.beats_zero,
-                result.beats_shuffled,
-            )
+            for differences in (False, True):
+                result = evaluate(records, history_length, differences)
+                representation = "delta" if differences else "absolute"
+                print(
+                    seed,
+                    history_length,
+                    representation,
+                    result.samples,
+                    f"{result.zero_mae:.15g}",
+                    f"{result.trajectory_mae:.15g}",
+                    f"{result.shuffled_mae:.15g}",
+                    f"{result.improvement:.15g}",
+                    result.beats_zero,
+                    result.beats_shuffled,
+                )
 
 
 if __name__ == "__main__":
