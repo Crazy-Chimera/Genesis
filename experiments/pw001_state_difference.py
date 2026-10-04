@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import argparse
+
 from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
@@ -24,8 +26,13 @@ def collect(seed: int, ticks: int = 10_000):
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seed", type=int, default=None)
+    args = parser.parse_args()
+
     print("GENESIS-2.13 state-difference trajectory benchmark")
-    for seed in (390001, 390002, 390003):
+    seeds = (args.seed,) if args.seed is not None else (390001, 390002, 390003)
+    for seed in seeds:
         records = collect(seed)
         print(
             f"seed={seed} records={len(records)} "
