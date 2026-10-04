@@ -11,6 +11,10 @@ on:
 
 jobs:
   experiment:
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [390001, 390002, 390003]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,8 +23,8 @@ jobs:
           python-version: "3.12"
       - run: pip install . pytest
       - run: pytest -q tests/test_state_trajectory.py
-      - run: python experiments/pw001_state_difference.py | tee genesis-2.13-results.txt
+      - run: python experiments/pw001_state_difference.py --seed ${{ matrix.seed }} | tee genesis-2.13-${{ matrix.seed }}.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: genesis-2.13-results
-          path: genesis-2.13-results.txt
+          name: genesis-2.13-results-${{ matrix.seed }}
+          path: genesis-2.13-${{ matrix.seed }}.txt
