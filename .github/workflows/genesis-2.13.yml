@@ -1,0 +1,26 @@
+name: GENESIS 2.13 experiment
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/state_trajectory.py"
+      - "experiments/pw001_state_difference.py"
+      - "tests/test_state_trajectory.py"
+      - ".github/workflows/genesis-2.13.yml"
+
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: pytest -q tests/test_state_trajectory.py
+      - run: python experiments/pw001_state_difference.py | tee genesis-2.13-results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.13-results
+          path: genesis-2.13-results.txt
