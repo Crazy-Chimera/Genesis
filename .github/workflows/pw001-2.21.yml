@@ -28,3 +28,5 @@ jobs:
         with:
           name: pw001-genesis-2.21
           path: pw001-2.21.txt
+
+# Dedicated GENESIS-2.21 workflow; isolated from the long aggregate PW-001 suite.
