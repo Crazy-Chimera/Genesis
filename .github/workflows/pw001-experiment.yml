@@ -21,6 +21,7 @@ on:
       - "experiments/pw001_robustness.py"
       - "experiments/pw001_structural_eval.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_state_delta.py"
       - "experiments/pw001_representation_transfer.py"
       - "genesis/representation_transfer.py"
       - "experiments/pw001_state_trajectory_ridge.py"
@@ -46,6 +47,7 @@ jobs:
       - run: python experiments/pw001_robustness.py | tee pw001-robustness.txt
       - run: python experiments/pw001_structural_eval.py | tee pw001-structural.txt
       - run: python experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
+      - run: python experiments/pw001_state_delta.py | tee pw001-state-delta.txt
       - run: python experiments/pw001_representation_transfer.py | tee pw001-representation-transfer.txt
       - run: python experiments/pw001_state_trajectory_ridge.py | tee pw001-state-trajectory-ridge.txt
       - run: python experiments/pw001_state_delta_trajectory.py | tee pw001-state-delta-trajectory.txt
@@ -62,6 +64,7 @@ jobs:
             pw001-robustness.txt
             pw001-structural.txt
             pw001-state-trajectory.txt
+            pw001-state-delta.txt
             pw001-representation-transfer.txt
             pw001-state-trajectory-ridge.txt
             pw001-state-delta-trajectory.txt
