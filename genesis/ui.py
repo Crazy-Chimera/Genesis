@@ -142,7 +142,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   <div class="card span-12">
     <h2>NEXT · GENESIS-2.23</h2>
     <p><b>Expanded cross-seed generalization is defined; verification is pending.</b></p>
-    <p class="muted">Six seeds (390001–390006), leave-one-seed-out training, histories 2/3/5, 500 ticks per seed, exact consecutive ticks, zero-change baseline and shuffled control. Positive evidence requires every tested case to beat both controls. Positive evidence requires every tested case to beat both controls.</p>
+    <p class="muted">Six seeds (390001–390006), leave-one-seed-out training, histories 2/3/5, 500 ticks per seed, exact consecutive ticks, zero-change baseline and shuffled control. Positive evidence requires every tested case to beat both controls.</p>
   </div>
 
   <div class="card span-12">
