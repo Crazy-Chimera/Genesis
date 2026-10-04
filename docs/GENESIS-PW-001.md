@@ -1224,3 +1224,51 @@ Další krok proto nemá být další mechanické rozšiřování stejného line
 Dokud tento kontrolní experiment nebude proveden, nelze z negativních výsledků 2.10–2.13 tvrdit, že non-coherence state neobsahuje prediktivní informaci.
 
 Experiment stále nemá zpětnou vazbu do GenesisUniverse, žádné cíle, odměny, agency, self-model ani endogenní učení.
+
+
+## GENESIS-2.14 — Nonlinear State-Trajectory Model-Class Control
+
+GENESIS-2.14 tests whether the negative GENESIS-2.12 result is caused by the linear ridge model class rather than the observer-state representation.
+
+The input remains the 193D non-coherence combined state trajectory. A deterministic nonlinear random-feature mapping is applied before ridge regression. The universe, observer, chronological holdout, exact-consecutive requirement, zero-change baseline, shuffled control, and seeds remain unchanged. The predictor receives no coherence history and has no feedback path into the universe.
+
+The verified screening run used 2,000 ticks per seed.
+
+### Verified result
+
+Across seeds 390001, 390002, 390003 and history lengths 2, 3, 5, 10:
+
+- **12/12 combinations failed to beat the zero-change baseline.**
+- **11/12 combinations beat the shuffled control.**
+- The only case that did not beat shuffled was seed 390003, history 10.
+
+Representative verified values:
+
+| seed | history | zero-change MAE | nonlinear MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|
+| 390001 | 2 | 0.000119222109 | 0.000551995448 | 0.000562104550 | -0.000432773340 |
+| 390001 | 10 | 0.000118896023 | 0.000374667719 | 0.000385386722 | -0.000255771696 |
+| 390002 | 2 | 0.000086979801 | 0.000428381218 | 0.000442374688 | -0.000341401416 |
+| 390002 | 10 | 0.000086950032 | 0.000260986975 | 0.000280673009 | -0.000174036943 |
+| 390003 | 2 | 0.000098640887 | 0.000535276823 | 0.000555416782 | -0.000436635936 |
+| 390003 | 10 | 0.000098511967 | 0.000391685566 | 0.000388315883 | -0.000293173605 |
+
+### Interpretation
+
+The nonlinear model-class control does not recover the GENESIS-2.9 innovation signal. Therefore the negative result cannot be attributed simply to the linearity of the ridge predictor under this tested nonlinear feature map.
+
+At the same time, the nonlinear predictor generally beats the shuffled control. The ordered state trajectory therefore contains measurable structure, but that structure does not provide a sufficiently accurate predictor of the next coherence innovation under this protocol.
+
+### Hypothesis state after 2.14
+
+The evidence now separates the observations more sharply:
+
+1. **2.9:** coherence history predicts the next coherence innovation.
+2. **2.10–2.11:** current non-coherence state does not robustly reproduce that signal.
+3. **2.12:** absolute 193D state trajectory does not reproduce it.
+4. **2.13:** state-difference trajectory does not reproduce it in screening.
+5. **2.14:** a nonlinear model-class control also does not reproduce it.
+
+The next methodological question is therefore not whether to keep increasing model complexity. A cleaner next probe is a **representation bottleneck**: reduce the observer state to a deterministic low-dimensional representation before prediction and test whether the predictive signal is being obscured by the 193D regional aggregation.
+
+The experiment remains measurement-only. No predictive output is returned to GenesisUniverse; there are no goals, rewards, agency, self-model, or endogenous learning.
