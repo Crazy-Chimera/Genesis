@@ -9,6 +9,7 @@ on:
       - "experiments/pw001_state_trajectory.py"
       - "experiments/pw001_delta_state_trajectory.py"
       - "experiments/pw001_state_feature_trajectory.py"
+      - "experiments/pw001_state_trajectory_regularization.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -71,3 +72,18 @@ jobs:
         with:
           name: pw001-state-feature-trajectory
           path: pw001-state-feature-trajectory.txt
+
+  state-trajectory-regularization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_state_trajectory_regularization.py | tee pw001-state-trajectory-regularization.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-state-trajectory-regularization
+          path: pw001-state-trajectory-regularization.txt
