@@ -27,6 +27,7 @@ on:
       - "experiments/pw001_population_trajectory.py"
       - "experiments/pw001_state_trajectory_regularization.py"
       - "experiments/pw001_direct_state_transfer.py"
+      - "experiments/pw001_state_change.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -60,6 +61,7 @@ jobs:
       - run: python experiments/pw001_population_trajectory.py | tee pw001-population-trajectory.txt
       - run: python experiments/pw001_state_trajectory_regularization.py | tee pw001-state-trajectory-regularization.txt
       - run: python experiments/pw001_direct_state_transfer.py | tee pw001-direct-state-transfer.txt
+      - run: python experiments/pw001_state_change.py | tee pw001-state-change.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
@@ -86,3 +88,4 @@ jobs:
             pw001-population-trajectory.txt
             pw001-state-trajectory-regularization.txt
             pw001-direct-state-transfer.txt
+            pw001-state-change.txt
