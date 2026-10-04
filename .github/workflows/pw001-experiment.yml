@@ -21,6 +21,7 @@ on:
       - "experiments/pw001_robustness.py"
       - "experiments/pw001_structural_eval.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_state_trajectory_ridge.py"
       - "experiments/pw001_state_delta_trajectory.py"
       - "experiments/pw001_nonlinear_state.py"
       - "experiments/pw001_compressed_state_trajectory.py"
@@ -41,6 +42,7 @@ jobs:
       - run: python experiments/pw001_robustness.py | tee pw001-robustness.txt
       - run: python experiments/pw001_structural_eval.py | tee pw001-structural.txt
       - run: python experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
+      - run: python experiments/pw001_state_trajectory_ridge.py | tee pw001-state-trajectory-ridge.txt
       - run: python experiments/pw001_state_delta_trajectory.py | tee pw001-state-delta-trajectory.txt
       - run: python experiments/pw001_nonlinear_state.py | tee pw001-nonlinear-state.txt
       - run: python experiments/pw001_compressed_state_trajectory.py | tee pw001-compressed-state-trajectory.txt
@@ -54,6 +56,7 @@ jobs:
             pw001-robustness.txt
             pw001-structural.txt
             pw001-state-trajectory.txt
+            pw001-state-trajectory-ridge.txt
             pw001-state-delta-trajectory.txt
             pw001-nonlinear-state.txt
             pw001-compressed-state-trajectory.txt
