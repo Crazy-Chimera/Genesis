@@ -1,0 +1,26 @@
+name: PW-001 GENESIS-2.17 population-state innovation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/population_innovation.py"
+      - "experiments/pw001_population_innovation.py"
+      - "tests/test_population_innovation.py"
+      - ".github/workflows/pw001-2.17.yml"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install . pytest
+      - run: pytest -q tests/test_population_innovation.py
+      - run: python experiments/pw001_population_innovation.py | tee pw001-2.17.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-genesis-2.17
+          path: pw001-2.17.txt
