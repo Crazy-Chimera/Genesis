@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.14">
+<main data-ui-version="2.16">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -92,17 +92,19 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>7. Structural probes · 1.7–2.8</div>
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9</div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11</div>
-      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span>
+      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span></div>
       <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">12/12 below zero baseline</span></div>
-      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">12/12 below zero baseline</span></div></div>
+      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">12/12 below zero baseline</span></div>
+      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">isolated dim-2 positive</span></div>
+      <div class="stage"><span class="dot pending"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">running</span></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.13</h2>
-    <p><b>State-difference trajectory did not beat the zero-change baseline in 12/12 screening combinations.</b></p>
+    <h2>RESULT · GENESIS-2.16</h2>
+    <p><b>Full-length validation of the isolated GENESIS-2.15 dim-2 positive case is running.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">state(t-k) … state(t)</span><br><span class="muted">193D combined observer state differences</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">state(t-k) … state(t)</span><br><span class="muted">PCA-compressed 193D observer state · 2 components</span></div>
       <div class="card span-6"><h2>EXCLUDED</h2><span class="pending">coherence history</span><br><span class="muted">no direct ΔC input</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>ΔC(t+1) = C(t+1) − C(t)</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory</span></div>
@@ -118,18 +120,19 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-6">
-    <h2>EVIDENCE · 2.10–2.14</h2>
+    <h2>EVIDENCE · 2.10–2.15</h2>
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
     <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">12/12 below zero baseline</span></div>
-    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nor nonlinear trajectory reconstructs the 2.9 innovation signal under the tested protocol. 2.14 remains a negative model-class control.</p>
+    <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">1 isolated positive</span></div>
+    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nor nonlinear trajectory reconstructs the 2.9 innovation signal robustly. 2.15 produced one isolated dim-2 positive case, so 2.16 tests whether it survives full-length validation across all seeds.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.15</h2>
-    <p><b>Representation bottleneck — next research question.</b></p>
-    <p class="muted">2.12–2.14 show that increasing trajectory/model complexity does not recover the 2.9 innovation signal. The next controlled probe should reduce the 193D observer state to a deterministic low-dimensional representation before prediction, without introducing coherence feedback or changing the universe.</p>
+    <h2>NEXT · GENESIS-2.16</h2>
+    <p><b>Full-length validation of the dim-2 representation.</b></p>
+    <p class="muted">2.15 found an isolated positive result at two PCA components for seed 390001. 2.16 tests that exact representation over 10,000 ticks and all three seeds before any claim of robust predictive structure is allowed.</p>
   </div>
 
   <div class="card span-12">
