@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install .
+      - run: pip install . pytest
       - run: pytest -q tests/test_rule_update.py
       - run: python experiments/pw001_rule_update.py | tee pw001-2.25-rule-update.txt
       - uses: actions/upload-artifact@v4
