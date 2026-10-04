@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.18">
+<main data-ui-version="2.19">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -96,18 +96,19 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">12/12 below zero baseline</span></div>
       <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">12/12 below zero baseline</span></div>
       <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening positive, not robust</span></div>
-      <div class="stage"><span class="dot pending"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
+      <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
+      <div class="stage"><span class="dot pending"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 seeds positive, no shuffled win</span></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.16</h2>
-    <p><b>Full-length validation of the isolated GENESIS-2.15 dim-2 positive case is complete.</b></p>
+    <h2>RESULT · GENESIS-2.17</h2>
+    <p><b>Population-state innovation probe is complete.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">state(t-k) … state(t)</span><br><span class="muted">PCA-compressed 193D observer state · 2 components</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">not robust</span><br><span class="muted">only seed 390003 beat zero-change</span></div>
-      <div class="card span-6"><h2>TARGET</h2><span>ΔC(t+1) = C(t+1) − C(t)</span></div>
-      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">population state(t)</span><br><span class="muted">12D aggregate observer-state representation</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">not robust</span><br><span class="muted">1/3 seeds positive; no shuffled win</span></div>
+      <div class="card span-6"><h2>TARGET</h2><span>ΔC̄(t+1) = C̄(t+1) − C̄(t)</span></div>
+      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled population state</span></div>
     </div>
   </div>
 
@@ -126,13 +127,14 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
     <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">12/12 below zero baseline</span></div>
     <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">screening only</span></div>\n    <div class="row"><span>dim-2 full validation · 2.16</span><span class="badge pending">1/3 seeds positive</span></div>
-    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nor nonlinear trajectory reconstructs the 2.9 innovation signal robustly. 2.15 produced one screening-positive dim-2 case. 2.16 full-length validation found a positive result only for seed 390003; seeds 390001 and 390002 remained below the zero-change baseline.</p>
+    <div class="row"><span>population-state innovation · 2.17</span><span class="badge pending">1/3 positive; no shuffled win</span></div>
+    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nor nonlinear trajectory reconstructs the 2.9 innovation signal robustly. 2.15 produced one screening-positive dim-2 case. 2.16 full-length validation found a positive result only for seed 390003; seeds 390001 and 390002 remained below the zero-change baseline. 2.17 found only a tiny seed-specific population-state improvement for 390003, and it did not beat the shuffled control.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.17</h2>
-    <p><b>Test the seed-specificity of the dim-2 signal.</b></p>
-    <p class="muted">2.16 confirms the isolated dim-2 signal only for seed 390003. 2.17 should test whether the effect follows a population-level or representation-dependent property before any agent semantics are introduced.</p>
+    <h2>NEXT · GENESIS-2.18</h2>
+    <p><b>Test whether population-state trajectories add predictive information.</b></p>
+    <p class="muted">2.17 does not establish a robust population-state snapshot effect. The clean next probe is a short population-state trajectory, preserving the same measurement-only protocol and controls.</p>
   </div>
 
   <div class="card span-12">
@@ -145,7 +147,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.12–2.16 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.12–2.17 results recorded</div>
     </div>
   </div>
 
