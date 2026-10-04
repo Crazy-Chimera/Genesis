@@ -15,6 +15,7 @@ on:
       - "experiments/pw001_state_velocity.py"
       - "experiments/pw001_state_trajectory_sweep.py"
       - "experiments/pw001_regularized_trajectory.py"
+      - "experiments/pw001_nonlinear_state_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -137,6 +138,21 @@ jobs:
         with:
           name: pw001-state-trajectory-sweep
           path: pw001-state-trajectory-sweep.txt
+
+  nonlinear-state-trajectory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_nonlinear_state_trajectory.py | tee pw001-nonlinear-state-trajectory.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-nonlinear-state-trajectory
+          path: pw001-nonlinear-state-trajectory.txt
 
   regularized-state-trajectory:
     runs-on: ubuntu-latest
