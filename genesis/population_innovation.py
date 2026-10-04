@@ -86,9 +86,8 @@ class PopulationInnovationPredictor:
 
         states = dict(population_state(by_tick[t]) for t in ticks)
         coherences = {
-            t: float(np.mean([r.coherence for r in by_tick[t]]))
-            for t in ticks
-        }
+            t: float(np.mean([r.coherence for r in by_tick[t]])
+        )
         min_tick, max_tick = ticks[0], ticks[-1]
         heldout = min_tick + max(1, int((max_tick - min_tick) * self.train_fraction))
 
@@ -116,8 +115,9 @@ class PopulationInnovationPredictor:
         test = np.asarray(test_x, dtype=float)
         y = np.asarray(train_y, dtype=float)
         mean = train.mean(axis=0)
-        scale = train.std(axis=0)
+        scale = np.asarray(train.std(axis=0), dtype=float)
         scale[scale == 0.0] = 1.0
+
         design = np.column_stack((np.ones(len(train)), (train - mean) / scale))
         reg = np.eye(design.shape[1])
         reg[0, 0] = 0.0
