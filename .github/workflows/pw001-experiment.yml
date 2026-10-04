@@ -7,6 +7,7 @@ on:
       - "genesis/**"
       - "experiments/pw001_predictive_eval.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_delta_state_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -21,9 +22,11 @@ jobs:
       - run: pip install .
       - run: python -u experiments/pw001_predictive_eval.py | tee pw001-results.txt
       - run: python -u experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
+      - run: python -u experiments/pw001_delta_state_trajectory.py | tee pw001-delta-state-trajectory.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
           path: |
             pw001-results.txt
             pw001-state-trajectory.txt
+            pw001-delta-state-trajectory.txt
