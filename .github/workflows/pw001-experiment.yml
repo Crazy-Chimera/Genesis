@@ -4,36 +4,22 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "genesis/core.py"
-      - "genesis/observer.py"
-      - "genesis/memory.py"
-      - "genesis/evaluation.py"
-      - "genesis/predictor.py"
-      - "genesis/structural.py"
-      - "genesis/innovation.py"
-      - "genesis/state_innovation.py"
-      - "genesis/state_trajectory.py"
-      - "genesis/state_delta_trajectory.py"
-      - "genesis/nonlinear_state.py"
-      - "genesis/compressed_state_trajectory.py"
-      - "genesis/nonlinear_state_trajectory.py"
+      - "genesis/**"
       - "experiments/pw001_predictive_eval.py"
       - "experiments/pw001_robustness.py"
       - "experiments/pw001_structural_eval.py"
       - "experiments/pw001_state_trajectory.py"
       - "experiments/pw001_state_delta.py"
       - "experiments/pw001_representation_transfer.py"
-      - "genesis/representation_transfer.py"
       - "experiments/pw001_state_trajectory_ridge.py"
       - "experiments/pw001_state_delta_trajectory.py"
       - "experiments/pw001_nonlinear_state.py"
       - "experiments/pw001_compressed_state_trajectory.py"
       - "experiments/pw001_nonlinear_state_trajectory.py"
       - "experiments/pw001_pca_innovation.py"
-      - "genesis/state_trajectory_compressed.py"
-      - "genesis/state_velocity.py"
       - "experiments/pw001_state_trajectory_compressed.py"
       - "experiments/pw001_state_velocity.py"
+      - "experiments/pw001_compressed_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -59,6 +45,7 @@ jobs:
       - run: python experiments/pw001_pca_innovation.py | tee pw001-pca-innovation.txt
       - run: python experiments/pw001_state_trajectory_compressed.py | tee pw001-state-trajectory-compressed.txt
       - run: python experiments/pw001_state_velocity.py | tee pw001-state-velocity.txt
+      - run: python experiments/pw001_compressed_trajectory.py | tee pw001-compressed-trajectory.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
@@ -77,3 +64,4 @@ jobs:
             pw001-pca-innovation.txt
             pw001-state-trajectory-compressed.txt
             pw001-state-velocity.txt
+            pw001-compressed-trajectory.txt
