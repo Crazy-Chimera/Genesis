@@ -22,7 +22,7 @@ def collect(seed: int, ticks: int = 2_000):
 def main() -> None:
     records = {seed: collect(seed) for seed in (390001, 390002, 390003)}
     results = []
-    print("GENESIS-2.17 cross-seed representation transfer; ticks=2000")
+    print("GENESIS-2.20 cross-seed representation transfer; ticks=2000")
     for source in records:
         for target in records:
             if source == target:
