@@ -1,0 +1,26 @@
+name: GENESIS 2.16 dim-2 validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/compressed_state_trajectory.py"
+      - "experiments/pw001_dim2_validation.py"
+      - "tests/test_compressed_state_trajectory.py"
+      - ".github/workflows/genesis-2.16.yml"
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install . pytest
+      - run: pytest -q tests/test_compressed_state_trajectory.py
+      - run: python experiments/pw001_dim2_validation.py | tee genesis-2.16-dim2.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.16-dim2-validation
+          path: genesis-2.16-dim2.txt
