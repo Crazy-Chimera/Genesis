@@ -22,7 +22,7 @@ def test_dashboard_contains_genesis_pw001():
     assert "2.12" in html
     assert "State-difference trajectory · 2.13" in html
     assert "Nonlinear state trajectory · 2.14" in html
-    assert 'data-ui-version="2.14"' in html
+    assert 'data-ui-version="2.16"' in html
     assert "state trajectory" in html.lower()
     assert "No self-model" in html
     assert "/step" in html
