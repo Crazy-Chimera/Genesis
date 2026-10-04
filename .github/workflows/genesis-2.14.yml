@@ -1,0 +1,30 @@
+name: GENESIS 2.14 experiment
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/nonlinear_state_trajectory.py"
+      - "experiments/pw001_nonlinear_state_trajectory.py"
+      - "tests/test_nonlinear_state_trajectory.py"
+      - ".github/workflows/genesis-2.14.yml"
+
+jobs:
+  experiment:
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [390001, 390002, 390003]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install . pytest
+      - run: pytest -q tests/test_nonlinear_state_trajectory.py
+      - run: python experiments/pw001_nonlinear_state_trajectory.py --ticks 2000 | tee genesis-2.14-${{ matrix.seed }}.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.14-results-${{ matrix.seed }}
+          path: genesis-2.14-${{ matrix.seed }}.txt
