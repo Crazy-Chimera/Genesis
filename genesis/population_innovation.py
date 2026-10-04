@@ -76,7 +76,9 @@ class PopulationInnovationPredictor:
         self.ridge = ridge
         self.require_consecutive = require_consecutive
 
-    def evaluate(self, records: Iterable[MemoryRecord]) -> PopulationInnovationEvaluationResult:
+    def evaluate(
+        self, records: Iterable[MemoryRecord]
+    ) -> PopulationInnovationEvaluationResult:
         by_tick: dict[int, list[MemoryRecord]] = {}
         for record in records:
             by_tick.setdefault(record.tick, []).append(record)
@@ -87,6 +89,7 @@ class PopulationInnovationPredictor:
         states = dict(population_state(by_tick[t]) for t in ticks)
         coherences = {
             t: float(np.mean([r.coherence for r in by_tick[t]]))
+            for t in ticks
         }
         min_tick, max_tick = ticks[0], ticks[-1]
         heldout = min_tick + max(1, int((max_tick - min_tick) * self.train_fraction))
@@ -121,9 +124,14 @@ class PopulationInnovationPredictor:
         design = np.column_stack((np.ones(len(train)), (train - mean) / scale))
         reg = np.eye(design.shape[1])
         reg[0, 0] = 0.0
-        coef = np.linalg.solve(design.T @ design + self.ridge * reg, design.T @ y)
+        coef = np.linalg.solve(
+            design.T @ design + self.ridge * reg,
+            design.T @ y,
+        )
 
-        pred = np.column_stack((np.ones(len(test)), (test - mean) / scale)) @ coef
+        pred = np.column_stack(
+            (np.ones(len(test)), (test - mean) / scale)
+        ) @ coef
         shuffled = test.copy()
         np.random.default_rng(390001).shuffle(shuffled)
         shuffled_pred = np.column_stack(
