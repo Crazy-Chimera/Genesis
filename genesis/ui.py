@@ -6,7 +6,7 @@ from typing import Mapping
 
 
 def render_dashboard(state: Mapping[str, float | int]) -> str:
-    """Render the measurement-only GENESIS chat dashboard."""
+    """Render the measurement-only GENESIS research dashboard."""
     tick = int(state.get("tick", 0))
     coherence = float(state.get("coherence", 0.0))
     progress = min(100.0, max(0.0, tick / 100_000 * 100))
@@ -90,22 +90,24 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>5. Temporal memory · 1.4</div>
       <div class="stage"><span class="dot"></span>6. Prediction · 1.5–1.6b</div>
       <div class="stage"><span class="dot"></span>7. Structural probes · 1.7–2.8</div>
-      <div class="stage"><span class="dot"></span>8. Innovation · 2.9</div>
-      <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11</div>
-      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · NOT CONFIRMED · <span class="muted">negative vs zero baseline</span></div>
-      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">12/12 below zero baseline</span></div>
-      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">12/12 below zero baseline</span></div>
-      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening positive, not robust</span></div>
+      <div class="stage"><span class="dot"></span>8. Innovation · 2.9 · <span class="muted">12/12 positive</span></div>
+      <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11 · <span class="muted">not robust</span></div>
+      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">0/12 positive</span></div>
+      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">0/12 positive</span></div>
+      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">0/12 positive</span></div>
+      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening only</span></div>
       <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
-      <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 positive; no shuffled win</span></div>\n      <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">0/12 positive</span></div>\n      <div class="stage"><span class="dot pending"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
+      <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 positive; no shuffled win</span></div>
+      <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">0/12 positive</span></div>
+      <div class="stage"><span class="dot pending"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.17</h2>
-    <p><b>Population-state innovation probe is complete.</b></p>
+    <h2>RESULT · GENESIS-2.19</h2>
+    <p><b>Population representation bottleneck is complete.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">population trajectory → PCA(2/4/8)</span><br><span class="muted">deterministic low-dimensional observer representation</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">population-state trajectory → PCA(2/4/8)</span><br><span class="muted">deterministic low-dimensional observer representation</span></div>
       <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/24 combinations beat zero-change</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next population-mean coherence innovation</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory · PCA dimensions 2/4/8</span></div>
@@ -124,17 +126,21 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <h2>EVIDENCE · 2.10–2.19</h2>
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
-    <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
-    <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">12/12 below zero baseline</span></div>
-    <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">screening only</span></div>\n    <div class="row"><span>dim-2 full validation · 2.16</span><span class="badge pending">1/3 seeds positive</span></div>
-    <div class="row"><span>population-state innovation · 2.17</span><span class="badge pending">1/3 positive; no shuffled win</span></div>\n    <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>\n    <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
-    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nonlinear trajectory, population snapshot, population trajectory, nor population PCA bottleneck reconstructs the 2.9 innovation signal robustly. 2.15 produced one screening-positive dim-2 case, but 2.16 full-length validation was positive for only seed 390003. 2.17 produced only a tiny seed-specific population-state improvement and did not beat shuffled. 2.18 had 0/12 positive cases; 2.19 had 0/24.</p>
+    <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">0/12 positive</span></div>
+    <div class="row"><span>state differences · 2.13</span><span class="badge pending">0/12 positive</span></div>
+    <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">0/12 positive</span></div>
+    <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">screening only</span></div>
+    <div class="row"><span>dim-2 full validation · 2.16</span><span class="badge pending">1/3 seeds positive</span></div>
+    <div class="row"><span>population-state innovation · 2.17</span><span class="badge pending">1/3 positive; no shuffled win</span></div>
+    <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
+    <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
+    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. The strongest exceptions remain seed-dependent: 2.15 produced a screening candidate, 2.16 validated it for only seed 390003, and 2.17 produced a tiny seed-specific improvement that did not beat shuffled. These are not robust mechanisms.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.18</h2>
-    <p><b>Test whether population-state trajectories add predictive information.</b></p>
-    <p class="muted">2.17 does not establish a robust population-state snapshot effect. The clean next probe is a short population-state trajectory, preserving the same measurement-only protocol and controls.</p>
+    <h2>NEXT · REPRESENTATION TRANSFER / STABILITY</h2>
+    <p><b>Test whether an observer representation learned or fitted on one seed transfers to another seed without refitting.</b></p>
+    <p class="muted">The next clean question follows directly from 2.16 and 2.19: distinguish seed-specific statistical structure from a stable representation of the underlying observer process. Preserve chronological holdout, exact-consecutive ticks, zero-change and shuffled controls, and keep all prediction external to GenesisUniverse.</p>
   </div>
 
   <div class="card span-12">
@@ -147,7 +153,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.12–2.19 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.19 results recorded</div>
     </div>
   </div>
 
