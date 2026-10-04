@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.22">
+<main data-ui-version="2.12">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -93,25 +93,25 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9 · <span class="muted">12/12 positive</span></div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11 · <span class="muted">not robust</span></div>
       <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening only</span></div>
-      <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
-      <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 positive; no shuffled win</span></div>
-      <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
-      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">7/54 positive</span></div>
+      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">not run</span></div>
+      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">not run</span></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.21</h2>
-    <p><b>Leave-one-seed-out cross-seed generalization is complete.</b></p>
+    <h2>RESULT · GENESIS-2.12</h2>
+    <p><b>State trajectory did not reconstruct the next coherence innovation.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">pooled source seeds → held-out target seed</span><br><span class="muted">pooled representation; target seed remains unseen during fitting</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/9 beat zero-change · 8/9 beat shuffled</span></div>
-      <div class="card span-6"><h2>TARGET</h2><span>held-out target-seed coherence innovation</span></div>
-      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled pooled representation</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">193D combined non-coherence state trajectory</span><br><span class="muted">history lengths 2 · 3 · 5 · 10; exact consecutive ticks</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/12 beat zero-change · 12/12 beat shuffled</span></div>
+      <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
+      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory</span></div>
     </div>
   </div>
 
@@ -136,13 +136,13 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
     <div class="row"><span>cross-seed generalization · 2.21</span><span class="badge pending">0/9 positive</span></div>
-    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. GENESIS-2.20 found 7/54 transfer cases beating zero-change. GENESIS-2.22 strengthens this with leave-one-seed-out seed-invariant evaluation: 0/9 cases beat zero-change, while 8/9 beat shuffled; the fail-closed decision remains negative.</p>
+    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. GENESIS-2.20 found 7/54 transfer cases beating zero-change. GENESIS-2.12 is negative under the fail-closed criterion: 0/12 cases beat zero-change, while 12/12 beat shuffled.</p>
   </div>
 
   <div class="card span-12">
     <h2>NEXT · POST-2.22 FRONTIER</h2>
-    <p><b>Seed-invariant leave-one-seed-out generalization did not establish a stable representation.</b></p>
-    <p class="muted">The next research step should preserve the fail-closed stability criterion and investigate representation invariants rather than increasing model complexity solely to obtain positive in-seed scores.</p>
+    <p><b>GENESIS-2.12 closes the state-trajectory hypothesis negatively.</b></p>
+    <p class="muted">The next research step is not yet selected. Any 2.13 extension should be defined from the failed mechanism and evaluated against the same zero-change and shuffled controls.</p>
   </div>
 
   <div class="card span-12">
@@ -155,7 +155,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.22 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.12 results recorded</div>
     </div>
   </div>
 
