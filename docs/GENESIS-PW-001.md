@@ -1161,3 +1161,66 @@ To neznamená, že obecná prostorově-temporální informace v systému neexist
 Další experiment proto nemá smysl definovat jako další ručně přidanou agregaci stejného state vectoru. Čistší další otázkou je metodologická kontrola **model class / representation bottlenecku**: oddělit, zda je negativní výsledek způsoben samotnou reprezentací, lineárním modelem, nebo ztrátou informace při agregaci do regionálních observer features.
 
 Experiment zůstává measurement-only. Žádný prediktivní výstup není vracen do `GenesisUniverse`; nejsou zavedeny cíle, odměny, agency, self-model ani endogenní učení.
+
+
+## GENESIS-2.13 — State-Difference Trajectory Screening
+
+GENESIS-2.13 testuje, zda problém GENESIS-2.12 spočívá v použití absolutních state snapshotů. Místo absolutních combined-state vektorů používá prediktor po sobě jdoucí rozdíly non-coherence state:
+
+state(t) - state(t-1)
+
+Cíl zůstává stejný: predikovat následující coherence innovation bez použití coherence nebo její historie jako vstupu.
+
+Screening zachovává:
+- 50% chronological holdout,
+- exact-consecutive ticks,
+- zero-change baseline,
+- deterministic shuffled control,
+- seeds 390001, 390002, 390003,
+- history lengths 2, 3, 5, 10.
+
+Kvůli výpočetní náročnosti je tento krok označen jako screening a používá 2 000 ticků na seed. Výsledek proto nenahrazuje plný 10 000-tick benchmark, ale slouží jako reprodukovatelný směrový test.
+
+### Screening result
+
+| seed | history | samples | zero-change MAE | difference MAE | shuffled MAE | improvement |
+|---:|---:|---:|---:|---:|---:|---:|
+| 390001 | 2 | 16955 | 0.000119222109 | 0.000346325698 | 0.000418585016 | -0.000227103590 |
+| 390001 | 3 | 16947 | 0.000119181114 | 0.002050236926 | 0.002118018919 | -0.001931055812 |
+| 390001 | 5 | 16931 | 0.000119099104 | 0.010224696914 | 0.010286005153 | -0.010105597809 |
+| 390001 | 10 | 16891 | 0.000118896023 | 0.019832200936 | 0.019884308683 | -0.019713304913 |
+| 390002 | 2 | 15577 | 0.000086979801 | 0.000200211533 | 0.000255217690 | -0.000113231732 |
+| 390002 | 3 | 15574 | 0.000086975891 | 0.001936593787 | 0.001988749486 | -0.001849617896 |
+| 390002 | 5 | 15568 | 0.000086967991 | 0.005583307070 | 0.005632442186 | -0.005496339080 |
+| 390002 | 10 | 15553 | 0.000086950032 | 0.015381241221 | 0.015417708683 | -0.015294291190 |
+| 390003 | 2 | 15528 | 0.000098640887 | 0.000548826749 | 0.000603547308 | -0.000450185862 |
+| 390003 | 3 | 15522 | 0.000098625763 | 0.003371000442 | 0.003423944243 | -0.003272374680 |
+| 390003 | 5 | 15510 | 0.000098594755 | 0.008865872015 | 0.008915921036 | -0.008767277259 |
+| 390003 | 10 | 15482 | 0.000098511967 | 0.031351164750 | 0.031391833441 | -0.031252652790 |
+
+### Interpretation
+
+State-difference trajectory nepřekonala zero-change baseline v žádné z 12 kombinací.
+
+Současně difference model překonal shuffled control ve všech 12 případech. To znamená, že ani state-difference trajectory není náhodná: obsahuje uspořádanou informaci, kterou lineární model využívá. Tato informace však v tomto experimentu není dostatečná k robustní rekonstrukci následující coherence innovation.
+
+S rostoucí délkou historie se chyba výrazně zhoršuje. Nejlepší screeningový případ je history=2, ale i ten je ve všech třech seedech výrazně horší než zero-change baseline.
+
+### Stav hypotézy po 2.13
+
+Kumulativní evidence nyní rozlišuje několik úrovní:
+
+1. GENESIS-2.9: coherence innovation je reprodukovatelně predikovatelná z vlastní krátké historie.
+2. GENESIS-2.10: jednotlivé aktuální non-coherence state reprezentace tento signál robustně nereprodukují.
+3. GENESIS-2.11: jednoduchá 193D kombinace těchto reprezentací jej nereprodukuje.
+4. GENESIS-2.12: krátká trajektorie absolutního combined state jej nereprodukuje.
+5. GENESIS-2.13: krátká trajektorie state differences jej v screeningovém protokolu také nereprodukuje.
+
+Další krok proto nemá být další mechanické rozšiřování stejného lineárního modelu. Nejčistší další experiment je model-class control: použít nelineární, ale stále externí a measurement-only prediktor na stejných 2.12/2.13 vstupních datech. Tím lze oddělit dvě hypotézy:
+
+- informace v observer-state reprezentaci skutečně chybí,
+- nebo je přítomna, ale lineární ridge model ji neumí extrahovat.
+
+Dokud tento kontrolní experiment nebude proveden, nelze z negativních výsledků 2.10–2.13 tvrdit, že non-coherence state neobsahuje prediktivní informaci.
+
+Experiment stále nemá zpětnou vazbu do GenesisUniverse, žádné cíle, odměny, agency, self-model ani endogenní učení.
