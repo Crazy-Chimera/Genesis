@@ -37,6 +37,12 @@ def _windows(records: Iterable[MemoryRecord], history_length: int):
     for item in records:
         groups.setdefault(item.identity, []).append(item)
 
+    expected_width = next(
+        spec.width
+        for spec in STATE_FEATURES_WITH_COMBINED
+        if spec.name == "combined"
+    )
+
     rows = []
     for items in groups.values():
         items.sort(key=lambda x: x.tick)
@@ -46,15 +52,33 @@ def _windows(records: Iterable[MemoryRecord], history_length: int):
             ticks = [x.tick for x in window] + [target.tick]
             if any(ticks[j + 1] != ticks[j] + 1 for j in range(len(ticks) - 1)):
                 continue
-            states = [np.asarray(combined_state(x), dtype=float) for x in window]\n            expected_width = next(\n                spec.width for spec in STATE_FEATURES_WITH_COMBINED\n                if spec.name == "combined"\n            )\n            if any(state.shape != (expected_width,) for state in states):\n                continue\n            rows.append((\n                target.tick,\n                states,\n                target.coherence - window[-1].coherence,\n            ))
+            states = [
+                np.asarray(combined_state(x), dtype=float)
+                for x in window
+            ]
+            if any(state.shape != (expected_width,) for state in states):
+                continue
+            rows.append(
+                (
+                    target.tick,
+                    states,
+                    target.coherence - window[-1].coherence,
+                )
+            )
     return sorted(rows, key=lambda x: x[0])
 
 
-def _split(records: Iterable[MemoryRecord], history_length: int, fraction: float = 0.5):
+def _split(
+    records: Iterable[MemoryRecord],
+    history_length: int,
+    fraction: float = 0.5,
+):
     rows = _windows(records, history_length)
     if not rows:
-        return [], [], [], []
-    cutoff = rows[0][0] + max(1, int((rows[-1][0] - rows[0][0]) * fraction))
+        return [], []
+    cutoff = rows[0][0] + max(
+        1, int((rows[-1][0] - rows[0][0]) * fraction)
+    )
     train = [r for r in rows if r[0] < cutoff]
     test = [r for r in rows if r[0] >= cutoff]
     return train, test
@@ -81,20 +105,36 @@ class CrossSeedGeneralizationPredictor:
             raise ValueError("target_seed must not be in train_seeds")
         if not train_seeds:
             raise ValueError("train_seeds must not be empty")
-        if target_seed not in records_by_seed or any(s not in records_by_seed for s in train_seeds):
+        if target_seed not in records_by_seed or any(
+            s not in records_by_seed for s in train_seeds
+        ):
             raise ValueError("records missing for requested seed")
 
         train_rows = []
         for seed in train_seeds:
-            train_rows.extend(_split(records_by_seed[seed], self.history_length)[0])
-        test_rows = _split(records_by_seed[target_seed], self.history_length)[1]
+            train_rows.extend(
+                _split(records_by_seed[seed], self.history_length)[0]
+            )
+        test_rows = _split(
+            records_by_seed[target_seed], self.history_length
+        )[1]
+
         if not train_rows or not test_rows:
             return CrossSeedGeneralizationResult(
-                tuple(train_seeds), target_seed, self.history_length, 0, 0.0, 0.0, 0.0
+                tuple(train_seeds),
+                target_seed,
+                self.history_length,
+                0,
+                0.0,
+                0.0,
+                0.0,
             )
 
         def flatten(rows):
-            return np.asarray([np.concatenate(row[1]) for row in rows], dtype=float)
+            return np.asarray(
+                [np.concatenate(row[1]) for row in rows],
+                dtype=float,
+            )
 
         train = flatten(train_rows)
         test = flatten(test_rows)
@@ -118,7 +158,9 @@ class CrossSeedGeneralizationPredictor:
 
         shuffled = v.copy()
         np.random.default_rng(390001).shuffle(shuffled)
-        shuffled_pred = np.column_stack((np.ones(len(shuffled)), shuffled)) @ coef
+        shuffled_pred = np.column_stack(
+            (np.ones(len(shuffled)), shuffled)
+        ) @ coef
 
         return CrossSeedGeneralizationResult(
             tuple(train_seeds),
