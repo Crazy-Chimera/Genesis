@@ -7,6 +7,7 @@ on:
       - "genesis/**"
       - "experiments/pw001_predictive_eval.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_state_trajectory_ridge.py"
       - "experiments/pw001_delta_state_trajectory.py"
       - "experiments/pw001_state_feature_trajectory.py"
       - "experiments/pw001_state_trajectory_regularization.py"
