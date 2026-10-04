@@ -3,7 +3,7 @@ from __future__ import annotations
 from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
-from genesis.state_trajectory import StateTrajectoryPredictor
+from genesis.state_delta_trajectory import StateDeltaTrajectoryPredictor
 
 
 def collect(seed: int, ticks: int = 2_000):
@@ -36,20 +36,19 @@ def main() -> None:
             "shuffled_mae improvement beats_zero beats_shuffled"
         )
         for history_length in (2, 3, 5, 10):
-            result = StateTrajectoryPredictor(
+            result = StateDeltaTrajectoryPredictor(
                 feature_name="combined",
                 history_length=history_length,
                 train_fraction=0.5,
                 ridge=1e-6,
                 require_consecutive=True,
-                differences=True,
             ).evaluate(records)
             print(
                 seed,
                 history_length,
                 result.samples,
                 f"{result.zero_mae:.15g}",
-                f"{result.trajectory_mae:.15g}",
+                f"{result.delta_mae:.15g}",
                 f"{result.shuffled_mae:.15g}",
                 f"{result.improvement:.15g}",
                 result.beats_zero,
