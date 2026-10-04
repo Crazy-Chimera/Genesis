@@ -24,6 +24,7 @@ on:
       - "experiments/pw001_state_velocity.py"
       - "experiments/pw001_compressed_trajectory.py"
       - "experiments/pw001_state_trajectory_features.py"
+      - "experiments/pw001_population_trajectory.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -54,6 +55,7 @@ jobs:
       - run: python experiments/pw001_state_velocity.py | tee pw001-state-velocity.txt
       - run: python experiments/pw001_compressed_trajectory.py | tee pw001-compressed-trajectory.txt
       - run: python experiments/pw001_state_trajectory_features.py | tee pw001-state-trajectory-features.txt
+      - run: python experiments/pw001_population_trajectory.py | tee pw001-population-trajectory.txt
       - uses: actions/upload-artifact@v4
         with:
           name: pw001-predictive-results
@@ -77,3 +79,4 @@ jobs:
             pw001-state-velocity.txt
             pw001-compressed-trajectory.txt
             pw001-state-trajectory-features.txt
+            pw001-population-trajectory.txt
