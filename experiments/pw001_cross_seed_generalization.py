@@ -20,6 +20,7 @@ def collect(seed: int, ticks: int = 2_000):
 
 
 def main() -> None:
+    # Verification rerun: 2026-10-04.
     seeds = (390001, 390002, 390003)
     records = {seed: collect(seed) for seed in seeds}
     results = []
