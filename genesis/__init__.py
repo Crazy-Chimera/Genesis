@@ -14,6 +14,7 @@ from .graph_relational import GraphRelationalPredictor, GraphRelationalEvaluatio
 from .innovation import InnovationPredictor, InnovationEvaluationResult
 from .state_innovation import StateFeatureSpec, StateInnovationEvaluationResult, StateInnovationPredictor
 from .state_trajectory import StateTrajectoryEvaluationResult, StateTrajectoryPredictor
+from .compressed_trajectory import CompressedStateTrajectoryPredictor, CompressedTrajectoryResult
 from .state_velocity import StateVelocityEvaluationResult, StateVelocityPredictor
 from .state_delta_trajectory import (
     StateDeltaTrajectoryEvaluationResult,
@@ -62,6 +63,8 @@ __all__ = [
     "StateInnovationPredictor",
     "StateTrajectoryEvaluationResult",
     "StateTrajectoryPredictor",
+    "CompressedTrajectoryResult",
+    "CompressedStateTrajectoryPredictor",
     "StateVelocityEvaluationResult",
     "StateVelocityPredictor",
     "StateDeltaTrajectoryEvaluationResult",
