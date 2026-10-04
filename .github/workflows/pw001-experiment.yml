@@ -12,6 +12,7 @@ on:
       - "experiments/pw001_state_feature_trajectory.py"
       - "experiments/pw001_state_trajectory_regularization.py"
       - "experiments/pw001_state_trajectory_isolated.py"
+      - "experiments/pw001_state_velocity.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -104,3 +105,18 @@ jobs:
         with:
           name: pw001-state-trajectory-isolated
           path: pw001-state-trajectory-isolated.txt
+
+  state-velocity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_state_velocity.py | tee pw001-state-velocity.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-state-velocity
+          path: pw001-state-velocity.txt
