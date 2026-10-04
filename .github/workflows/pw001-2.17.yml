@@ -24,3 +24,5 @@ jobs:
         with:
           name: pw001-genesis-2.17
           path: pw001-2.17.txt
+
+# Re-run benchmark from current main state.
