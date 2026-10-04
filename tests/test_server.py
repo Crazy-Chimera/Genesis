@@ -24,7 +24,7 @@ def test_dashboard_contains_genesis_pw001():
     assert "Nonlinear state trajectory · 2.14" in html
     assert "0/12 positive" in html
     assert "1/3 seeds positive" in html
-    assert "negative; 7/54 positive" in html
+    assert "negative; 7/54 zero-change wins" in html
     assert "0/12 beat zero-change" in html
     assert "verification pending" in html
     assert 'data-ui-version="2.23"' in html
