@@ -93,8 +93,8 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9</div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11</div>
       <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span>
-      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">screening negative</span></div>
-      <div class="stage"><span class="dot pending"></span>12. Nonlinear state trajectory · 2.14 · <span class="pending">READY / NOT RUN</span></div></div>
+      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">12/12 below zero baseline</span></div>
+      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">12/12 below zero baseline</span></div></div>
     </div>
   </div>
 
@@ -118,18 +118,18 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-6">
-    <h2>EVIDENCE · 2.10–2.13</h2>
+    <h2>EVIDENCE · 2.10–2.14</h2>
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
-    <div class="row"><span>nonlinear current-state · 2.13</span><span class="badge pending">model-class control</span></div>
-    <p class="muted">Neither a single state, combined 193D state, nor short absolute/difference state trajectory reconstructs the 2.9 innovation signal under the tested linear protocol. 2.14 is reserved for the nonlinear trajectory model-class control.</p>
+    <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">12/12 below zero baseline</span></div>
+    <p class="muted">Neither a single state, combined 193D state, short state trajectory, nor nonlinear trajectory reconstructs the 2.9 innovation signal under the tested protocol. 2.14 remains a negative model-class control.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.14</h2>
-    <p><b>Nonlinear state-trajectory control — not yet run.</b></p>
-    <p class="muted">Same 193D non-coherence state trajectory as 2.12, now passed through a deterministic nonlinear random-feature map before ridge regression. This isolates model-class effects while preserving the same universe, holdout, seeds, and no-feedback invariant. Result is not yet available.</p>
+    <h2>NEXT · GENESIS-2.15</h2>
+    <p><b>Representation bottleneck — next research question.</b></p>
+    <p class="muted">2.12–2.14 show that increasing trajectory/model complexity does not recover the 2.9 innovation signal. The next controlled probe should reduce the 193D observer state to a deterministic low-dimensional representation before prediction, without introducing coherence feedback or changing the universe.</p>
   </div>
 
   <div class="card span-12">
