@@ -33,23 +33,40 @@ class RepresentationTransferResult:
         return self.transfer_mae < self.shuffled_mae
 
 
-def _split(records: Iterable[MemoryRecord], history_length: int, fraction: float):
+def _windows(records: Iterable[MemoryRecord], history_length: int):
     groups: dict[int, list[MemoryRecord]] = {}
     for item in records:
         groups.setdefault(item.identity, []).append(item)
-    windows, targets = [], []
+
+    rows = []
     for items in groups.values():
         items.sort(key=lambda x: x.tick)
         for i in range(history_length, len(items)):
             window = items[i-history_length:i]
             target = items[i]
             ticks = [x.tick for x in window] + [target.tick]
-            if any(ticks[j+1] != ticks[j] + 1 for j in range(len(ticks)-1)):
+            if any(ticks[j + 1] != ticks[j] + 1 for j in range(len(ticks) - 1)):
                 continue
-            windows.append([np.asarray(combined_state(x), dtype=float) for x in window])
-            targets.append(target.coherence - window[-1].coherence)
-    cutoff = int(len(windows) * fraction)
-    return windows[:cutoff], targets[:cutoff], windows[cutoff:], targets[cutoff:]
+            rows.append((
+                target.tick,
+                [np.asarray(combined_state(x), dtype=float) for x in window],
+                target.coherence - window[-1].coherence,
+            ))
+    return sorted(rows, key=lambda x: x[0])
+
+
+def _split(records: Iterable[MemoryRecord], history_length: int, fraction: float):
+    rows = _windows(records, history_length)
+    if not rows:
+        return [], [], [], []
+    ticks = [row[0] for row in rows]
+    cutoff = ticks[0] + max(1, int((ticks[-1] - ticks[0]) * fraction))
+    train = [row for row in rows if row[0] < cutoff]
+    test = [row for row in rows if row[0] >= cutoff]
+    return (
+        [row[1] for row in train], [row[2] for row in train],
+        [row[1] for row in test], [row[2] for row in test],
+    )
 
 
 class RepresentationTransferPredictor:
@@ -83,7 +100,7 @@ class RepresentationTransferPredictor:
 
         def encode(windows):
             return np.asarray([
-                ((np.asarray(w) - mean) / scale @ basis).reshape(-1)
+                (((np.asarray(w) - mean) / scale) @ basis).reshape(-1)
                 for w in windows
             ])
 
