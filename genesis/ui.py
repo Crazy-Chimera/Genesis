@@ -93,16 +93,16 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9</div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11</div>
       <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">negative vs zero baseline</span>
-      <div class="stage"><span class="dot"></span>11. Nonlinear model-class control · 2.13</div>
-      <div class="stage"><span class="dot pending"></span>12. Nonlinear state trajectory · 2.14 · <span class="pending">RUNNING</span></div></div>
+      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">screening negative</span></div>
+      <div class="stage"><span class="dot pending"></span>12. Nonlinear state trajectory · 2.14 · <span class="pending">READY / NOT RUN</span></div></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.12</h2>
-    <p><b>State trajectory did not beat the zero-change baseline in 12/12 tested seed × history combinations.</b></p>
+    <h2>RESULT · GENESIS-2.13</h2>
+    <p><b>State-difference trajectory did not beat the zero-change baseline in 12/12 screening combinations.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">state(t-k) … state(t)</span><br><span class="muted">193D combined observer state</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">state(t-k) … state(t)</span><br><span class="muted">193D combined observer state differences</span></div>
       <div class="card span-6"><h2>EXCLUDED</h2><span class="pending">coherence history</span><br><span class="muted">no direct ΔC input</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>ΔC(t+1) = C(t+1) − C(t)</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory</span></div>
@@ -123,13 +123,13 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">12/12 below zero baseline</span></div>
     <div class="row"><span>nonlinear current-state · 2.13</span><span class="badge pending">model-class control</span></div>
-    <p class="muted">Neither a single state, combined 193D state, nor short state trajectory reconstructs the 2.9 innovation signal under the tested linear protocol. 2.13 tests whether the linear model class itself is the bottleneck.</p>
+    <p class="muted">Neither a single state, combined 193D state, nor short absolute/difference state trajectory reconstructs the 2.9 innovation signal under the tested linear protocol. 2.14 is reserved for the nonlinear trajectory model-class control.</p>
   </div>
 
   <div class="card span-12">
-    <h2>RUNNING · GENESIS-2.14</h2>
-    <p><b>Nonlinear state-trajectory control.</b></p>
-    <p class="muted">Same 193D non-coherence state trajectory as 2.12, now passed through a deterministic nonlinear random-feature map before ridge regression. This isolates model-class effects while preserving the same universe, holdout, seeds, and no-feedback invariant. Result is pending.</p>
+    <h2>NEXT · GENESIS-2.14</h2>
+    <p><b>Nonlinear state-trajectory control — not yet run.</b></p>
+    <p class="muted">Same 193D non-coherence state trajectory as 2.12, now passed through a deterministic nonlinear random-feature map before ridge regression. This isolates model-class effects while preserving the same universe, holdout, seeds, and no-feedback invariant. Result is not yet available.</p>
   </div>
 
   <div class="card span-12">
