@@ -18,6 +18,7 @@ class StateTrajectoryEvaluationResult:
     heldout_start_tick: int
     feature_name: str
     history_length: int
+    differences: bool = False
 
     @property
     def improvement(self) -> float:
@@ -37,13 +38,13 @@ class StateTrajectoryPredictor:
 
     def __init__(
         self,
-        feature_name: str = "combined",
-        history_length: int = 3,
-        train_fraction: float = 0.5,
-        ridge: float = 1e-6,
-        require_consecutive: bool = True,
-        differences: bool = False,
-    ) -> None:
+        feature_name="combined",
+        history_length=3,
+        train_fraction=0.5,
+        ridge=1e-6,
+        require_consecutive=True,
+        differences=False,
+    ):
         if history_length < 2:
             raise ValueError("history_length must be >= 2")
         if not 0.0 < train_fraction < 1.0:
@@ -60,24 +61,20 @@ class StateTrajectoryPredictor:
         self.require_consecutive = require_consecutive
         self.differences = differences
 
-    def evaluate(self, records: Iterable[MemoryRecord]) -> StateTrajectoryEvaluationResult:
+    def evaluate(self, records: Iterable[MemoryRecord]):
         ordered = sorted(records, key=lambda x: (x.tick, x.identity))
         if not ordered:
             return StateTrajectoryEvaluationResult(
-                0, 0.0, 0.0, 0.0, 0, self.spec.name, self.history_length
+                0, 0, 0, 0, 0, self.spec.name, self.history_length, self.differences
             )
 
         lo, hi = ordered[0].tick, ordered[-1].tick
         heldout = lo + max(1, int((hi - lo) * self.train_fraction))
-        groups: dict[int, list[MemoryRecord]] = {}
+        groups = {}
         for item in ordered:
             groups.setdefault(item.identity, []).append(item)
 
-        tx: list[tuple[float, ...]] = []
-        ty: list[float] = []
-        vx: list[tuple[float, ...]] = []
-        vy: list[float] = []
-
+        tx, ty, vx, vy = [], [], [], []
         for items in groups.values():
             items.sort(key=lambda x: x.tick)
             for i in range(self.history_length, len(items)):
@@ -90,19 +87,18 @@ class StateTrajectoryPredictor:
                     continue
 
                 vectors = [
-                    tuple(float(v) for v in self.spec.feature(x)) for x in window
+                    np.asarray(tuple(float(v) for v in self.spec.feature(x)), dtype=float)
+                    for x in window
                 ]
                 if any(len(v) != self.spec.width for v in vectors):
                     continue
 
                 if self.differences:
-                    vectors = [
-                        tuple(b - a for a, b in zip(vectors[j], vectors[j + 1]))
-                        for j in range(len(vectors) - 1)
-                    ]
+                    vectors = [vectors[j + 1] - vectors[j] for j in range(len(vectors) - 1)]
 
-                row = tuple(v for vec in vectors for v in vec)
+                row = tuple(float(v) for vector in vectors for v in vector)
                 delta = target.coherence - window[-1].coherence
+
                 if target.tick < heldout:
                     tx.append(row)
                     ty.append(delta)
@@ -112,7 +108,7 @@ class StateTrajectoryPredictor:
 
         if not tx or not vx:
             return StateTrajectoryEvaluationResult(
-                0, 0.0, 0.0, 0.0, heldout, self.spec.name, self.history_length
+                0, 0, 0, 0, heldout, self.spec.name, self.history_length, self.differences
             )
 
         train = np.asarray(tx, float)
@@ -121,12 +117,12 @@ class StateTrajectoryPredictor:
         mean = train.mean(0)
         scale = train.std(0)
         scale[scale == 0] = 1
-        x = np.column_stack((np.ones(len(train)), (train - mean) / scale))
-        v = np.column_stack((np.ones(len(test)), (test - mean) / scale))
-        reg = np.eye(x.shape[1])
+        X = np.column_stack((np.ones(len(train)), (train - mean) / scale))
+        V = np.column_stack((np.ones(len(test)), (test - mean) / scale))
+        reg = np.eye(X.shape[1])
         reg[0, 0] = 0
-        coef = np.linalg.solve(x.T @ x + self.ridge * reg, x.T @ y)
-        pred = v @ coef
+        coef = np.linalg.solve(X.T @ X + self.ridge * reg, X.T @ y)
+        pred = V @ coef
 
         shuffled = test.copy()
         np.random.default_rng(390001).shuffle(shuffled)
@@ -141,4 +137,5 @@ class StateTrajectoryPredictor:
             heldout,
             self.spec.name,
             self.history_length,
+            self.differences,
         )
