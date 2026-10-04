@@ -11,7 +11,7 @@ HISTORIES = (2, 3, 5, 10)
 RIDGES = (1e-4, 1e-3, 1e-2, 1e-1, 1.0, 10.0, 100.0)
 
 
-def collect(seed: int, ticks: int = 10_000):
+def collect(seed: int, ticks: int = 2_000):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     tracker = RegionTracker(LocalStructureObserver())
     memory = TemporalMemory()
