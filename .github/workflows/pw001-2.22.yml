@@ -9,6 +9,8 @@ on:
       - "tests/test_seed_invariant.py"
       - ".github/workflows/pw001-2.22.yml"
 
+# Explicit benchmark trigger: keep the seed-invariant protocol independently runnable.
+
 jobs:
   benchmark:
     runs-on: ubuntu-latest
