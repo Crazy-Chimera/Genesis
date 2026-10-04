@@ -33,8 +33,8 @@ def make_record(tick: int, value: float, coherence: float) -> MemoryRecord:
 def test_delta_predictor_beats_zero_on_synthetic_relation():
     records = []
     for tick in range(1, 21):
-        value = float(tick)
-        coherence = 0.01 * tick + 0.002 * (tick - 1)
+        value = float(tick * tick)
+        coherence = 0.0005 * tick * tick
         records.append(make_record(tick, value, coherence))
 
     result = StateDeltaPredictor(
