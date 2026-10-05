@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.37-verified">
+<main data-ui-version="2.38-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -111,11 +111,11 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.37 VERIFIED</h2>
-    <p><b>The full PW-001 update rule beats the frequency-only model across all 6 tested seeds; coupling adds measurable predictive information.</b></p>
+    <h2>RESULT · GENESIS-2.38 VERIFIED</h2>
+    <p><b>The full PW-001 update rule beats both zero-change and frequency-only controls across 12 unseen seeds; coupling adds reproducible predictive information.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">12 unseen target seeds · source 390013–390024 → target 390025–390036</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.37 positive · 6/6 seeds</span><br><span class="muted">full rule vs frequency-only; no feedback into the universe</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.38 positive · 12/12 unseen seeds</span><br><span class="muted">full rule vs zero-change + frequency-only; no feedback into the universe</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
@@ -152,24 +152,24 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <p class="muted">2.32–2.35 remained negative. 2.36 applies the explicit PW-001 update equation without the stochastic noise term and predicts the next coherence innovation one step ahead. Across seeds 390001–390006, it beats zero-change in 6/6 cases, with mechanistic MAE ≈3.49–3.55×10⁻⁷ versus zero-change MAE ≈3.63×10⁻⁶–1.68×10⁻⁵.</p>
   </div>
 
-<div class="card s8"><h2>RESULT · GENESIS-2.37</h2>
+<div class="card s8"><h2>RESULT · GENESIS-2.38</h2>
 <p><b>Local coupling contributes predictive information beyond intrinsic frequency alone.</b></p>
 <div class="grid">
 <div class="card s6"><h2>BASE</h2><span class="muted">frequency-only update</span><br>
 <span class="ok">intrinsic frequency + no coupling</span></div>
 <div class="card s6"><h2>FULL RULE</h2><span class="muted">PW-001 deterministic update</span><br>
 <span class="ok">frequency + local four-neighbour coupling</span></div>
-<div class="card s6"><h2>RESULT</h2><span class="pending">verification pending</span><br>
+<div class="card s6"><h2>RESULT</h2><span class="pending">12/12 unseen seeds</span><br>
 <span class="muted">current CI benchmark · 390001–390006</span></div>
-<div class="card s6"><h2>INTERPRETATION</h2><span class="muted">mechanistic decomposition; verification pending</span><br>
+<div class="card s6"><h2>INTERPRETATION</h2><span class="muted">unseen-seed mechanistic validation; verified</span><br>
 <span>prediction remains external and no-feedback</span></div>
 </div></div>
 
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.38</h2>
-    <p><b>Test whether the coupling advantage survives independent noise controls and stronger out-of-sample validation.</b></p>
-    <p class="muted">The 2.37 result isolates a measurable contribution from local coupling. It remains an external mechanistic predictor, not evidence of intelligence, agency, self-modeling, or autonomous learning.</p>
+    <h2>NEXT · GENESIS-2.39</h2>
+    <p><b>Test whether the mechanistic relation survives controlled coupling ablation, longer horizons, and independent equation implementations.</b></p>
+    <p class="muted">The 2.38 result replicates the mechanistic signal on unseen seeds. The next step is causal ablation and longer-horizon validation; this remains an external predictor, not evidence of intelligence, agency, self-modeling, or autonomous learning.</p>
   </div>
 
   <div class="card span-12">
@@ -182,7 +182,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.37 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.38 results recorded</div>
     </div>
   </div>
 
