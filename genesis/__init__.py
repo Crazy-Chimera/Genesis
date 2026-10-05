@@ -23,6 +23,7 @@ from .state_delta_trajectory import (
     StateDeltaTrajectoryPredictor,
 )
 from .global_phase import GlobalPhaseEvaluationResult, GlobalPhasePredictor, phase_features
+from .mechanistic import MechanisticResult, MechanisticOneStepPredictor, rule_next_phase_without_noise
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -79,5 +80,8 @@ __all__ = [
     "GlobalPhaseEvaluationResult",
     "GlobalPhasePredictor",
     "phase_features",
+    "MechanisticResult",
+    "MechanisticOneStepPredictor",
+    "rule_next_phase_without_noise",
     "run",
 ]
