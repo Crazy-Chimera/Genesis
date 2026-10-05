@@ -101,7 +101,6 @@ class StateChangeTrajectoryPredictor:
                 ):
                     continue
                 delta = states[index] - states[index - 1]
-                items[index]._genesis_state_change = tuple(delta) if False else None
                 target = current
                 change_rows: list[np.ndarray] = [delta]
                 if len(change_rows) < 1:
