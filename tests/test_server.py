@@ -30,7 +30,9 @@ def test_dashboard_contains_genesis_pw001():
     assert 'data-ui-version="2.34"' in html
     assert "GENESIS-2.34" in html
     assert "state trajectory" in html.lower()
-    assert "unseen-seed replication" in html.lower()\n    assert "0/12 zero-change wins" in html\n    assert "negative mean" in html
+    assert "unseen-seed replication" in html.lower()
+    assert "0/12 zero-change wins" in html
+    assert "negative mean" in html
     assert "No self-model" in html
     assert "/step" in html
 
