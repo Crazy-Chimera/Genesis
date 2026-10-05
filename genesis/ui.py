@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.42-verified">
+<main data-ui-version="2.44-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -106,7 +106,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>28. Rule-transition cross-seed · 2.28 · <span class="muted">4/6 baseline wins</span></div>
       <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div>
       <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
-      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div><div class="stage"><span class="dot"></span>35. Independent full-rule audit · 2.42 · <span class="muted">0 residual error across 6 seeds</span></div></div>
+      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div><div class="stage"><span class="dot"></span>35. Independent full-rule audit · 2.42 · <span class="muted">0 residual error across 6 seeds</span></div><div class="stage"><span class="dot pending"></span>36. Mechanistic noise attribution · 2.44 · <span class="muted">noise effect measured; attribution audit</span></div></div>
     </div>
   </div>
 
@@ -179,7 +179,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-12">
-    <h2>INVARIANTS</h2>
+    <h2>RESULT · GENESIS-2.44</h2>\n    <p><b>Independent noise-attribution audit isolates the stochastic contribution without changing the universe rule.</b></p>\n    <p class="muted">Six seeds × four horizons (1, 2, 5, 10): deterministic-reference MAE is 0 in the tested comparison, while the measured noise effect remains non-zero and grows with horizon. This is an attribution/validation result, not evidence of agency or a new physical mechanism.</p>\n  </div>\n\n  <div class="card span-12">\n    <h2>INVARIANTS</h2>
     <div class="grid">
       <div class="card span-3"><span class="ok">✓</span> Universe rules unchanged</div>
       <div class="card span-3"><span class="ok">✓</span> Observer is external</div>
