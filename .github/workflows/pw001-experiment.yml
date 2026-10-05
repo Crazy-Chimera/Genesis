@@ -10,7 +10,6 @@ on:
       - "genesis/compressed_trajectory.py"
       - "experiments/pw001_state_trajectory.py"
       - "experiments/pw001_state_trajectory_ridge.py"
-      - "experiments/pw001_state_trajectory_ridge.py"
       - "experiments/pw001_delta_state_trajectory.py"
       - "experiments/pw001_state_feature_trajectory.py"
       - "experiments/pw001_state_trajectory_regularization.py"
@@ -31,6 +30,8 @@ on:
       - "experiments/pw001_mechanistic_decomposition.py"
       - "experiments/pw001_mechanistic_validation.py"
       - "experiments/pw001_mechanistic_coupling.py"
+      - "experiments/pw001_mechanistic_noise.py"
+      - "genesis/mechanistic_noise.py"
       - "experiments/pw001_state_direction.py"
       - ".github/workflows/pw001-experiment.yml"
 
@@ -203,7 +204,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: {name: pw001-regularized-trajectory, path: pw001-regularized-trajectory.txt}
 
-
   mechanistic-one-step:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -252,12 +252,23 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic-coupling, path: pw001-mechanistic-coupling.txt}
 
+  mechanistic-noise-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_mechanistic_noise.py | tee pw001-mechanistic-noise.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-mechanistic-noise, path: pw001-mechanistic-noise.txt}
+
   state-direction:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
       - run: set -o pipefail; python -u experiments/pw001_state_direction.py | tee pw001-state-direction.txt
