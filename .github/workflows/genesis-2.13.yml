@@ -8,6 +8,7 @@ on:
       - "genesis/state_difference.py"
       - "experiments/pw001_state_difference.py"
       - "tests/test_state_trajectory.py"
+      - "tests/test_state_difference.py"
       - ".github/workflows/genesis-2.13.yml"
 
 jobs:
@@ -23,7 +24,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install . pytest
-      - run: pytest -q tests/test_state_trajectory.py
+      - run: pytest -q tests/test_state_trajectory.py tests/test_state_difference.py
       - run: |
           set -o pipefail
           python experiments/pw001_state_difference.py --seed ${{ matrix.seed }} | tee genesis-2.13-${{ matrix.seed }}.txt
