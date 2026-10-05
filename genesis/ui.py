@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.33">
+<main data-ui-version="2.34">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -111,11 +111,11 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.33</h2>
+    <h2>RESULT · GENESIS-2.34</h2>
     <p><b>Rule-transition observables fail independent unseen-seed replication.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">18 unseen seeds · blocked-time cross-seed replication</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative replication</span><br><span class="muted">2.32: 4/12 · 2.33: 3/12 permutation p<0.05</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">12 unseen target seeds · source 390013–390024 → target 390025–390036</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative replication</span><br><span class="muted">2.34: 0/12 zero-change wins · 4/12 permutation wins</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
@@ -149,12 +149,12 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   <div class="card span-12">
     <h2>RESULT · GENESIS-2.31</h2>
     <p><b>Independent unseen-seed replication and permutation audit remain negative.</b></p>
-    <p class="muted">2.32 tested 12 unseen target seeds: 4/12 beat zero-change, 4/12 beat shuffled; mean improvement was negative. 2.33 repeated the same cases with 500 deterministic permutations: 3/12 had p < 0.05, median p = 0.532934. This is insufficient evidence for a general transferable mechanism.</p>
+    <p class="muted">2.32–2.33 remained negative. 2.34 tested local frequency-detuning transfer on 12 unseen target seeds: 0/12 beat zero-change, 4/12 beat permutation, with mean improvement −0.0413814. This is strong negative evidence against this representation as a transferable predictor.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.34</h2>
-    <p><b>Stop expanding the same linear rule-transition representation. Next, test an independently motivated mechanism or representation.</b></p>
+    <h2>NEXT · GENESIS-2.35</h2>
+    <p><b>2.34 failed: stop expanding the same rule-transition family. Next, test an independently motivated mechanism or representation.</b></p>
     <p class="muted">A positive result must beat zero-change and shuffled/permutation controls on held-out unseen seeds; no universe feedback is permitted.</p>
   </div>
 
@@ -168,7 +168,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.31 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.34 results recorded</div>
     </div>
   </div>
 
