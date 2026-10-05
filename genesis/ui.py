@@ -106,16 +106,16 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>28. Rule-transition cross-seed · 2.28 · <span class="muted">4/6 baseline wins</span></div>
       <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div>
       <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
-      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div><div class="stage"><span class="dot"></span>35. Independent full-rule audit · 2.42 · <span class="muted">0 residual error across 6 seeds</span></div><div class="stage"><span class="dot pending"></span>36. Mechanistic noise attribution · 2.44 · <span class="muted">noise effect measured; attribution audit</span></div></div>
+      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div><div class="stage"><span class="dot"></span>35. Independent full-rule audit · 2.42 · <span class="muted">0 residual error across 6 seeds</span></div><div class="stage"><span class="dot"></span>36. Mechanistic horizon validation · 2.43 · <span class="muted">24/24 positive</span></div><div class="stage"><span class="dot"></span>37. Mechanistic noise attribution · 2.44 · <span class="muted">noise effect measured; attribution audit</span></div></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.39 VERIFIED</h2>
-    <p><b>The full PW-001 update rule beats both zero-change and frequency-only controls across 12 unseen seeds; coupling adds reproducible predictive information.</b></p>
+    <h2>RESULT · GENESIS-2.43 VERIFIED</h2>
+    <p><b>The mechanistic PW-001 predictor remains substantially better than zero-change through horizon 10 on all six unseen seeds tested in 2.43.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">12 unseen target seeds · source 390013–390024 → target 390025–390036</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.38 positive · 12/12 unseen seeds</span><br><span class="muted">full rule vs zero-change + frequency-only; no feedback into the universe</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">explicit PW-001 rule</span><br><span class="muted">6 unseen seeds · horizons 1, 2, 5, 10</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.43 positive · 24/24 seed×horizon cases</span><br><span class="muted">deterministic rule prediction vs zero-change; no feedback into the universe</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
