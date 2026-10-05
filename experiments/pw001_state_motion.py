@@ -32,7 +32,7 @@ def main() -> None:
             "seed history_length samples zero_mae motion_mae "
             "shuffled_mae improvement beats_zero beats_shuffled"
         )
-        for history_length in (2, 3, 5, 10):
+        for history_length in (2,):
             result = StateMotionPredictor(
                 feature_name="combined",
                 history_length=history_length,
