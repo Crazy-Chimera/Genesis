@@ -93,7 +93,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>8. Innovation · 2.9 · <span class="muted">12/12 positive</span></div>
       <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11 · <span class="muted">not robust</span></div>
       <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>11. State-difference / harmonic-state probes · 2.13 · <span class="muted">validation in progress</span></div>
+      <div class="stage"><span class="dot"></span>11. State-difference / harmonic-state probes · 2.13 · <span class="muted">0/12 positive</span></div>
       <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">0/12 positive</span></div>
       <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening only</span></div>
       <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
@@ -134,7 +134,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">0/12 positive</span></div>
-    <div class="row"><span>2.13 state-change / harmonic probes</span><span class="badge pending">validation in progress</span></div>
+    <div class="row"><span>2.13 state-change / harmonic probes</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">screening only</span></div>
     <div class="row"><span>dim-2 full validation · 2.16</span><span class="badge pending">1/3 seeds positive</span></div>
