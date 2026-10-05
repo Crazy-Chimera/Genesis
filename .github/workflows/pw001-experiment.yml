@@ -45,9 +45,24 @@ on:
       - "experiments/pw001_state_change.py"
       - "genesis/state_change.py"
       - "tests/test_state_change.py"
+      - "experiments/pw001_numerical_convergence.py"
+      - "genesis/numerical_convergence.py"
+      - "tests/test_numerical_convergence.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
+  numerical-convergence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_numerical_convergence.py | tee pw001-numerical-convergence.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-numerical-convergence, path: pw001-numerical-convergence.txt}
+
   predictive:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -324,7 +339,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: {name: pw001-global-phase, path: pw001-global-phase.txt}
 
-
   precision-audit:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -337,7 +351,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: {name: pw001-precision-audit, path: pw001-precision-audit.txt}
 
-
   state-change:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -349,7 +362,6 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_state_change.py | tee pw001-state-change.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-change, path: pw001-state-change.txt}
-
 
   state-trajectory-geometry:
     runs-on: ubuntu-latest
