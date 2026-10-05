@@ -1,0 +1,26 @@
+name: GENESIS 2.32
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_rule_transition_replication.py"
+      - "genesis/rule_transition.py"
+      - "genesis/rule_distribution.py"
+      - ".github/workflows/genesis-2.32.yml"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python experiments/pw001_rule_transition_replication.py | tee genesis-2.32-results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.32-replication
+          path: genesis-2.32-results.txt
