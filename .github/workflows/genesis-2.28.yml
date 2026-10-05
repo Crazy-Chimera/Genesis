@@ -1,0 +1,28 @@
+name: GENESIS 2.28
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/rule_transition.py"
+      - "experiments/pw001_rule_transition.py"
+      - "tests/test_rule_transition.py"
+      - ".github/workflows/genesis-2.28.yml"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install . pytest
+      - run: pytest -q tests/test_rule_transition.py
+      - run: set -o pipefail; python -u experiments/pw001_rule_transition.py | tee pw001-rule-transition.txt
+      - run: grep -q '^SUMMARY$' pw001-rule-transition.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-rule-transition
+          path: pw001-rule-transition.txt
