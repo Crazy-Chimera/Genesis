@@ -1898,3 +1898,40 @@ The next validation should test whether the mechanistic relation survives:
 5. strict controls against numerical and implementation leakage.
 
 The overall PW-001 workflow remains measurement-only and no-feedback.
+
+
+## GENESIS-2.39 — Coupling Dose-Response Validation
+
+GENESIS-2.39 tests whether the mechanistic predictive relation is specifically centered on the actual PW-001 coupling parameter rather than merely correlated with the presence of a coupling term. The predictor recomputes the deterministic one-step coherence innovation for a sweep of coupling values: 0, 0.0025, 0.005, 0.0075, 0.01, 0.0125, 0.015, and 0.02. The actual universe continues to use the configured PW-001 coupling of 0.01. Six previously unseen seeds, 390037–390042, are evaluated for 2,000 ticks each.
+
+### Verified result
+
+Workflow: **PW-001 experiment #219**  
+Commit: `69f97e81c2be9b619bf7cde0f682b017f11f73f1`  
+Artifact: `11335275646`  
+Artifact digest: `sha256:31beae15134669f3478322fed89f023710496f36ade7104d8357a8054b5449ec`
+
+The minimum MAE occurs at coupling **0.01 for all six unseen seeds**:
+
+| seed | MAE at 0 | MAE at 0.0075 | MAE at 0.01 | MAE at 0.0125 | best coupling |
+|---:|---:|---:|---:|---:|---:|
+| 390037 | 1.2115185e-06 | 4.3113941e-07 | 3.5099380e-07 | 4.4106692e-07 | 0.01 |
+| 390038 | 2.9237871e-06 | 7.4498244e-07 | 3.4481785e-07 | 7.5197752e-07 | 0.01 |
+| 390039 | 2.5992322e-06 | 7.0324174e-07 | 3.4966052e-07 | 6.9356689e-07 | 0.01 |
+| 390040 | 3.9496767e-06 | 1.0014352e-06 | 3.4681658e-07 | 1.0078183e-06 | 0.01 |
+| 390041 | 9.7359627e-07 | 4.3038094e-07 | 3.5547354e-07 | 4.2638794e-07 | 0.01 |
+| 390042 | 2.1314894e-06 | 6.0203909e-07 | 3.4888187e-07 | 5.8079621e-07 | 0.01 |
+
+### Interpretation
+
+GENESIS-2.39 strengthens GENESIS-2.38 by showing a dose-response structure: the tested prediction error decreases toward the configured coupling value and rises again when the coupling is increased beyond it. The exact minimum at 0.01 occurs independently on all six unseen seeds.
+
+This is stronger evidence for a mechanistic relation tied to the numerical coupling parameter than a binary coupled-versus-uncoupled comparison alone. It is still a result about the tested PW-001 update equation and numerical protocol; it does not establish intelligence, agency, self-modeling, or endogenous learning.
+
+The predictor remains external. It does not modify `GenesisUniverse`, its parameters, or the coupling rule, and no prediction is fed back into the universe.
+
+### Research frontier after 2.39
+
+The next validation should test the identified coupling relation under longer horizons and independent implementations of the update equation, followed by controlled perturbations of the coupling term. The dose-response should also be tested at finer resolution around 0.01 before interpreting the minimum as a precise parameter estimate.
+
+All existing non-interference invariants remain unchanged.
