@@ -159,9 +159,9 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 <span class="ok">intrinsic frequency + no coupling</span></div>
 <div class="card s6"><h2>FULL RULE</h2><span class="muted">PW-001 deterministic update</span><br>
 <span class="ok">frequency + local four-neighbour coupling</span></div>
-<div class="card s6"><h2>RESULT</h2><span class="ok">6/6 seeds full rule beats frequency-only</span><br>
-<span class="muted">390001–390006 · 2,000 ticks each</span></div>
-<div class="card s6"><h2>INTERPRETATION</h2><span class="muted">mechanistic decomposition, not intelligence</span><br>
+<div class="card s6"><h2>RESULT</h2><span class="pending">verification pending</span><br>
+<span class="muted">current CI benchmark · 390001–390006</span></div>
+<div class="card s6"><h2>INTERPRETATION</h2><span class="muted">mechanistic decomposition; verification pending</span><br>
 <span>prediction remains external and no-feedback</span></div>
 </div></div>
 
