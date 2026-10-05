@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+
 import numpy as np
 
 from .core import GenesisConfig, GenesisUniverse
@@ -22,6 +23,7 @@ class MechanisticNoiseAuditResult:
 def evaluate_noise_audit(
     universe: GenesisUniverse, horizon: int
 ) -> MechanisticNoiseAuditResult:
+    """Compare the independent deterministic rule with the full noisy production rule."""
     if horizon < 1:
         raise ValueError("horizon must be >= 1")
 
@@ -37,33 +39,36 @@ def evaluate_noise_audit(
             ticks=universe.config.ticks,
         )
     )
-    zero_noise.phase = universe.phase.copy()
-    zero_noise.omega = universe.omega.copy()
-    zero_noise.tick = universe.tick
 
     deterministic_errors: list[float] = []
     noise_errors: list[float] = []
 
     for _ in range(universe.config.ticks):
         start = universe.phase.copy()
-        predicted = start.copy()
-        for _ in range(horizon):
-            predicted = deterministic_next_phase(universe, predicted)
+        zero_noise.phase = start.copy()
+        zero_noise.omega = universe.omega.copy()
+        zero_noise.tick = universe.tick
 
         deterministic_target = start.copy()
         for _ in range(horizon):
-            deterministic_target = deterministic_next_phase(universe, deterministic_target)
+            deterministic_target = deterministic_next_phase(
+                universe, deterministic_target
+            )
 
-        full_target = start.copy()
         for _ in range(horizon):
+            zero_noise.step()
             universe.step()
 
+        zero_noise_coherence = coherence(zero_noise.phase)
         deterministic_coherence = coherence(deterministic_target)
-        audit_coherence = coherence(deterministic_target)
-        full_coherence = coherence(full_target)
+        full_coherence = coherence(universe.phase)
 
-        deterministic_errors.append(abs(deterministic_coherence - audit_coherence))
-        noise_errors.append(abs(full_coherence - deterministic_coherence))
+        deterministic_errors.append(
+            abs(zero_noise_coherence - deterministic_coherence)
+        )
+        noise_errors.append(
+            abs(full_coherence - deterministic_coherence)
+        )
 
     return MechanisticNoiseAuditResult(
         horizon=horizon,
