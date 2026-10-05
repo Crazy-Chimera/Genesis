@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.38-verified">
+<main data-ui-version="2.39-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -106,12 +106,12 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>28. Rule-transition cross-seed · 2.28 · <span class="muted">4/6 baseline wins</span></div>
       <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div>
       <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
-      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div></div>
+      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.38 VERIFIED</h2>
+    <h2>RESULT · GENESIS-2.39 VERIFIED</h2>
     <p><b>The full PW-001 update rule beats both zero-change and frequency-only controls across 12 unseen seeds; coupling adds reproducible predictive information.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">12 unseen target seeds · source 390013–390024 → target 390025–390036</span></div>
@@ -142,7 +142,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
     <div class="row"><span>cross-seed transfer · 2.20</span><span class="badge pending">7/54 positive</span></div>\n    <div class="row"><span>leave-one-seed-out · 2.21</span><span class="badge pending">0/9 positive</span></div>\n    <div class="row"><span>seed-invariant · 2.22</span><span class="badge pending">0/9 positive</span></div>
-    <div class="row"><span>expanded cross-seed · 2.23</span><span class="badge pending">0/18 positive</span></div>\n    <div class="row"><span>rule-native · 2.24</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-update · 2.25</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-invariant validation · 2.26</span><span class="badge ok">CI green</span></div>\n    <div class="row"><span>rule-distribution · 2.27</span><span class="badge pending">0/6 positive</span></div><div class="row"><span>unseen-seed replication · 2.32</span><span class="badge pending">4/12; negative mean</span></div><div class="row"><span>permutation audit · 2.33</span><span class="badge pending">3/12 p&lt;0.05</span></div><div class="row"><span>global-phase transfer · 2.35</span><span class="badge pending">0/3 positive</span></div><div class="row"><span>mechanistic one-step rule · 2.36</span><span class="badge ok">6/6 positive</span></div>
+    <div class="row"><span>expanded cross-seed · 2.23</span><span class="badge pending">0/18 positive</span></div>\n    <div class="row"><span>rule-native · 2.24</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-update · 2.25</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-invariant validation · 2.26</span><span class="badge ok">CI green</span></div>\n    <div class="row"><span>rule-distribution · 2.27</span><span class="badge pending">0/6 positive</span></div><div class="row"><span>unseen-seed replication · 2.32</span><span class="badge pending">4/12; negative mean</span></div><div class="row"><span>permutation audit · 2.33</span><span class="badge pending">3/12 p&lt;0.05</span></div><div class="row"><span>global-phase transfer · 2.35</span><span class="badge pending">0/3 positive</span></div><div class="row"><span>mechanistic one-step rule · 2.36</span><span class="badge ok">6/6 positive</span></div><div class="row"><span>coupling dose-response · 2.39</span><span class="badge ok">6/6 minimum at 0.01</span></div>
     <p class="muted">The tested observer-state families and rule-derived representations do not establish robust cross-seed predictive generalization. The primary criterion remains held-out improvement over zero-change; shuffled superiority alone is insufficient.</p>
   </div>
 
@@ -167,9 +167,9 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.39</h2>
-    <p><b>Test whether the mechanistic relation survives controlled coupling ablation, longer horizons, and independent equation implementations.</b></p>
-    <p class="muted">The 2.38 result replicates the mechanistic signal on unseen seeds. The next step is causal ablation and longer-horizon validation; this remains an external predictor, not evidence of intelligence, agency, self-modeling, or autonomous learning.</p>
+    <h2>RESULT · GENESIS-2.39</h2>
+    <p><b>The coupling dose-response is centered on the actual PW-001 coupling value 0.01 across six unseen seeds.</b></p>
+    <p class="muted">The tested values 0, 0.0025, 0.005, 0.0075, 0.01, 0.0125, 0.015 and 0.02 produce a unique minimum at 0.01 for every seed 390037–390042. This supports a mechanistic parameter-identification interpretation, while remaining external and no-feedback.</p>
   </div>
 
   <div class="card span-12">
