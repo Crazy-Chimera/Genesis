@@ -31,11 +31,25 @@ class StateChangeEvaluationResult:
         return self.change_mae < self.shuffled_mae
 
 
+def _fixed_vector(values: Iterable[float], width: int) -> np.ndarray:
+    vector = np.asarray(tuple(values), dtype=float)
+    if vector.size > width:
+        raise ValueError(f"feature width {vector.size} exceeds declared width {width}")
+    if vector.size == width:
+        return vector
+    return np.pad(vector, (0, width - vector.size))
+
+
 def state_change(previous: MemoryRecord, current: MemoryRecord) -> tuple[float, ...]:
+    """Return compact, fixed-width statistics of measured feature changes.
+
+    Missing observer values at a region birth are represented by zero displacement
+    up to the feature's declared width. The universe is not modified.
+    """
     values: list[float] = []
     for spec in STATE_FEATURES:
-        before = np.asarray(spec.feature(previous), dtype=float)
-        after = np.asarray(spec.feature(current), dtype=float)
+        before = _fixed_vector(spec.feature(previous), spec.width)
+        after = _fixed_vector(spec.feature(current), spec.width)
         delta = after - before
         values.extend(
             (
