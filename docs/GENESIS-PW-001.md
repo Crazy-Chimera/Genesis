@@ -1981,6 +1981,58 @@ The next validation should compare the mechanistic prediction signal against con
 All non-interference invariants remain unchanged: no prediction feedback, goals, rewards, agency, self-model, or endogenous learning are introduced.
 
 
+## GENESIS-2.43 — Mechanistic Horizon Validation
+
+GENESIS-2.43 extends the mechanistic one-step prediction from GENESIS-2.36–2.39 to multi-step horizons. The predictor repeatedly applies the deterministic PW-001 local update rule without stochastic noise, while the actual universe continues to evolve with the complete production rule. No predicted state is fed back into the universe.
+
+The benchmark evaluates six previously unseen seeds, 390055–390060, over 2,000 starting ticks each and prediction horizons 1, 2, 5, and 10.
+
+### Verified result
+
+The benchmark was reproduced locally from the exact current `genesis/core.py` and `genesis/mechanistic_horizon.py` implementation at the current `main` revision. The corresponding CI job is also integrated into the PW-001 workflow and remains pending runner execution.
+
+All **24/24** seed × horizon combinations beat the zero-change baseline.
+
+Mean results across the 24 combinations:
+
+- mechanistic prediction remains substantially below zero-change error at every tested horizon;
+- the mechanistic MAE remains approximately in the 3.4e-07 to 1.15e-06 range;
+- zero-change MAE grows strongly with horizon, while mechanistic error grows much more slowly.
+
+Representative results:
+
+| seed | horizon | zero MAE | mechanistic MAE | improvement |
+|---:|---:|---:|---:|---:|
+| 390055 | 1 | 3.086945e-05 | 3.453058e-07 | +3.052414e-05 |
+| 390055 | 2 | 4.686595e-05 | 4.944245e-07 | +4.637153e-05 |
+| 390055 | 5 | 1.086218e-04 | 7.879507e-07 | +1.078339e-04 |
+| 390055 | 10 | 1.978178e-04 | 1.096397e-06 | +1.967214e-04 |
+| 390056 | 10 | 2.219032e-04 | 1.117561e-06 | +2.207856e-04 |
+| 390058 | 10 | 2.960462e-04 | 1.109931e-06 | +2.949363e-04 |
+| 390060 | 10 | 1.761270e-04 | 1.105274e-06 | +1.750217e-04 |
+
+### Interpretation
+
+GENESIS-2.43 strengthens the mechanistic result by showing that the deterministic local-rule predictor is not limited to a one-step advantage. Under the tested protocol, its prediction remains substantially more accurate than zero-change through horizon 10 on every unseen seed.
+
+This does **not** establish a new physical law, intelligence, agency, self-modeling, or endogenous learning. The predictor is an external computation derived directly from the explicitly specified PW-001 update rule. The universe itself is unchanged and receives no prediction feedback.
+
+The result should also be distinguished from the earlier observer-state trajectory experiments: 2.12–2.20 searched for predictive information in measured observer representations, whereas 2.43 evaluates a direct mechanistic consequence of the known universe rule.
+
+### Research frontier after 2.43
+
+The next validation should determine how much of the multi-step advantage is attributable to:
+
+1. deterministic local coupling;
+2. the omitted stochastic noise term;
+3. numerical error accumulation with horizon;
+4. parameter sensitivity and controlled coupling perturbation;
+5. independent reproduction of the complete rule.
+
+GENESIS-2.42 provides the independent full-rule implementation audit, and GENESIS-2.44 provides the noise-attribution audit. The next priority is therefore to combine these controls into a stricter mechanistic falsification protocol rather than expanding observer representations.
+
+All non-interference invariants remain unchanged.
+
 ## GENESIS-2.44 — Independent Noise-Attribution Audit
 
 GENESIS-2.44 isolates the contribution of the deterministic stochastic-noise term in the production PW-001 update rule. The audit compares the complete production rule with a deterministic reference that removes only the noise contribution, while keeping the local coupling, natural frequency, timestep, periodic topology, and phase wrapping unchanged.
