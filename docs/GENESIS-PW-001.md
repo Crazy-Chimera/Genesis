@@ -1979,3 +1979,40 @@ The next validation should compare the mechanistic prediction signal against con
 5. quantify numerical convergence before interpreting small residuals as physical structure.
 
 All non-interference invariants remain unchanged: no prediction feedback, goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+
+## GENESIS-2.44 — Independent Noise-Attribution Audit
+
+GENESIS-2.44 isolates the contribution of the deterministic stochastic-noise term in the production PW-001 update rule. The audit compares the complete production rule with a deterministic reference that removes only the noise contribution, while keeping the local coupling, natural frequency, timestep, periodic topology, and phase wrapping unchanged.
+
+### Verified result
+
+Commit: `dfeb5ceed019d511f249a7b222e1d3dfd5ebf297`  
+CI: **SUCCESS**  
+Audit scope: six seeds × four prediction horizons (1, 2, 5, 10).
+
+The deterministic-reference comparison has zero error at the deterministic component, while the measured noise contribution is non-zero and increases with prediction horizon.
+
+### Interpretation
+
+GENESIS-2.44 is an **attribution and validation result**, not evidence of agency or a new physical mechanism. It separates the deterministic local-rule component from the stochastic contribution in the implemented PW-001 process.
+
+Together with GENESIS-2.42, this closes an important implementation-consistency boundary:
+
+1. the complete production update can be reproduced independently;
+2. the stochastic contribution can be isolated without changing the production universe;
+3. the mechanistic prediction claim can therefore be analyzed separately from implementation mismatch and noise attribution.
+
+The predictor and audit remain external to `GenesisUniverse`. No prediction is fed back into the universe and no goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+### Research frontier after 2.44
+
+The next clean validation target is not another observer feature expansion. The priority is mechanistic falsification:
+
+1. test the coupling relation under controlled ablation and perturbation;
+2. extend from one-step innovation to longer horizons;
+3. quantify numerical convergence and floating-point sensitivity;
+4. preserve the independent full-rule implementation as a reproducibility oracle;
+5. test whether the identified relation survives parameter changes within the same rule family.
+
+The current evidence therefore supports a **tested mechanistic one-step predictive relation in PW-001**, while remaining deliberately agnostic about intelligence, agency, self-modeling, or autonomous learning.
