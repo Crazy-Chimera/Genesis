@@ -21,6 +21,7 @@ on:
       - "genesis/rule_invariant.py"
       - "experiments/pw001_nonlinear_state_trajectory.py"
       - "experiments/pw001_direct_state_transfer.py"
+      - "experiments/pw001_global_phase.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -179,3 +180,16 @@ jobs:
       - run: python -u experiments/pw001_regularized_trajectory.py | tee pw001-regularized-trajectory.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-regularized-trajectory, path: pw001-regularized-trajectory.txt}
+
+
+  global-phase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: python -u experiments/pw001_global_phase.py | tee pw001-global-phase.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-global-phase, path: pw001-global-phase.txt}
