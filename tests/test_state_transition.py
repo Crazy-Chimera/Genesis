@@ -27,6 +27,7 @@ def make_record(tick: int, identity: int = 1, coherence: float = 0.0) -> MemoryR
         multiscale_field=(0.0,) * 68,
         relational=(0.0,) * 16,
         graph_relational=(0.0,) * 33,
+        global_harmonics=(0.0,) * 9,
     )
 
 
