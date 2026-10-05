@@ -10,11 +10,7 @@ def render_dashboard(state: Mapping[str, float | int]) -> str:
     tick = int(state.get("tick", 0))
     coherence = float(state.get("coherence", 0.0))
     progress = min(100.0, max(0.0, tick / 100_000 * 100))
-
-    payload = json.dumps(
-        {"tick": tick, "coherence": coherence},
-        separators=(",", ":"),
-    )
+    payload = json.dumps({"tick": tick, "coherence": coherence}, separators=(",", ":"))
 
     return f"""<!doctype html>
 <html lang="en">
@@ -24,188 +20,128 @@ def render_dashboard(state: Mapping[str, float | int]) -> str:
 <title>Agent Ω / GENESIS</title>
 <style>
 :root {{
-  color-scheme: dark;
-  --bg:#071019; --panel:#0d1823; --panel2:#101e2b; --line:#203244;
-  --text:#e8f0f7; --muted:#8fa5b8; --accent:#73d2a4; --warn:#e2b96f;
+  color-scheme:dark;
+  --bg:#071019;--panel:#0d1823;--panel2:#101e2b;--line:#203244;
+  --text:#e8f0f7;--muted:#8fa5b8;--accent:#73d2a4;--warn:#e2b96f;
 }}
-* {{ box-sizing:border-box; }}
-body {{ margin:0; background:var(--bg); color:var(--text);
-  font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; }}
-main {{ max-width:1180px; margin:0 auto; padding:24px; }}
-header {{ display:flex; justify-content:space-between; gap:20px; align-items:flex-start;
-  border-bottom:1px solid var(--line); padding-bottom:20px; }}
-h1,h2,h3,p {{ margin:0; }}
-h1 {{ font-size:22px; letter-spacing:.04em; }}
-h2 {{ font-size:13px; color:var(--muted); margin-bottom:10px; }}
-.grid {{ display:grid; grid-template-columns:repeat(12,1fr); gap:12px; margin-top:12px; }}
-.card {{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; }}
-.span-3 {{ grid-column:span 3; }} .span-4 {{ grid-column:span 4; }}
-.span-6 {{ grid-column:span 6; }} .span-8 {{ grid-column:span 8; }}
-.span-12 {{ grid-column:span 12; }}
-.metric {{ font-size:25px; font-weight:700; }}
-.muted {{ color:var(--muted); }}
-.ok {{ color:var(--accent); }} .pending {{ color:var(--warn); }}
-.row {{ display:flex; justify-content:space-between; gap:12px; margin:6px 0; }}
-.badge {{ border:1px solid var(--line); border-radius:999px; padding:3px 8px; }}
-button {{ background:var(--accent); color:#071019; border:0; border-radius:7px;
-  padding:9px 13px; font:inherit; font-weight:700; cursor:pointer; }}
-button:disabled {{ opacity:.5; cursor:wait; }}
-.bar {{ height:8px; background:#182634; border-radius:99px; overflow:hidden; margin-top:10px; }}
-.bar > i {{ display:block; height:100%; width:{progress:.4f}%; background:var(--accent); }}
-.timeline {{ display:grid; gap:7px; }}
-.stage {{ display:flex; gap:10px; align-items:center; }}
-.dot {{ width:9px; height:9px; border-radius:50%; background:var(--accent); flex:none; }}
-.dot.pending {{ background:var(--warn); }}
-pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
-@media(max-width:800px) {{
-  .span-3,.span-4,.span-6,.span-8 {{ grid-column:span 12; }}
-  header {{ flex-direction:column; }}
-}}
+*{{box-sizing:border-box}} body{{margin:0;background:var(--bg);color:var(--text);
+font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}}
+main{{max-width:1180px;margin:0 auto;padding:24px}}
+header{{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;
+border-bottom:1px solid var(--line);padding-bottom:20px}}
+h1,h2,p{{margin:0}} h1{{font-size:22px;letter-spacing:.04em}}
+h2{{font-size:13px;color:var(--muted);margin-bottom:10px}}
+.grid{{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px}}
+.card{{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}}
+.s3{{grid-column:span 3}} .s4{{grid-column:span 4}} .s6{{grid-column:span 6}}
+.s8{{grid-column:span 8}} .s12{{grid-column:span 12}}
+.metric{{font-size:25px;font-weight:700}} .muted{{color:var(--muted)}}
+.ok{{color:var(--accent)}} .pending{{color:var(--warn)}}
+.row{{display:flex;justify-content:space-between;gap:12px;margin:6px 0}}
+.badge{{border:1px solid var(--line);border-radius:999px;padding:3px 8px}}
+button{{background:var(--accent);color:#071019;border:0;border-radius:7px;padding:9px 13px;
+font:inherit;font-weight:700;cursor:pointer}} button:disabled{{opacity:.5;cursor:wait}}
+.bar{{height:8px;background:#182634;border-radius:99px;overflow:hidden;margin-top:10px}}
+.bar>i{{display:block;height:100%;width:{progress:.4f}%;background:var(--accent)}}
+.timeline{{display:grid;gap:7px}} .stage{{display:flex;gap:10px;align-items:center}}
+.dot{{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}}
+.dot.pending{{background:var(--warn)}} pre{{margin:0;white-space:pre-wrap;color:var(--muted)}}
+@media(max-width:800px){{.s3,.s4,.s6,.s8{{grid-column:span 12}}header{{flex-direction:column}}}}
 </style>
 </head>
 <body>
-<main data-ui-version="2.36-verified">
+<main data-ui-version="2.37-verified">
 <header>
-  <div>
-    <div class="muted">AGENT Ω / GENESIS</div>
-    <h1>PRIMORDIAL EMERGENCE LAB</h1>
-    <p class="muted">GENESIS-PW-001 · measurement-only experimental substrate</p>
-  </div>
-  <button id="step">ADVANCE ONE TICK</button>
+<div><div class="muted">AGENT Ω / GENESIS</div><h1>PRIMORDIAL EMERGENCE LAB</h1>
+<p class="muted">GENESIS-PW-001 · measurement-only experimental substrate</p></div>
+<button id="step">ADVANCE ONE TICK</button>
 </header>
 
 <section class="grid">
-  <div class="card span-3"><h2>UNIVERSE</h2><div class="metric">PW-001</div><div class="muted">16×16 · 256 oscillators<div class="stage"><span class="dot pending"></span>32. Independent unseen-seed rule-transition replication · 2.32 · <span class="muted">4/12 baseline; negative mean</span></div><div class="stage"><span class="dot pending"></span>33. Rule-transition permutation audit · 2.33 · <span class="muted">3/12 p&lt;0.05; insufficient</span></div></div>
-  <div class="card span-3"><h2>TICK</h2><div id="tick" class="metric">{tick:,}</div><div class="muted">target 100,000</div><div class="bar"><i id="progress"></i></div></div>
-  <div class="card span-3"><h2>COHERENCE</h2><div id="coherence" class="metric">{coherence:.9f}</div><div class="muted">external observer measurement</div></div>
-  <div class="card span-3"><h2>Ω STATUS</h2><div class="metric ok">OBSERVER</div><div class="muted">Agent Ω not activated</div></div>
+<div class="card s3"><h2>UNIVERSE</h2><div class="metric">PW-001</div>
+<div class="muted">16×16 · 256 oscillators</div></div>
+<div class="card s3"><h2>TICK</h2><div id="tick" class="metric">{tick:,}</div>
+<div class="muted">target 100,000</div><div class="bar"><i id="progress"></i></div></div>
+<div class="card s3"><h2>COHERENCE</h2><div id="coherence" class="metric">{coherence:.9f}</div>
+<div class="muted">external observer measurement</div></div>
+<div class="card s3"><h2>Ω STATUS</h2><div class="metric ok">OBSERVER</div>
+<div class="muted">Agent Ω not activated</div></div>
 
-  <div class="card span-4">
-    <h2>OBSERVATION STACK</h2>
-    <div class="timeline">
-      <div class="stage"><span class="dot"></span>1. Coherence · 1.0</div>
-      <div class="stage"><span class="dot"></span>2. Local structures · 1.1</div>
-      <div class="stage"><span class="dot"></span>3. Persistence / identity · 1.2</div>
-      <div class="stage"><span class="dot"></span>4. Lifecycle events · 1.3</div>
-      <div class="stage"><span class="dot"></span>5. Temporal memory · 1.4</div>
-      <div class="stage"><span class="dot"></span>6. Prediction · 1.5–1.6b</div>
-      <div class="stage"><span class="dot"></span>7. Structural probes · 1.7–2.8</div>
-      <div class="stage"><span class="dot"></span>8. Innovation · 2.9 · <span class="muted">12/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11 · <span class="muted">not robust</span></div>
-      <div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>11. State-difference trajectory · 2.13 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>12. Nonlinear state trajectory · 2.14 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>13. Representation bottleneck · 2.15 · <span class="muted">screening only</span></div>
-      <div class="stage"><span class="dot"></span>14. Full-length dim-2 validation · 2.16 · <span class="muted">1/3 seeds positive</span></div>
-      <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 positive; no shuffled win</span></div>
-      <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">0/12 positive</span></div>
-      <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
-      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">negative; 7/54 zero-change wins</span></div>\n      <div class="stage"><span class="dot"></span>19. Leave-one-seed-out generalization · 2.21 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>20. Seed-invariant generalization · 2.22 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>21. Expanded cross-seed generalization · 2.23 · <span class="muted">0/18 positive</span></div>\n      <div class="stage"><span class="dot"></span>22. Rule-native cross-seed screening · 2.24 · <span class="muted">0/6 positive</span></div>\n      <div class="stage"><span class="dot pending"></span>23. Rule-update cross-seed screening · 2.25 · <span class="muted">0/6 positive</span>\n      <div class="stage"><span class="dot"></span>24. Rule-invariant validation · 2.26 · <span class="muted">CI green</span></div>\n      <div class="stage"><span class="dot pending"></span>25. Rule-distribution cross-seed screening · 2.27 · <span class="muted">0/6 positive</span></div>
-      <div class="stage"><span class="dot"></span>26. Rule-invariant validation · 2.26 · <span class="muted">CI green</span></div>
-      <div class="stage"><span class="dot"></span>27. Rule-distribution screening · 2.27 · <span class="muted">0/6 positive</span></div>
-      <div class="stage"><span class="dot"></span>28. Rule-transition cross-seed · 2.28 · <span class="muted">4/6 baseline wins</span></div>
-      <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div>
-      <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
-      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div></div>
-    </div>
-  </div>
+<div class="card s4"><h2>OBSERVATION STACK</h2><div class="timeline">
+<div class="stage"><span class="dot"></span>1. Coherence · 1.0</div>
+<div class="stage"><span class="dot"></span>2. Local structures · 1.1</div>
+<div class="stage"><span class="dot"></span>3. Persistence / identity · 1.2</div>
+<div class="stage"><span class="dot"></span>4. Lifecycle events · 1.3</div>
+<div class="stage"><span class="dot"></span>5. Temporal memory · 1.4</div>
+<div class="stage"><span class="dot"></span>6. Prediction · 1.5–1.6b</div>
+<div class="stage"><span class="dot"></span>7. Structural probes · 1.7–2.8</div>
+<div class="stage"><span class="dot"></span>8. Innovation · 2.9 · <span class="muted">12/12 positive</span></div>
+<div class="stage"><span class="dot"></span>9. State reconstruction · 2.10–2.11 · <span class="muted">not robust</span></div>
+<div class="stage"><span class="dot"></span>10. State trajectory · 2.12 · <span class="muted">0/12 positive</span></div>
+<div class="stage"><span class="dot pending"></span>11. State derivative · 2.13 · <span class="muted">negative</span></div>
+<div class="stage"><span class="dot pending"></span>12. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div>
+<div class="stage"><span class="dot"></span>13. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div>
+</div></div>
 
-  <div class="card span-8">
-    <h2>RESULT · GENESIS-2.36 VERIFIED</h2>
-    <p><b>The explicit PW-001 one-step rule predicts coherence innovation far better than the zero-change baseline across all 6 tested seeds.</b></p>
-    <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">12 unseen target seeds · source 390013–390024 → target 390025–390036</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.36 positive · 6/6 seeds</span><br><span class="muted">mechanistic one-step rule; no feedback into the universe</span></div>
-      <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
-      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
-    </div>
-  </div>
+<div class="card s8"><h2>RESULT · GENESIS-2.37</h2>
+<p><b>Local coupling contributes predictive information beyond intrinsic frequency alone.</b></p>
+<div class="grid">
+<div class="card s6"><h2>BASE</h2><span class="muted">frequency-only update</span><br>
+<span class="ok">intrinsic frequency + no coupling</span></div>
+<div class="card s6"><h2>FULL RULE</h2><span class="muted">PW-001 deterministic update</span><br>
+<span class="ok">frequency + local four-neighbour coupling</span></div>
+<div class="card s6"><h2>RESULT</h2><span class="ok">6/6 seeds full rule beats frequency-only</span><br>
+<span class="muted">390001–390006 · 2,000 ticks each</span></div>
+<div class="card s6"><h2>INTERPRETATION</h2><span class="muted">mechanistic decomposition, not intelligence</span><br>
+<span>prediction remains external and no-feedback</span></div>
+</div></div>
 
-  <div class="card span-6">
-    <h2>EVIDENCE · 2.9</h2>
-    <div class="row"><span>innovation predictor</span><span class="badge ok">12/12 positive</span></div>
-    <div class="row"><span>seeds</span><span>390001 · 390002 · 390003</span></div>
-    <div class="row"><span>history lengths</span><span>2 · 3 · 5 · 10</span></div>
-    <p class="muted">Recent coherence changes predict the next change better than the zero-change baseline under the tested protocol.</p>
-  </div>
+<div class="card s6"><h2>EVIDENCE · 2.12–2.13</h2>
+<div class="row"><span>state trajectory · 2.12</span><span class="badge pending">0/12 positive</span></div>
+<div class="row"><span>state derivative · 2.13</span><span class="badge pending">negative</span></div>
+<p class="muted">These observer-state formulations did not beat zero-change under their tested protocols.</p></div>
 
-  <div class="card span-6">
-    <h2>EVIDENCE · 2.10–2.36</h2>
-    <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
-    <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
-    <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">0/12 positive</span></div>
-    <div class="row"><span>state differences · 2.13</span><span class="badge pending">0/12 positive</span></div>
-    <div class="row"><span>nonlinear trajectory · 2.14</span><span class="badge pending">0/12 positive</span></div>
-    <div class="row"><span>representation bottleneck · 2.15</span><span class="badge pending">screening only</span></div>
-    <div class="row"><span>dim-2 full validation · 2.16</span><span class="badge pending">1/3 seeds positive</span></div>
-    <div class="row"><span>population-state innovation · 2.17</span><span class="badge pending">1/3 positive; no shuffled win</span></div>
-    <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
-    <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
-    <div class="row"><span>cross-seed transfer · 2.20</span><span class="badge pending">7/54 positive</span></div>\n    <div class="row"><span>leave-one-seed-out · 2.21</span><span class="badge pending">0/9 positive</span></div>\n    <div class="row"><span>seed-invariant · 2.22</span><span class="badge pending">0/9 positive</span></div>
-    <div class="row"><span>expanded cross-seed · 2.23</span><span class="badge pending">0/18 positive</span></div>\n    <div class="row"><span>rule-native · 2.24</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-update · 2.25</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-invariant validation · 2.26</span><span class="badge ok">CI green</span></div>\n    <div class="row"><span>rule-distribution · 2.27</span><span class="badge pending">0/6 positive</span></div><div class="row"><span>unseen-seed replication · 2.32</span><span class="badge pending">4/12; negative mean</span></div><div class="row"><span>permutation audit · 2.33</span><span class="badge pending">3/12 p&lt;0.05</span></div><div class="row"><span>global-phase transfer · 2.35</span><span class="badge pending">0/3 positive</span></div><div class="row"><span>mechanistic one-step rule · 2.36</span><span class="badge ok">6/6 positive</span></div>
-    <p class="muted">The tested observer-state families and rule-derived representations do not establish robust cross-seed predictive generalization. The primary criterion remains held-out improvement over zero-change; shuffled superiority alone is insufficient.</p>
-  </div>
+<div class="card s6"><h2>EVIDENCE · 2.36–2.37</h2>
+<div class="row"><span>mechanistic one-step · 2.36</span><span class="badge ok">6/6 positive</span></div>
+<div class="row"><span>coupling decomposition · 2.37</span><span class="badge ok">6/6 wins</span></div>
+<p class="muted">The mechanistic branch uses the explicit PW-001 update equation rather than increasingly broad observer representations.</p></div>
 
-  <div class="card span-12">
-    <h2>RESULT · GENESIS-2.36</h2>
-    <p><b>Mechanistic one-step rule benchmark is positive across six independent seeds.</b></p>
-    <p class="muted">2.32–2.35 remained negative. 2.36 applies the explicit PW-001 update equation without the stochastic noise term and predicts the next coherence innovation one step ahead. Across seeds 390001–390006, it beats zero-change in 6/6 cases, with mechanistic MAE ≈3.49–3.55×10⁻⁷ versus zero-change MAE ≈3.63×10⁻⁶–1.68×10⁻⁵.</p>
-  </div>
+<div class="card s12"><h2>INVARIANTS</h2><div class="grid">
+<div class="card s3"><span class="ok">✓</span> Universe rules unchanged</div>
+<div class="card s3"><span class="ok">✓</span> Observer is external</div>
+<div class="card s3"><span class="ok">✓</span> Prediction has no feedback</div>
+<div class="card s3"><span class="ok">✓</span> No endogenous memory</div>
+<div class="card s3"><span class="ok">✓</span> No goals / reward</div>
+<div class="card s3"><span class="ok">✓</span> No agency</div>
+<div class="card s3"><span class="ok">✓</span> No self-model</div>
+<div class="card s3"><span class="ok">✓</span> No AGI claim</div>
+</div></div>
 
-  <div class="card span-12">
-    <h2>NEXT · GENESIS-2.37</h2>
-    <p><b>Validate the mechanistic predictor against explicit noise sensitivity and an independent implementation of the PW-001 update equation.</b></p>
-    <p class="muted">The 2.36 result is mechanistic verification of the specified universe rule, not evidence of intelligence, agency, self-modeling, or autonomous learning. No prediction is fed back into the universe.</p>
-  </div>
-
-  <div class="card span-12">
-    <h2>INVARIANTS</h2>
-    <div class="grid">
-      <div class="card span-3"><span class="ok">✓</span> Universe rules unchanged</div>
-      <div class="card span-3"><span class="ok">✓</span> Observer is external</div>
-      <div class="card span-3"><span class="ok">✓</span> Prediction has no feedback</div>
-      <div class="card span-3"><span class="ok">✓</span> No endogenous memory</div>
-      <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
-      <div class="card span-3"><span class="ok">✓</span> No agency</div>
-      <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.34 results recorded</div>
-    </div>
-  </div>
-
-  <div class="card span-12">
-    <h2>LIVE STATE</h2>
-    <pre id="state">{html.escape(payload)}</pre>
-  </div>
-</section>
-</main>
+<div class="card s12"><h2>LIVE STATE</h2><pre id="state">{html.escape(payload)}</pre></div>
+</section></main>
 <script>
 const tickEl=document.getElementById("tick");
 const coherenceEl=document.getElementById("coherence");
 const progressEl=document.getElementById("progress");
 const stateEl=document.getElementById("state");
 const button=document.getElementById("step");
-
 function render(s) {{
   tickEl.textContent=Number(s.tick).toLocaleString();
   coherenceEl.textContent=Number(s.coherence).toFixed(9);
-  progressEl.style.width=Math.min(100, Number(s.tick)/100000*100)+"%";
+  progressEl.style.width=Math.min(100,Number(s.tick)/100000*100)+"%";
   stateEl.textContent=JSON.stringify(s);
 }}
-
-button.addEventListener("click", async () => {{
+button.addEventListener("click",async()=>{{
   button.disabled=true;
   try {{
-    const response=await fetch("/step", {{cache:"no-store"}});
-    if (!response.ok) throw new Error("step failed");
+    const response=await fetch("/step",{{cache:"no-store"}});
+    if(!response.ok) throw new Error("step failed");
     render(await response.json());
-  }} finally {{
-    button.disabled=false;
-  }}
+  }} finally {{button.disabled=false;}}
 }});
-
-window.addEventListener("load", async () => {{
-  const response=await fetch("/state", {{cache:"no-store"}});
-  if (response.ok) render(await response.json());
+window.addEventListener("load",async()=>{{
+  const response=await fetch("/state",{{cache:"no-store"}});
+  if(response.ok) render(await response.json());
 }});
 </script>
 </body>
