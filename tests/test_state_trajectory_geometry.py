@@ -5,7 +5,7 @@ from dataclasses import replace
 import numpy as np
 import pytest
 
-from genesis.state_innovation import STATE_FEATURES_WITH_COMBINED, StateFeatureSpec
+from genesis.state_innovation import StateFeatureSpec
 from genesis.state_trajectory_geometry import (
     StateTrajectoryGeometryPredictor,
     trajectory_geometry,
@@ -76,5 +76,4 @@ def _record(tick: int):
         multiscale_field=(0.0,) * 68,
         relational=(0.0,) * 16,
         graph_relational=(0.0,) * 33,
-        event_kinds=(),
     )
