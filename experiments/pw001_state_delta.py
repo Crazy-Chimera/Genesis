@@ -25,18 +25,14 @@ def collect(seed: int, ticks: int = 10_000):
 
 def main() -> None:
     print("GENESIS-2.13 state-delta benchmark")
-    for include_terminal in (False, True):
-        print(f"include_terminal={include_terminal}")
-        for seed in (390001, 390002, 390003):
+    for seed in (390001, 390002, 390003):
             records = collect(seed)
             for history_length in (2, 3, 5, 10):
                 result = StateDeltaPredictor(
-                    feature_name="combined",
                     history_length=history_length,
                     train_fraction=0.5,
                     ridge=1e-6,
                     require_consecutive=True,
-                    include_terminal=include_terminal,
                 ).evaluate(records)
                 print(
                     seed,
