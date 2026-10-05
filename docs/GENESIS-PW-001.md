@@ -1516,3 +1516,53 @@ The consistent shuffled-control advantage is nevertheless evidence that the orde
 This closes GENESIS-2.12 as a **negative predictive result**, not as evidence of intelligence, agency, self-modeling, or endogenous learning.
 
 The next experiment should therefore test a more appropriate representation or model class rather than adding more dimensions to the same linear trajectory formulation.
+
+
+## GENESIS-2.25 — Rule-Update Cross-Seed Screening
+
+GENESIS-2.25 tests whether observables derived directly from the universe's local update rule can predict the next coherence innovation across previously unseen seeds.
+
+The representation is computed from the current phase field, intrinsic frequency field, coupling constant, local coupling term, and the resulting local update. It contains eight aggregate rule-update observables. The predictor is trained on the first half of five source seeds and evaluated on the held-out half of a sixth target seed, rotating the target across six seeds (390001–390006). Coherence history is excluded from the input. The protocol uses a zero-change baseline and deterministic shuffled control.
+
+### Verified result
+
+Experiment CI run #185 completed the rule-update job successfully on commit f91952f7b9a7579e3c621809001777ece951da10.
+
+Artifact: 11326767778
+Artifact digest: sha256:c9e0b414f39d22d72f8395729aac9dad0c7b6a7ab275de8d10f9766bff279482
+
+Across all six cross-seed target cases:
+
+- **0/6** beat the zero-change baseline.
+- **1/6** beat the shuffled control.
+- Mean zero-change MAE: **9.864764045e-06**
+- Mean rule-update MAE: **4.513704452e-05**
+- Mean shuffled MAE: **4.513704452e-05**
+- Mean improvement: **−3.527228047e-05**
+- Decision: **negative**
+
+| Target seed | Zero MAE | Rule-update MAE | Shuffled MAE | Improvement |
+|---:|---:|---:|---:|---:|
+| 390001 | 9.473080e-06 | 1.743590e-05 | 1.743590e-05 | -7.962815e-06 |
+| 390002 | 2.279214e-05 | 4.339819e-05 | 4.339819e-05 | -2.060606e-05 |
+| 390003 | 3.926005e-06 | 3.447948e-05 | 3.447948e-05 | -3.055347e-05 |
+| 390004 | 5.700032e-06 | 4.699848e-05 | 4.699848e-05 | -4.129845e-05 |
+| 390005 | 9.748586e-06 | 2.921071e-05 | 2.921071e-05 | -1.946212e-05 |
+| 390006 | 7.548743e-06 | 9.929951e-05 | 9.929951e-05 | -9.175077e-05 |
+
+### Interpretation
+
+GENESIS-2.25 does **not** establish a cross-seed predictive mechanism. The rule-update representation performs substantially worse than the zero-change baseline on every target seed. The single shuffled-control comparison is not sufficient to establish predictive information, especially because the rule-update predictor does not improve over baseline.
+
+This result is stronger evidence against **simple rule-update aggregate transfer** than against the underlying universe containing any transferable structure. The experiment only tests the stated eight-dimensional linear representation and cross-seed protocol.
+
+### Research frontier after 2.25
+
+The current evidence supports a stricter research boundary:
+
+1. Do not promote isolated within-seed positives to a general mechanism.
+2. Require cross-seed stability for claims about transferable predictive structure.
+3. Prefer representations tied to local causal state transitions over broad aggregate statistics, but test them fail-closed.
+4. Keep the universe rules unchanged while observer hypotheses are exhausted.
+
+No prediction is fed back into GenesisUniverse. No goals, rewards, agency, self-model, or endogenous learning are introduced.
