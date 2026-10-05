@@ -17,8 +17,20 @@ def test_phase_features_are_sincos_and_fixed_width():
 
 
 def test_global_phase_reconstructs_synthetic_innovation():
+    # Use distinct spatial phase values so the shuffled-row control actually
+    # changes the held-out input assignment. The previous uniform fixture made
+    # every row identical, making the control mathematically indistinguishable.
     records = [
-        record(t, np.full((2, 2), float(t)), 0.1 + 0.0001 * t * t)
+        record(
+            t,
+            np.array(
+                [
+                    [t / 100.0, t / 100.0 + 0.01],
+                    [t / 100.0 + 0.02, t / 100.0 + 0.03],
+                ]
+            ),
+            0.1 + 0.0001 * t * t,
+        )
         for t in range(40)
     ]
     result = GlobalPhasePredictor(ridge=1e-6).evaluate(records)
