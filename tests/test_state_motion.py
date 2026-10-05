@@ -37,6 +37,7 @@ def test_state_motion_beats_zero_on_synthetic_signal():
                 multiscale_field=(0.0,) * 68,
                 relational=(0.0,) * 16,
                 graph_relational=(0.0,) * 33,
+                global_harmonics=(0.0,) * 9,
             )
         )
 
