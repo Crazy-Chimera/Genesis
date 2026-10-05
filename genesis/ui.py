@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.34">
+<main data-ui-version="2.35-pending">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -111,11 +111,11 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.34</h2>
-    <p><b>Rule-transition observables fail independent unseen-seed replication.</b></p>
+    <h2>RESULT · GENESIS-2.34 / 2.35 PENDING</h2>
+    <p><b>Rule-transition transfer fails replication; frequency-detuning is strongly negative. Global-phase transfer remains pending.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">12 unseen target seeds · source 390013–390024 → target 390025–390036</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative replication</span><br><span class="muted">2.34: 0/12 zero-change wins · 4/12 permutation wins</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">2.34 negative · 2.35 pending</span><br><span class="muted">2.34: 0/12 zero-change wins; 2.35 awaits verified CI</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
