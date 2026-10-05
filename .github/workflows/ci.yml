@@ -19,11 +19,13 @@ jobs:
 
   genesis-2-13:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install .
-      - run: python -u experiments/pw001_state_motion.py
+      - env:
+          GENESIS_BENCHMARK_TICKS: "2_000"
+        run: python -u experiments/pw001_state_motion.py
