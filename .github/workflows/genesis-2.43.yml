@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install .
+      - run: pip install '.[test]'
       - run: pytest -q tests/test_mechanistic_horizon.py
       - run: python experiments/pw001_mechanistic_horizon.py | tee genesis-2.43-results.txt
       - uses: actions/upload-artifact@v4
