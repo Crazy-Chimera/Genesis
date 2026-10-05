@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.44-verified-2.13-pending">
+<main data-ui-version="2.44-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
