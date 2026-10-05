@@ -22,7 +22,7 @@ def test_state_change_has_compact_group_statistics():
     same = next(r for r in records if r.tick == 0)
     later = next(r for r in records if r.tick == 1 and r.identity == same.identity)
     values = state_change(same, later)
-    assert len(values) == 40
+    assert len(values) == 44
     assert all(value == value for value in values)
 
 
