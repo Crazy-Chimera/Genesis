@@ -31,6 +31,8 @@ on:
       - "experiments/pw001_mechanistic_validation.py"
       - "experiments/pw001_mechanistic_coupling.py"
       - "experiments/pw001_mechanistic_noise.py"
+      - "experiments/pw001_mechanistic_horizon.py"
+      - "genesis/mechanistic_horizon.py"
       - "genesis/mechanistic_noise.py"
       - "experiments/pw001_state_direction.py"
       - "experiments/pw001_temporal_state.py"
@@ -265,6 +267,18 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_mechanistic_noise.py | tee pw001-mechanistic-noise.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic-noise, path: pw001-mechanistic-noise.txt}
+
+  mechanistic-horizon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_mechanistic_horizon.py | tee pw001-mechanistic-horizon.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-mechanistic-horizon, path: pw001-mechanistic-horizon.txt}
 
   state-direction:
     runs-on: ubuntu-latest
