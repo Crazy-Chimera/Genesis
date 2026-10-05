@@ -43,7 +43,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_predictive_eval.py | tee pw001-results.txt
+      - run: set -o pipefail; python -u experiments/pw001_predictive_eval.py | tee pw001-results.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-predictive, path: pw001-results.txt}
 
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
+      - run: set -o pipefail; python -u experiments/pw001_state_trajectory.py | tee pw001-state-trajectory.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-trajectory, path: pw001-state-trajectory.txt}
 
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_compressed_trajectory.py | tee pw001-compressed-trajectory.txt
+      - run: set -o pipefail; python -u experiments/pw001_compressed_trajectory.py | tee pw001-compressed-trajectory.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-compressed-trajectory, path: pw001-compressed-trajectory.txt}
 
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_delta_state_trajectory.py | tee pw001-delta-state-trajectory.txt
+      - run: set -o pipefail; python -u experiments/pw001_delta_state_trajectory.py | tee pw001-delta-state-trajectory.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-delta-state-trajectory, path: pw001-delta-state-trajectory.txt}
 
@@ -91,7 +91,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_state_feature_trajectory.py | tee pw001-state-feature-trajectory.txt
+      - run: set -o pipefail; python -u experiments/pw001_state_feature_trajectory.py | tee pw001-state-feature-trajectory.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-feature-trajectory, path: pw001-state-feature-trajectory.txt}
 
@@ -103,7 +103,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_state_trajectory_regularization.py | tee pw001-state-trajectory-regularization.txt
+      - run: set -o pipefail; python -u experiments/pw001_state_trajectory_regularization.py | tee pw001-state-trajectory-regularization.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-trajectory-regularization, path: pw001-state-trajectory-regularization.txt}
 
@@ -115,7 +115,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_state_trajectory_isolated.py | tee pw001-state-trajectory-isolated.txt
+      - run: set -o pipefail; python -u experiments/pw001_state_trajectory_isolated.py | tee pw001-state-trajectory-isolated.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-trajectory-isolated, path: pw001-state-trajectory-isolated.txt}
 
@@ -127,7 +127,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_state_velocity.py | tee pw001-state-velocity.txt
+      - run: set -o pipefail; python -u experiments/pw001_state_velocity.py | tee pw001-state-velocity.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-velocity, path: pw001-state-velocity.txt}
 
@@ -139,7 +139,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_state_trajectory_sweep.py | tee pw001-state-trajectory-sweep.txt
+      - run: set -o pipefail; python -u experiments/pw001_state_trajectory_sweep.py | tee pw001-state-trajectory-sweep.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-trajectory-sweep, path: pw001-state-trajectory-sweep.txt}
 
@@ -151,7 +151,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_nonlinear_state_trajectory.py | tee pw001-nonlinear-state-trajectory.txt
+      - run: set -o pipefail; python -u experiments/pw001_nonlinear_state_trajectory.py | tee pw001-nonlinear-state-trajectory.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-nonlinear-state-trajectory, path: pw001-nonlinear-state-trajectory.txt}
 
@@ -163,7 +163,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_direct_state_transfer.py | tee pw001-direct-state-transfer.txt
+      - run: set -o pipefail; python -u experiments/pw001_direct_state_transfer.py | tee pw001-direct-state-transfer.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-direct-state-transfer, path: pw001-direct-state-transfer.txt}
 
@@ -175,7 +175,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_rule_update.py | tee pw001-rule-update.txt
+      - run: set -o pipefail; python -u experiments/pw001_rule_update.py | tee pw001-rule-update.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-rule-update, path: pw001-rule-update.txt}
 
@@ -187,7 +187,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_rule_invariant.py | tee pw001-rule-invariant.txt
+      - run: set -o pipefail; python -u experiments/pw001_rule_invariant.py | tee pw001-rule-invariant.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-rule-invariant, path: pw001-rule-invariant.txt}
 
@@ -199,7 +199,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_regularized_trajectory.py | tee pw001-regularized-trajectory.txt
+      - run: set -o pipefail; python -u experiments/pw001_regularized_trajectory.py | tee pw001-regularized-trajectory.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-regularized-trajectory, path: pw001-regularized-trajectory.txt}
 
@@ -212,7 +212,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_mechanistic.py | tee pw001-mechanistic.txt
+      - run: set -o pipefail; python -u experiments/pw001_mechanistic.py | tee pw001-mechanistic.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic, path: pw001-mechanistic.txt}
 
@@ -224,7 +224,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_mechanistic_decomposition.py | tee pw001-mechanistic-decomposition.txt
+      - run: set -o pipefail; python -u experiments/pw001_mechanistic_decomposition.py | tee pw001-mechanistic-decomposition.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic-decomposition, path: pw001-mechanistic-decomposition.txt}
 
@@ -236,7 +236,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_mechanistic_validation.py | tee pw001-mechanistic-validation.txt
+      - run: set -o pipefail; python -u experiments/pw001_mechanistic_validation.py | tee pw001-mechanistic-validation.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic-validation, path: pw001-mechanistic-validation.txt}
 
@@ -248,7 +248,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_mechanistic_coupling.py | tee pw001-mechanistic-coupling.txt
+      - run: set -o pipefail; python -u experiments/pw001_mechanistic_coupling.py | tee pw001-mechanistic-coupling.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic-coupling, path: pw001-mechanistic-coupling.txt}
 
@@ -260,7 +260,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_state_direction.py | tee pw001-state-direction.txt
+      - run: set -o pipefail; python -u experiments/pw001_state_direction.py | tee pw001-state-direction.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-direction, path: pw001-state-direction.txt}
 
@@ -272,6 +272,6 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install .
-      - run: python -u experiments/pw001_global_phase.py | tee pw001-global-phase.txt
+      - run: set -o pipefail; python -u experiments/pw001_global_phase.py | tee pw001-global-phase.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-global-phase, path: pw001-global-phase.txt}
