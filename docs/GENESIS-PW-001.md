@@ -1839,3 +1839,62 @@ The result still does **not** establish intelligence, agency, self-modeling, or 
 The next validation should test whether this mechanistic advantage persists under stronger out-of-sample conditions, especially unseen seeds, longer horizons, and controls that remove or perturb the coupling contribution while preserving other rule statistics.
 
 All non-interference invariants remain unchanged.
+
+
+## GENESIS-2.38 — Mechanistic Unseen-Seed Validation
+
+GENESIS-2.38 tests whether the mechanistic predictive advantage from GENESIS-2.36/2.37 persists on a previously unseen seed set. The representation and predictor are unchanged: the explicit PW-001 local update rule without stochastic noise is used to predict the next coherence innovation. A frequency-only decomposition is retained as the mechanistic control.
+
+The validation evaluates twelve unseen seeds, 390025–390036, for 10,000 ticks each.
+
+### Verified result
+
+Workflow: **PW-001 experiment #217**  
+Commit: `3265cd91cc9e896c2efbae4c20f1f5cbfecc0cf8`  
+Artifact: `11335025985`  
+Artifact digest: `sha256:9e7c09c88d2435a19fbffa679ddd59c77c3828a01e57abff67f8bd21bdc70f43`
+
+Across all twelve unseen seeds:
+
+- **12/12** beat the zero-change baseline.
+- **12/12** full-rule predictors beat the frequency-only control.
+- Mean zero-change MAE: **1.7775128191e-05**
+- Mean frequency-only MAE: **2.9674175188e-06**
+- Mean full-rule MAE: **3.5113184497e-07**
+- Mean full-vs-frequency MAE reduction: **2.6162856739e-06**
+- Mean full-rule improvement over zero-change: **1.7423996346e-05**
+
+| Seed | Zero MAE | Frequency-only MAE | Full-rule MAE | Full vs frequency |
+|---:|---:|---:|---:|---:|
+| 390025 | 2.398936e-05 | 4.546837e-06 | 3.466044e-07 | +4.200233e-06 |
+| 390026 | 2.341419e-05 | 3.785690e-06 | 3.581756e-07 | +3.427514e-06 |
+| 390027 | 1.926159e-05 | 1.435997e-06 | 3.527156e-07 | +1.083281e-06 |
+| 390028 | 1.435328e-05 | 3.106964e-06 | 3.506196e-07 | +2.756344e-06 |
+| 390029 | 1.167519e-05 | 2.791355e-06 | 3.545918e-07 | +2.436763e-06 |
+| 390030 | 1.530716e-05 | 4.839012e-06 | 3.458034e-07 | +4.493209e-06 |
+| 390031 | 3.168815e-05 | 3.159458e-06 | 3.432778e-07 | +2.816180e-06 |
+| 390032 | 1.744589e-05 | 1.482901e-06 | 3.521984e-07 | +1.130703e-06 |
+| 390033 | 1.076869e-05 | 2.539805e-06 | 3.607020e-07 | +2.179103e-06 |
+| 390034 | 1.861953e-05 | 3.048003e-06 | 3.522046e-07 | +2.695798e-06 |
+| 390035 | 1.061419e-05 | 2.405628e-06 | 3.475192e-07 | +2.058109e-06 |
+| 390036 | 1.616432e-05 | 2.467360e-06 | 3.491699e-07 | +2.118190e-06 |
+
+### Interpretation
+
+GENESIS-2.38 provides an independent unseen-seed replication of the mechanistic signal observed in GENESIS-2.36 and decomposed in GENESIS-2.37. The full-rule predictor remains substantially better than both the zero-change baseline and the frequency-only control on every tested unseen seed.
+
+This is materially stronger evidence for a **mechanistic one-step predictive relation in the tested PW-001 update rule** than the earlier observer-representation probes. It still does not establish intelligence, agency, self-modeling, endogenous learning, or a general law beyond the tested rule and protocol.
+
+The predictor remains external. It does not modify `GenesisUniverse`, its parameters, or the coupling rule, and no prediction is fed back into the universe.
+
+### Research frontier after 2.38
+
+The next validation should test whether the mechanistic relation survives:
+
+1. longer prediction horizons rather than only one-step innovation;
+2. controlled perturbation or ablation of the coupling term;
+3. out-of-distribution parameter changes while preserving the update-law family;
+4. independent implementations of the update equation;
+5. strict controls against numerical and implementation leakage.
+
+The overall PW-001 workflow remains measurement-only and no-feedback.
