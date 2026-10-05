@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.29">
+<main data-ui-version="2.31">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -104,16 +104,18 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>26. Rule-invariant validation · 2.26 · <span class="muted">CI green</span></div>
       <div class="stage"><span class="dot"></span>27. Rule-distribution screening · 2.27 · <span class="muted">0/6 positive</span></div>
       <div class="stage"><span class="dot"></span>28. Rule-transition cross-seed · 2.28 · <span class="muted">4/6 baseline wins</span></div>
-      <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div></div>
+      <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div>
+      <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
+      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.29</h2>
-    <p><b>Rule-transition observables remain promising but are not yet a robust transferable mechanism.</b></p>
+    <h2>RESULT · GENESIS-2.31</h2>
+    <p><b>Rule-transition observables do not yet form a robust transferable mechanism.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">six seeds · blocked-time cross-seed screening</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">not robust</span><br><span class="muted">4/6 beat zero-change · 1/6 beat shuffled</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">18 unseen seeds · blocked-time cross-seed replication</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative replication</span><br><span class="muted">2/6 + 4/12 beat zero-change · 3/6 + 5/12 shuffled</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
@@ -145,14 +147,14 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-12">
-    <h2>RESULT · GENESIS-2.29</h2>
+    <h2>RESULT · GENESIS-2.31</h2>
     <p><b>Blocked-time rule-transition screening remains non-robust.</b></p>
-    <p class="muted">Six seeds (390001–390006), 600 ticks per seed with a 150-tick temporal gap. Result: 4/6 beat zero-change; 1/6 beat shuffled. The effect is seed-dependent and weaker under blocked time.</p>
+    <p class="muted">Six original plus eighteen unseen target seeds were tested with a 150-tick temporal gap. 2.30: 2/6 beat zero-change, 3/6 shuffled. 2.31: 4/12 beat zero-change, 5/12 shuffled; mean improvement became negative. The effect is not robust under unseen-seed replication.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.30</h2>
-    <p><b>Test independent temporal blocks or additional unseen seeds for the rule-transition signal, while preserving fail-closed cross-seed validation.</b></p>
+    <h2>NEXT · GENESIS-2.32</h2>
+    <p><b>Stop expanding the same linear rule-transition representation. Next, perform an independent falsification/replication protocol before introducing a new representation.</b></p>
     <p class="muted">A positive result must beat zero-change and shuffled controls on held-out seeds; no universe feedback is permitted.</p>
   </div>
 
@@ -166,7 +168,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.27 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.31 results recorded</div>
     </div>
   </div>
 
