@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 import numpy as np
 
+from .global_harmonics import global_phase_harmonics
+
 Cell = tuple[int, int]
 
 
@@ -36,6 +38,7 @@ class RegionObservation:
     multiscale_field: tuple[float, ...] = ()
     relational: tuple[float, ...] = ()
     graph_relational: tuple[float, ...] = ()
+    global_harmonics: tuple[float, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -620,6 +623,7 @@ class RegionTracker:
                 multiscale_field=self.observer.multiscale_field(phase, cluster),
                 relational=self.observer.relational_features(cluster, assigned_clusters, phase, local),
                 graph_relational=self.observer.graph_relational_features(cluster, assigned_clusters, phase, local),
+                global_harmonics=global_phase_harmonics(phase),
             ))
         self._previous = current
         self._previous_phase = phase.copy()
