@@ -5,22 +5,23 @@ def test_state_change_trajectory_beats_zero_on_synthetic_signal():
     from genesis.memory import MemoryRecord
 
     records = []
-    for tick in range(8):
-        state = tuple(float(tick + offset) for offset in range(5))
+    for tick in range(10):
+        value = float(tick * tick)
+        state = (value,) + (0.0,) * 8
         records.append(
             MemoryRecord(
                 tick=tick,
                 identity=1,
                 cells=((0, 0),),
-                coherence=0.1 * tick,
+                coherence=0.01 * tick * tick,
                 boundary_contrast=0.0,
                 lifetime=tick,
                 persistence=tick,
                 overlap=1.0,
-                local_patch=state + (0.0, 0.0, 0.0, 0.0),
-                phase_patch=state + (0.0,) * 13,
-                gradient_patch=state + (0.0,) * 13,
-                motion=(0.0, 0.0, 0.0),
+                local_patch=state,
+                phase_patch=(value,) + (0.0,) * 17,
+                gradient_patch=(value,) + (0.0,) * 17,
+                motion=(0.0,) * 3,
                 boundary_flux=(0.0,) * 5,
                 boundary_deformation=(0.0,) * 7,
                 spatiotemporal_patch=(0.0,) * 36,
@@ -31,7 +32,7 @@ def test_state_change_trajectory_beats_zero_on_synthetic_signal():
             )
         )
     result = StateChangeTrajectoryPredictor(
-        feature_name="combined", history_length=2, ridge=1e-6
+        feature_name="local_patch", history_length=2, ridge=1e-6
     ).evaluate(records)
     assert result.samples > 0
     assert result.beats_zero
@@ -65,6 +66,6 @@ def test_state_change_trajectory_requires_consecutive_ticks():
         MemoryRecord(tick=4, coherence=0.3, **base),
     ]
     result = StateChangeTrajectoryPredictor(
-        feature_name="combined", history_length=2
+        feature_name="local_patch", history_length=2
     ).evaluate(records)
     assert result.samples == 0
