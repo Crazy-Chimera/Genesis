@@ -30,7 +30,7 @@ def test_dashboard_contains_genesis_pw001():
     assert 'data-ui-version="2.35-pending"' in html
     assert "GENESIS-2.34" in html
     assert "2.35" in html
-    assert "pending CI benchmark" in html
+    assert "awaits verified CI" in html
     assert "state trajectory" in html.lower()
     assert "unseen-seed replication" in html.lower()
     assert "0/12 zero-change wins" in html
