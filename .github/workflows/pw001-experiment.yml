@@ -22,6 +22,8 @@ on:
       - "experiments/pw001_nonlinear_state_trajectory.py"
       - "experiments/pw001_direct_state_transfer.py"
       - "experiments/pw001_global_phase.py"
+      - "experiments/pw001_mechanistic.py"
+      - "genesis/mechanistic.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -181,6 +183,18 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: {name: pw001-regularized-trajectory, path: pw001-regularized-trajectory.txt}
 
+
+  mechanistic-one-step:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: python -u experiments/pw001_mechanistic.py | tee pw001-mechanistic.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-mechanistic, path: pw001-mechanistic.txt}
 
   global-phase:
     runs-on: ubuntu-latest
