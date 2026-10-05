@@ -119,6 +119,7 @@ class RegularizedStateTrajectoryPredictor:
         min_tick = min(r[2] for r in rows)
         max_tick = max(r[2] for r in rows)
         heldout = min_tick + max(1, int((max_tick - min_tick) * self.train_fraction))
+        rows.sort(key=lambda row: row[2])
         train_rows = [r for r in rows if r[2] < heldout]
         test_rows = [r for r in rows if r[2] >= heldout]
         if len(train_rows) < 4 or not test_rows:
