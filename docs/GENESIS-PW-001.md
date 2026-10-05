@@ -1804,3 +1804,38 @@ The next step is independent validation of the mechanistic signal under stronger
 
 All existing non-interference invariants remain unchanged.
 
+## GENESIS-2.37 — Mechanistic Coupling Decomposition
+
+GENESIS-2.37 decomposes the successful mechanistic one-step predictor into two explicit components: a frequency-only model and the full local update rule including coupling. The benchmark evaluates seeds 390001–390006 over 2,000 ticks and keeps the predictor external to the universe.
+
+### Verified result
+
+Workflow: PW-001 experiment #210  
+Commit: `fff735fabcbab542aa4e383d0fa8f22d5378fdfb`
+
+| seed | samples | frequency-only MAE | full-rule MAE | full vs frequency improvement |
+|---:|---:|---:|---:|---:|
+| 390001 | 2000 | 8.444411823e-06 | 3.535830459e-07 | +1.251020358e-06 |
+| 390002 | 2000 | 1.684121870e-05 | 3.486073891e-07 | +4.592433922e-06 |
+| 390003 | 2000 | 3.628382486e-06 | 3.553881476e-07 | +1.371730194e-06 |
+| 390004 | 2000 | 4.517595026e-06 | 3.514016776e-07 | +1.304903096e-06 |
+| 390005 | 2000 | 4.672357803e-06 | 3.489248535e-07 | +1.283161280e-06 |
+| 390006 | 2000 | 6.277700877e-06 | 3.516872357e-07 | +1.986929024e-06 |
+
+**6/6 seeds: the full rule beats the frequency-only model.**
+
+Mean full-vs-frequency MAE reduction: approximately **1.9657e-06**.
+
+### Interpretation
+
+GENESIS-2.37 isolates the contribution of the local coupling term inside the universe's known update rule. Across all six seeds, adding the coupling information reduces one-step prediction error relative to frequency alone.
+
+This strengthens the mechanistic interpretation of GENESIS-2.36: the predictive signal is not explained by local frequency alone under this benchmark. The coupling term contributes measurable predictive information about the next coherence innovation.
+
+The result still does **not** establish intelligence, agency, self-modeling, or endogenous learning. The predictor remains an external observer-layer computation and does not modify the universe.
+
+### Research frontier after 2.37
+
+The next validation should test whether this mechanistic advantage persists under stronger out-of-sample conditions, especially unseen seeds, longer horizons, and controls that remove or perturb the coupling contribution while preserving other rule statistics.
+
+All non-interference invariants remain unchanged.
