@@ -35,6 +35,12 @@ def coherence(phase: np.ndarray) -> float:
     return float(abs(np.mean(np.exp(1j * phase))))
 
 
+def circular_phase_error(expected: np.ndarray, actual: np.ndarray) -> float:
+    """Maximum angular error on the periodic phase circle."""
+    delta = np.angle(np.exp(1j * (expected - actual)))
+    return float(np.max(np.abs(delta)))
+
+
 def evaluate(seed: int, ticks: int = 2_000) -> tuple[float, float, float]:
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     max_phase_error = 0.0
@@ -54,10 +60,11 @@ def evaluate(seed: int, ticks: int = 2_000) -> tuple[float, float, float]:
         actual_delta = coherence(universe.phase) - coherence(before)
 
         max_phase_error = max(
-            max_phase_error, float(np.max(np.abs(expected - universe.phase)))
+            max_phase_error, circular_phase_error(expected, universe.phase)
         )
         max_coherence_error = max(
-            max_coherence_error, abs(coherence(expected) - coherence(universe.phase))
+            max_coherence_error,
+            abs(coherence(expected) - coherence(universe.phase)),
         )
         prediction_errors.append(abs(actual_delta - predicted_delta))
 
@@ -69,8 +76,8 @@ def evaluate(seed: int, ticks: int = 2_000) -> tuple[float, float, float]:
 
 
 def main() -> None:
-    print("GENESIS-2.41 independent mechanistic equation audit")
-    print("seed max_phase_error max_coherence_error mean_prediction_mae")
+    print("GENESIS-2.41b independent mechanistic equation audit")
+    print("seed max_circular_phase_error max_coherence_error mean_prediction_mae")
     for seed in range(390049, 390055):
         phase_error, coherence_error, mae = evaluate(seed)
         print(
