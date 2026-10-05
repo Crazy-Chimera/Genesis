@@ -4,10 +4,19 @@ from genesis.mechanistic_noise import evaluate_noise_audit
 
 def test_noise_audit_is_exact_for_deterministic_path():
     result = evaluate_noise_audit(
-        GenesisUniverse(GenesisConfig(seed=390001, ticks=5)), 2
+        GenesisUniverse(GenesisConfig(seed=390001, ticks=5, noise=0.001)), 2
     )
     assert result.samples == 5
     assert result.deterministic_mae == 0.0
+    assert result.noise_effect_mae > 0.0
+
+
+def test_noise_audit_has_no_noise_effect_when_noise_is_zero():
+    result = evaluate_noise_audit(
+        GenesisUniverse(GenesisConfig(seed=390001, ticks=5, noise=0.0)), 2
+    )
+    assert result.deterministic_mae == 0.0
+    assert result.noise_effect_mae == 0.0
 
 
 def test_noise_audit_rejects_invalid_horizon():
