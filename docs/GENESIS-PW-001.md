@@ -1566,3 +1566,75 @@ The current evidence supports a stricter research boundary:
 4. Keep the universe rules unchanged while observer hypotheses are exhausted.
 
 No prediction is fed back into GenesisUniverse. No goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+
+
+## GENESIS-2.28 — Rule-Transition Cross-Seed Screening
+
+GENESIS-2.28 tests whether the change in the local rule-distribution state between consecutive ticks provides transferable predictive information about the next coherence innovation.
+
+The benchmark uses seeds 390001–390006, 500 ticks per seed, leave-one-seed-out training, the first 250 ticks of the remaining seeds for training and the final 250 ticks of the target seed for evaluation. Coherence history is excluded. The controls are zero-change and deterministic shuffled representation.
+
+### Verified result
+
+CI run #1 completed successfully at commit `1572a8356eb35dc88d388aafc9916b6724079131`.
+
+Artifact: `11328191021`  
+Artifact digest: `sha256:5ff3e28f32bb65d6286d0e9792b54bedbc0027c775eb22cbb7d68286e80bf865`
+
+Across six target seeds:
+
+- **4/6** beat the zero-change baseline.
+- **3/6** beat the shuffled control.
+- Mean zero-change MAE: **9.864764045e-06**
+- Mean transition MAE: **8.740214648e-06**
+- Mean shuffled MAE: **8.747517910e-06**
+- Mean improvement: **+1.124549397e-06**
+
+The result is therefore **promising but not robust**. The positive cases are seed-dependent, and the fail-closed criterion for a transferable mechanism is not satisfied.
+
+### Interpretation
+
+GENESIS-2.28 is the strongest positive result in the current rule-derived branch, but it does not establish a general cross-seed mechanism. It shows that local rule-transition observables can contain predictive information on some held-out seeds under this protocol.
+
+The correct next step is robustness against a stronger temporal separation, not immediate promotion of the effect to a mechanism.
+
+## GENESIS-2.29 — Blocked-Time Rule-Transition Cross-Seed Screening
+
+GENESIS-2.29 keeps exactly the same rule-transition representation and model class as 2.28, but introduces a temporal gap between training and evaluation. For each target seed, the predictor is trained on ticks 0–299 of the other five seeds, ticks 300–449 of the target seed are discarded as a temporal gap, and evaluation uses ticks 450–599 of the target seed.
+
+This tests whether the 2.28 effect survives a stricter temporal separation without increasing representation dimensionality or model complexity.
+
+### Verified result
+
+CI run #1 completed successfully at commit `590dc0145c4a7d22f096928a978eabd41b38c4a0`.
+
+Artifact: `11328097365`  
+Artifact digest: `sha256:e70887fb47290a34c9bca5dc4184a12aae9369ce5b67131670a53795e97a2da3`
+
+Across six target seeds:
+
+- **4/6** beat the zero-change baseline.
+- **1/6** beat the shuffled control.
+- Mean zero-change MAE: **9.055114794e-06**
+- Mean transition MAE: **8.789817292e-06**
+- Mean shuffled MAE: **8.816877722e-06**
+- Mean improvement: **+2.652975012e-07**
+
+### Interpretation
+
+GENESIS-2.29 preserves a small baseline improvement in 4/6 target seeds, but the shuffled-control advantage collapses to 1/6. The mean improvement also falls substantially from 2.28.
+
+Therefore **2.29 does not establish robust transferable predictive power**. The result is best treated as evidence for a seed-dependent and temporally sensitive signal in the tested rule-transition representation.
+
+### Research frontier after 2.29
+
+The evidence now supports a strict decision boundary:
+
+1. retain rule-transition observables as a live hypothesis;
+2. do not claim a general predictive mechanism;
+3. do not add model complexity merely to recover the isolated positive cases;
+4. require stronger reproducibility, preferably across independent temporal blocks or additional unseen seeds;
+5. preserve the measurement-only universe and all existing invariants.
+
+No prediction is fed back into `GenesisUniverse`. No goals, rewards, agency, self-model, or endogenous learning are introduced.
