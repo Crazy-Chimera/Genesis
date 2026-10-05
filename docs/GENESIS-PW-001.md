@@ -1638,3 +1638,68 @@ The evidence now supports a strict decision boundary:
 5. preserve the measurement-only universe and all existing invariants.
 
 No prediction is fed back into `GenesisUniverse`. No goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+
+## GENESIS-2.30 — Unseen-Seed Replication of Blocked-Time Rule-Transition
+
+GENESIS-2.30 repeats the blocked-time protocol of 2.29 on six previously unseen seeds (390007–390012). Training uses ticks 0–299 of the other seeds, target ticks 300–449 are excluded, and evaluation uses target ticks 450–599. The representation and linear predictor are unchanged.
+
+### Verified result
+
+Run: GENESIS-2.30 #1  
+Commit: `c35923177c71db7d1bb862ec64b7659ec6c39442`  
+Artifact: `11327928482`  
+Artifact digest: `sha256:ad5a0a92c0c63f3e6b8cd574da6564eed21bfcb7651cad8b14d8d3a229dd9537`
+
+Across six unseen target seeds:
+
+- **2/6** beat the zero-change baseline.
+- **3/6** beat the shuffled control.
+- Mean zero-change MAE: **1.3252337546e-05**
+- Mean transition MAE: **1.2797046864e-05**
+- Mean shuffled MAE: **1.3011137058e-05**
+- Mean improvement: **+4.5529068195e-07**
+
+### Interpretation
+
+GENESIS-2.30 preserves a small positive mean improvement on unseen seeds, but only 2/6 targets beat the baseline and only 3/6 beat shuffled control. Therefore the blocked-time rule-transition effect is **not robustly replicated** on the first unseen seed set.
+
+The result strengthens the case for treating the 2.28–2.29 signal as a hypothesis rather than a demonstrated transferable mechanism.
+
+## GENESIS-2.31 — Extended Unseen-Seed Rule-Transition Replication
+
+GENESIS-2.31 extends the same blocked-time protocol to twelve additional unseen seeds (390013–390024). No representation or model complexity is added. This is a direct replication test of the 2.29/2.30 hypothesis.
+
+### Verified result
+
+Run: GENESIS-2.31 #1  
+Commit: `a6df1968b607f22b880141fca61f0ddb3182e2e4`  
+Artifact: `11328462254`  
+Artifact digest: `sha256:909994952789f67129f8383d9601e17afb79583c27d0084335c711df70fd0e3d`
+
+Across twelve unseen target seeds:
+
+- **4/12** beat the zero-change baseline.
+- **5/12** beat the shuffled control.
+- Mean zero-change MAE: **1.4443846995e-05**
+- Mean transition MAE: **1.8131409368e-05**
+- Mean shuffled MAE: **1.8156972813e-05**
+- Mean improvement: **−3.6875623724e-06**
+
+### Interpretation
+
+GENESIS-2.31 is a **negative replication result**. The mean transition predictor is worse than the zero-change baseline, and only one-third of targets beat the baseline.
+
+Taken together, 2.30 and 2.31 show that the positive mean effect observed in 2.28–2.29 is not stable under unseen-seed replication. The current evidence therefore does **not** support a transferable predictive mechanism in the tested rule-transition representation.
+
+### Research frontier after 2.31
+
+The experimental decision boundary is now:
+
+1. retain rule-transition structure as an empirical observation, not as a mechanism;
+2. stop expanding the same linear rule-transition representation;
+3. prioritize independent replication and falsification over additional feature engineering;
+4. require unseen-seed stability before treating any predictive effect as a property of the universe;
+5. preserve all measurement-only and no-feedback invariants.
+
+No prediction is fed back into `GenesisUniverse`. No goals, rewards, agency, self-model, or endogenous learning are introduced.
