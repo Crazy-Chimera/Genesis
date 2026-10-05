@@ -9,6 +9,7 @@ on:
       - "experiments/pw001_compressed_trajectory.py"
       - "genesis/compressed_trajectory.py"
       - "experiments/pw001_state_trajectory.py"
+      - "experiments/pw001_state_change_trajectory.py"
       - "experiments/pw001_state_trajectory_ridge.py"
       - "experiments/pw001_delta_state_trajectory.py"
       - "experiments/pw001_state_feature_trajectory.py"
