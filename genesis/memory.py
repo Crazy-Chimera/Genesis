@@ -29,6 +29,7 @@ class MemoryRecord:
     multiscale_field: tuple[float, ...] = ()
     relational: tuple[float, ...] = ()
     graph_relational: tuple[float, ...] = ()
+    global_harmonics: tuple[float, ...] = ()
     events: tuple[str, ...] = ()
 
 
@@ -70,6 +71,7 @@ class TemporalMemory:
                 multiscale_field=observation.multiscale_field,
                 relational=observation.relational,
                 graph_relational=observation.graph_relational,
+                global_harmonics=observation.global_harmonics,
                 events=tuple(sorted(events_by_identity.get(observation.identity, ()))),
             )
             self._records.append(item)
