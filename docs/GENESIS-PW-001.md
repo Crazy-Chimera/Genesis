@@ -1767,3 +1767,40 @@ The evidence through 2.34 establishes a clear boundary:
 GENESIS-2.35 global-phase transfer remains a separate pending benchmark and must not be interpreted until its reproducible CI result is available.
 
 All existing invariants remain unchanged: the universe rules are not modified by observation or prediction; there is no feedback, goal, reward, agency, self-model, or endogenous learning.
+
+## GENESIS-2.36 — Mechanistic One-Step Rule Prediction
+
+GENESIS-2.36 changes the probe strategy from increasingly broad observer representations to a mechanism derived directly from the universe's local update rule.
+
+The benchmark evaluates seeds 390001–390006 over 2,000 ticks. The target is the next coherence innovation, while the predictor uses mechanistic information from the local update rule and does not use coherence history as an input. The zero-change predictor is the primary baseline.
+
+### Verified result
+
+Workflow: GENESIS-2.36 mechanistic benchmark #1  
+Commit: `1fbb2966450f4ecc26d252150f4c6a945c9e1900`
+
+| seed | samples | zero MAE | mechanistic MAE | improvement |
+|---:|---:|---:|---:|---:|
+| 390001 | 2000 | 8.444411823e-06 | 3.535830459e-07 | +8.090828777e-06 |
+| 390002 | 2000 | 1.684121870e-05 | 3.486073891e-07 | +1.649261131e-05 |
+| 390003 | 2000 | 3.628382486e-06 | 3.553881476e-07 | +3.272994338e-06 |
+| 390004 | 2000 | 4.517595026e-06 | 3.514016777e-07 | +4.166193348e-06 |
+| 390005 | 2000 | 4.672357803e-06 | 3.489248535e-07 | +4.323432949e-06 |
+| 390006 | 2000 | 6.277700877e-06 | 3.516872357e-07 | +5.926013641e-06 |
+
+**6/6 seeds beat the zero-change baseline.**
+
+### Interpretation
+
+GENESIS-2.36 is a qualitatively different result from the preceding representation-transfer probes. The predictor is tied to the local update mechanism itself rather than to a progressively larger observer representation.
+
+Under the stated protocol, the tested local rule-update information contains strong one-step predictive information about the next coherence innovation.
+
+This is still not evidence of intelligence, agency, self-modeling, or endogenous learning. The predictor is external, measurement-only, and its output is not fed back into `GenesisUniverse`.
+
+### Research frontier after 2.36
+
+The next step is independent validation of the mechanistic signal under stronger controls and longer horizons. The result should not yet be promoted to a general law of PW-001 until it survives such validation.
+
+All existing non-interference invariants remain unchanged.
+
