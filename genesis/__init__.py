@@ -22,6 +22,7 @@ from .state_delta_trajectory import (
     StateDeltaTrajectoryEvaluationResult,
     StateDeltaTrajectoryPredictor,
 )
+from .global_phase import GlobalPhaseEvaluationResult, GlobalPhasePredictor, phase_features
 from .observer import (
     Cluster,
     LocalStructureObserver,
@@ -75,5 +76,8 @@ __all__ = [
     "StateDeltaTrajectoryPredictor",
     "CrossSeedTrajectoryResult",
     "CrossSeedTrajectoryPredictor",
+    "GlobalPhaseEvaluationResult",
+    "GlobalPhasePredictor",
+    "phase_features",
     "run",
 ]
