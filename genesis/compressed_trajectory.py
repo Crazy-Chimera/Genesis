@@ -85,7 +85,10 @@ class CompressedStateTrajectoryPredictor:
                     ticks[j + 1] != ticks[j] + 1 for j in range(len(ticks) - 1)
                 ):
                     continue
-                matrix = np.asarray([combined_state(x) for x in window], dtype=float)
+                vectors = [tuple(float(v) for v in combined_state(x)) for x in window]
+                if any(len(v) != 193 for v in vectors):
+                    continue
+                matrix = np.asarray(vectors, dtype=float)
                 delta = target.coherence - window[-1].coherence
                 if target.tick < heldout:
                     train_windows.append(matrix)
