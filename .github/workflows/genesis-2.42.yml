@@ -1,0 +1,25 @@
+name: GENESIS-2.42 full-rule independent audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_independent_full_rule_audit.py"
+      - "genesis/core.py"
+      - ".github/workflows/genesis-2.42.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python experiments/pw001_independent_full_rule_audit.py | tee genesis-2.42-audit.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.42-independent-full-rule-audit
+          path: genesis-2.42-audit.txt
