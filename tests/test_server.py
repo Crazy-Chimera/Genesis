@@ -20,7 +20,7 @@ def test_dashboard_contains_genesis_pw001():
     html = render_dashboard({"tick": 0, "coherence": 0.5})
     assert "GENESIS-PW-001" in html
     assert "2.12" in html
-    assert "State-difference trajectory · 2.13" in html
+    assert "State-difference / harmonic-state probes · 2.13" in html
     assert "Nonlinear state trajectory · 2.14" in html
     assert "0/12 positive" in html
     assert "1/3 seeds positive" in html
