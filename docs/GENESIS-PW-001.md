@@ -1703,3 +1703,67 @@ The experimental decision boundary is now:
 5. preserve all measurement-only and no-feedback invariants.
 
 No prediction is fed back into `GenesisUniverse`. No goals, rewards, agency, self-model, or endogenous learning are introduced.
+
+
+## GENESIS-2.32 — Independent Unseen-Seed Replication
+
+GENESIS-2.32 repeats the blocked-time rule-transition protocol on twelve previously unseen target seeds 390025–390036. Training uses source seeds 390013–390024, target ticks 0–299 are used for training context, ticks 300–449 are a temporal gap, and ticks 450–599 are evaluated. The representation and linear model are unchanged.
+
+### Verified result
+
+- **4/12** targets beat the zero-change baseline.
+- **4/12** targets beat the shuffled control.
+- Mean zero-change MAE: **1.47508181433364e-05**
+- Mean transition MAE: **2.1887873320269e-05**
+- Mean shuffled MAE: **2.1718214706382e-05**
+- Mean improvement: **−7.13705517693252e-06**
+
+### Interpretation
+
+GENESIS-2.32 is a negative independent replication. The mean transition predictor is worse than the zero-change baseline, and the representation does not consistently beat the shuffled control. The earlier 2.28–2.30 positive cases therefore do not generalize to this unseen-seed set.
+
+## GENESIS-2.33 — Permutation Audit
+
+GENESIS-2.33 applies 500 deterministic permutations per target case to the same 2.32 held-out predictions.
+
+### Verified result
+
+Across twelve target seeds:
+
+- **3/12** cases had permutation p-values below 0.05.
+- Median p-value: **0.532934**
+- Minimum p-value: **0.00199601**
+
+The audit therefore finds a small number of individually unusual cases, but the majority are not statistically distinguishable from the permutation null at the 0.05 level. This does not establish a transferable mechanism.
+
+## GENESIS-2.34 — Local Frequency-Detuning Transfer
+
+GENESIS-2.34 tests whether local frequency-detuning information transfers predictively to new seeds. The experiment evaluates twelve target seeds 390025–390036.
+
+### Verified result
+
+- **0/12** targets beat the zero-change baseline.
+- **4/12** targets beat the permutation control.
+- Mean zero-change MAE: **1.1761592743724247e-04**
+- Mean model MAE: **4.149901131328593e-02**
+- Mean permutation MAE: **4.150090779921796e-02**
+- Mean improvement: **−4.138139538585868e-02**
+
+### Interpretation
+
+GENESIS-2.34 is strongly negative. The tested frequency-detuning representation does not provide useful predictive transfer under this protocol. The result supports stopping this feature family rather than increasing model complexity.
+
+## Research frontier after GENESIS-2.34
+
+The evidence through 2.34 establishes a clear boundary:
+
+1. GENESIS-2.12 state trajectories do not beat the zero-change baseline.
+2. GENESIS-2.13 differential/state-delta trajectories also do not beat the baseline on the tested seeds.
+3. Rule-transition observables showed isolated positive cases in 2.28–2.30 but failed unseen-seed replication in 2.31–2.32.
+4. The 2.33 permutation audit does not establish a general effect.
+5. Frequency-detuning transfer in 2.34 is strongly negative.
+6. Therefore the project should prioritize independent, causally motivated observables and falsification rather than expanding dimensionality or model complexity.
+
+GENESIS-2.35 global-phase transfer remains a separate pending benchmark and must not be interpreted until its reproducible CI result is available.
+
+All existing invariants remain unchanged: the universe rules are not modified by observation or prediction; there is no feedback, goal, reward, agency, self-model, or endogenous learning.
