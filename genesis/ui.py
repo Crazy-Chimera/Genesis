@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.24">
+<main data-ui-version="2.25">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -100,18 +100,18 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>15. Population-state innovation · 2.17 · <span class="muted">1/3 positive; no shuffled win</span></div>
       <div class="stage"><span class="dot"></span>16. Population-state trajectory · 2.18 · <span class="muted">0/12 positive</span></div>
       <div class="stage"><span class="dot"></span>17. Population representation bottleneck · 2.19 · <span class="muted">0/24 positive</span></div>
-      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">negative; 7/54 zero-change wins</span></div>\n      <div class="stage"><span class="dot"></span>19. Leave-one-seed-out generalization · 2.21 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>20. Seed-invariant generalization · 2.22 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot pending"></span>21. Expanded cross-seed generalization · 2.23 · <span class="muted">0/18 positive</span></div>
+      <div class="stage"><span class="dot pending"></span>18. Cross-seed representation transfer · 2.20 · <span class="muted">negative; 7/54 zero-change wins</span></div>\n      <div class="stage"><span class="dot"></span>19. Leave-one-seed-out generalization · 2.21 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>20. Seed-invariant generalization · 2.22 · <span class="muted">0/9 positive</span></div>\n      <div class="stage"><span class="dot"></span>21. Expanded cross-seed generalization · 2.23 · <span class="muted">0/18 positive</span></div>\n      <div class="stage"><span class="dot"></span>22. Rule-native cross-seed screening · 2.24 · <span class="muted">0/6 positive</span></div>\n      <div class="stage"><span class="dot pending"></span>23. Rule-update cross-seed screening · 2.25 · <span class="muted">0/6 positive</span></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.12</h2>
-    <p><b>State trajectory did not reconstruct the next coherence innovation.</b></p>
+    <h2>RESULT · GENESIS-2.25</h2>
+    <p><b>Rule-update observables did not establish cross-seed predictive generalization.</b></p>
     <div class="grid">
-      <div class="card span-6"><h2>INPUT</h2><span class="ok">193D combined non-coherence state trajectory</span><br><span class="muted">history lengths 2 · 3 · 5 · 10; exact consecutive ticks</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/12 beat zero-change · 12/12 beat shuffled</span></div>
+      <div class="card span-6"><h2>INPUT</h2><span class="ok">8D coherence-free rule-update representation</span><br><span class="muted">six seeds · 500 ticks · leave-one-seed-out</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative</span><br><span class="muted">0/6 beat zero-change · 3/6 beat shuffled</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
-      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled trajectory</span></div>
+      <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
   </div>
 
@@ -124,7 +124,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-6">
-    <h2>EVIDENCE · 2.10–2.22</h2>
+    <h2>EVIDENCE · 2.10–2.25</h2>
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">0/12 positive</span></div>
@@ -136,20 +136,20 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
     <div class="row"><span>cross-seed transfer · 2.20</span><span class="badge pending">7/54 positive</span></div>\n    <div class="row"><span>leave-one-seed-out · 2.21</span><span class="badge pending">0/9 positive</span></div>\n    <div class="row"><span>seed-invariant · 2.22</span><span class="badge pending">0/9 positive</span></div>
-    <div class="row"><span>expanded cross-seed · 2.23</span><span class="badge pending">0/18 positive</span></div>
-    <p class="muted">The tested observer-state families do not robustly reconstruct the 2.9 innovation signal. Seed-dependent positives in 2.15–2.19 do not establish stable mechanisms. Cross-seed results through GENESIS-2.23 do not establish a stable predictive representation. The primary criterion remains held-out improvement over zero-change.</p>
+    <div class="row"><span>expanded cross-seed · 2.23</span><span class="badge pending">0/18 positive</span></div>\n    <div class="row"><span>rule-native · 2.24</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-update · 2.25</span><span class="badge pending">0/6 positive</span></div>
+    <p class="muted">The tested observer-state families and rule-derived representations do not establish robust cross-seed predictive generalization. The primary criterion remains held-out improvement over zero-change; shuffled superiority alone is insufficient.</p>
   </div>
 
   <div class="card span-12">
-    <h2>RESULT · GENESIS-2.23</h2>
-    <p><b>Expanded cross-seed generalization is negative.</b></p>
-    <p class="muted">Six seeds (390001–390006), leave-one-seed-out training, histories 2/3/5, 500 ticks per seed. Result: 0/18 beat zero-change; 11/18 beat shuffled. Cross-seed predictive transfer is not established.</p>
+    <h2>RESULT · GENESIS-2.25</h2>
+    <p><b>Rule-update cross-seed screening is negative.</b></p>
+    <p class="muted">Six seeds (390001–390006), leave-one-seed-out training, 500 ticks per seed. Result: 0/6 beat zero-change; 3/6 beat shuffled. The rule-update representation does not establish cross-seed predictive transfer.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.24</h2>
-    <p><b>Test representation tied to the underlying universe rule rather than seed-specific observer coordinates.</b></p>
-    <p class="muted">A positive result must beat zero-change and shuffled controls on held-out seeds while preserving measurement-only invariants.</p>
+    <h2>NEXT · GENESIS-2.26</h2>
+    <p><b>Pre-register a rule-level invariant analysis tied directly to the local update equation.</b></p>
+    <p class="muted">A positive result must beat zero-change and shuffled controls on held-out seeds, with the invariant defined before evaluation and no universe feedback.</p>
   </div>
 
   <div class="card span-12">
@@ -162,7 +162,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.22 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.25 results recorded</div>
     </div>
   </div>
 
