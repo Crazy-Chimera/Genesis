@@ -1935,3 +1935,47 @@ The predictor remains external. It does not modify `GenesisUniverse`, its parame
 The next validation should test the identified coupling relation under longer horizons and independent implementations of the update equation, followed by controlled perturbations of the coupling term. The dose-response should also be tested at finer resolution around 0.01 before interpreting the minimum as a precise parameter estimate.
 
 All existing non-interference invariants remain unchanged.
+
+
+## GENESIS-2.42 — Independent Full-Rule Implementation Audit
+
+GENESIS-2.42 closes the implementation-consistency gap identified in GENESIS-2.41b. The 2.41b audit independently reproduced the deterministic update without the stochastic noise term, while production `GenesisUniverse.step()` includes deterministic noise. Therefore the 2.41b residual could not be attributed purely to implementation differences.
+
+2.42 independently reproduces the **complete PW-001 update rule**, including the same deterministic noise generation rule, local four-neighbour coupling, natural frequency, timestep, and periodic phase wrapping. It compares the independently calculated next phase against the production implementation for six seeds, 390049–390054, over 2,000 ticks each.
+
+### Verified result
+
+Workflow: **GENESIS-2.42 full-rule independent audit #1**  
+Commit: `ef250cd7abfbab2ec1a7a02d504e18de839c2997`  
+Artifact: `11335683556`  
+Artifact digest: `sha256:7cf15b02b7900c9e7c2b24d153b6be3f0a452084f9a7982974fdd4f3cae8fb87`  
+CI conclusion: **SUCCESS**
+
+| seed | max circular phase error | max coherence error |
+|---:|---:|---:|
+| 390049 | 0 | 0 |
+| 390050 | 0 | 0 |
+| 390051 | 0 | 0 |
+| 390052 | 0 | 0 |
+| 390053 | 0 | 0 |
+| 390054 | 0 | 0 |
+
+### Interpretation
+
+The independent explicit-index implementation reproduces the production update exactly at the tested numerical precision: no circular phase discrepancy and no coherence discrepancy were observed across all six seeds and 2,000 ticks.
+
+This result is an **implementation-consistency validation**. It does not establish a new physical mechanism and does not by itself validate the mechanistic predictive claim. It removes a specific alternative explanation for discrepancies between an independent deterministic-rule calculation and the production implementation: omission of the production noise term.
+
+The mechanistic result from GENESIS-2.38/2.39 therefore remains a separate empirical claim. GENESIS-2.42 establishes that the production implementation and the independently written complete rule agree exactly under the tested protocol.
+
+### Research frontier after 2.42
+
+The next validation should compare the mechanistic prediction signal against controlled perturbations and longer horizons while retaining the independently reproduced full rule. In particular:
+
+1. separate deterministic-rule prediction from noise-driven residuals;
+2. test longer-horizon prediction without feeding predictions back into the universe;
+3. perturb or ablate coupling while preserving all other update terms;
+4. retain independent implementation as a reproducibility oracle;
+5. quantify numerical convergence before interpreting small residuals as physical structure.
+
+All non-interference invariants remain unchanged: no prediction feedback, goals, rewards, agency, self-model, or endogenous learning are introduced.
