@@ -3,165 +3,146 @@ from __future__ import annotations
 import numpy as np
 
 from genesis.core import GenesisConfig, GenesisUniverse
-from genesis.memory import MemoryRecord
+from genesis.memory import MemoryRecord, TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
-
-
-def frequency_state(record: MemoryRecord, omega: np.ndarray) -> tuple[float, ...]:
-    values = np.asarray([omega[r, c] for r, c in record.cells], dtype=float)
-    if values.size == 0:
-        return (0.0, 0.0, 0.0)
-    mean = float(values.mean())
-    return (
-        mean,
-        float(values.std()),
-        float(np.mean(np.abs(values - omega.mean()))),
-    )
 
 
 def collect(seed: int, ticks: int = 600):
     universe = GenesisUniverse(GenesisConfig(seed=seed, ticks=ticks))
     observer = LocalStructureObserver()
     tracker = RegionTracker(observer)
-    records: list[MemoryRecord] = []
+    memory = TemporalMemory()
+    frequency: dict[tuple[int, int], tuple[float, ...]] = {}
 
-    observations, events = tracker.observe_events(universe.phase)
-    for observation in observations:
-        records.append(MemoryRecord(
-            tick=universe.tick,
-            identity=observation.identity,
-            cells=observation.cells,
-            coherence=observation.coherence,
-            boundary_contrast=observation.boundary_contrast,
-            lifetime=observation.lifetime,
-            persistence=observation.persistence,
-            overlap=observation.overlap,
-            event_kinds=tuple(e.kind for e in events if e.identity == observation.identity),
-            local_patch=observation.local_patch,
-            phase_patch=observation.phase_patch,
-            gradient_patch=observation.gradient_patch,
-            motion=observation.motion,
-            boundary_flux=observation.boundary_flux,
-            boundary_deformation=observation.boundary_deformation,
-            spatiotemporal_patch=observation.spatiotemporal_patch,
-            spatial_field=observation.spatial_field,
-            multiscale_field=observation.multiscale_field,
-            relational=observation.relational,
-            graph_relational=observation.graph_relational,
-        ))
+    def record_frame() -> None:
+        observations, events = tracker.observe_events(universe.phase)
+        added = memory.record(universe.tick, observations, events)
+        for record in added:
+            values = np.asarray([universe.omega[r, c] for r, c in record.cells], dtype=float)
+            if values.size == 0:
+                feature = (0.0, 0.0, 0.0)
+            else:
+                feature = (
+                    float(values.mean()),
+                    float(values.std()),
+                    float(np.mean(np.abs(values - universe.omega.mean()))),
+                )
+            frequency[(record.tick, record.identity)] = feature
 
-    # Keep a separate observer-only frequency map keyed by (tick, identity).
-    freq = {(r.tick, r.identity): frequency_state(r, universe.omega) for r in records}
-
+    record_frame()
     for _ in range(ticks):
         universe.step()
-        observations, events = tracker.observe_events(universe.phase)
-        for observation in observations:
-            record = MemoryRecord(
-                tick=universe.tick,
-                identity=observation.identity,
-                cells=observation.cells,
-                coherence=observation.coherence,
-                boundary_contrast=observation.boundary_contrast,
-                lifetime=observation.lifetime,
-                persistence=observation.persistence,
-                overlap=observation.overlap,
-                event_kinds=tuple(e.kind for e in events if e.identity == observation.identity),
-                local_patch=observation.local_patch,
-                phase_patch=observation.phase_patch,
-                gradient_patch=observation.gradient_patch,
-                motion=observation.motion,
-                boundary_flux=observation.boundary_flux,
-                boundary_deformation=observation.boundary_deformation,
-                spatiotemporal_patch=observation.spatiotemporal_patch,
-                spatial_field=observation.spatial_field,
-                multiscale_field=observation.multiscale_field,
-                relational=observation.relational,
-                graph_relational=observation.graph_relational,
-            )
-            records.append(record)
-            freq[(record.tick, record.identity)] = frequency_state(record, universe.omega)
-
-    return records, freq
+        record_frame()
+    return memory.all(), frequency
 
 
-def evaluate(train_records, train_freq, test_records, test_freq, ridge=1e-6):
-    train_x = np.asarray([train_freq[(r.tick, r.identity)] for r in train_records], float)
-    train_y = np.asarray([
-        r.coherence - prev.coherence
-        for prev, r in zip(train_records, train_records[1:])
-        if prev.identity == r.identity and r.tick == prev.tick + 1
-    ], float)
-    # Rebuild exact consecutive pairs to keep X/Y aligned.
-    pairs = []
-    by_id = {}
-    for r in train_records:
-        by_id.setdefault(r.identity, []).append(r)
+def pairs(records: list[MemoryRecord] | tuple[MemoryRecord, ...]):
+    by_id: dict[int, list[MemoryRecord]] = {}
+    for record in records:
+        by_id.setdefault(record.identity, []).append(record)
     for items in by_id.values():
-        items.sort(key=lambda r: r.tick)
+        items.sort(key=lambda item: item.tick)
+    for items in by_id.values():
+        for current, target in zip(items, items[1:]):
+            if target.tick == current.tick + 1:
+                yield current, target
+
+
+def evaluate(train_records, train_frequency, test_records, test_frequency, ridge=1e-6):
     train_x, train_y = [], []
-    for items in by_id.values():
-        for a, b in zip(items, items[1:]):
-            if b.tick != a.tick + 1:
-                continue
-            train_x.append(train_freq[(a.tick, a.identity)])
-            train_y.append(b.coherence - a.coherence)
+    for current, target in pairs(train_records):
+        train_x.append(train_frequency[(current.tick, current.identity)])
+        train_y.append(target.coherence - current.coherence)
 
-    by_id = {}
-    for r in test_records:
-        by_id.setdefault(r.identity, []).append(r)
     test_x, test_y = [], []
-    for items in by_id.values():
-        items.sort(key=lambda r: r.tick)
-        for a, b in zip(items, items[1:]):
-            if b.tick != a.tick + 1:
-                continue
-            test_x.append(test_freq[(a.tick, a.identity)])
-            test_y.append(b.coherence - a.coherence)
+    for current, target in pairs(test_records):
+        test_x.append(test_frequency[(current.tick, current.identity)])
+        test_y.append(target.coherence - current.coherence)
 
-    train_x, train_y = np.asarray(train_x, float), np.asarray(train_y, float)
-    test_x, test_y = np.asarray(test_x, float), np.asarray(test_y, float)
-    mean, scale = train_x.mean(0), train_x.std(0)
-    scale[scale == 0] = 1
+    train_x = np.asarray(train_x, dtype=float)
+    train_y = np.asarray(train_y, dtype=float)
+    test_x = np.asarray(test_x, dtype=float)
+    test_y = np.asarray(test_y, dtype=float)
+
+    mean = train_x.mean(axis=0)
+    scale = train_x.std(axis=0)
+    scale[scale == 0.0] = 1.0
     X = np.column_stack((np.ones(len(train_x)), (train_x - mean) / scale))
     V = np.column_stack((np.ones(len(test_x)), (test_x - mean) / scale))
-    reg = np.eye(X.shape[1]); reg[0, 0] = 0
-    coef = np.linalg.solve(X.T @ X + ridge * reg, X.T @ train_y)
-    pred = V @ coef
+    regularizer = np.eye(X.shape[1])
+    regularizer[0, 0] = 0.0
+    coef = np.linalg.solve(
+        X.T @ X + ridge * regularizer,
+        X.T @ train_y,
+    )
+    prediction = V @ coef
 
     rng = np.random.default_rng(390001)
-    perm_mae = []
+    permutation_mae = []
     for _ in range(25):
         shuffled = test_x.copy()
         rng.shuffle(shuffled)
-        sp = np.column_stack((np.ones(len(shuffled)), (shuffled - mean) / scale)) @ coef
-        perm_mae.append(float(np.mean(np.abs(test_y - sp))))
+        shuffled_prediction = np.column_stack(
+            (np.ones(len(shuffled)), (shuffled - mean) / scale)
+        ) @ coef
+        permutation_mae.append(float(np.mean(np.abs(test_y - shuffled_prediction))))
 
-    zero = float(np.mean(np.abs(test_y)))
-    model = float(np.mean(np.abs(test_y - pred)))
-    return len(test_y), zero, model, float(np.mean(perm_mae)), zero - model
+    zero_mae = float(np.mean(np.abs(test_y)))
+    model_mae = float(np.mean(np.abs(test_y - prediction)))
+    return (
+        len(test_y),
+        zero_mae,
+        model_mae,
+        float(np.mean(permutation_mae)),
+        zero_mae - model_mae,
+    )
 
 
 def main() -> None:
     print("GENESIS-2.34 local frequency-detuning transfer")
     source = tuple(range(390013, 390025))
     target = tuple(range(390025, 390037))
-    source_records = [collect(seed) for seed in source]
-    target_records = [collect(seed) for seed in target]
+    source_data = [collect(seed) for seed in source]
+    target_data = [collect(seed) for seed in target]
 
     results = []
-    for target_seed, (target_records_i, target_freq_i) in zip(target, target_records):
-        train_records = [r for pair in source_records for r in pair[0] if r.tick < 300]
-        train_freq = {k: v for pair in source_records for k, v in pair[1].items() if k[0] < 300}
-        test_records = [r for r in target_records_i if 450 <= r.tick < 600]
-        test_freq = {k: v for k, v in target_freq_i.items() if 450 <= k[0] < 600}
-        result = evaluate(train_records, train_freq, test_records, test_freq)
+    train_records = tuple(
+        record for records, _ in source_data for record in records if record.tick < 300
+    )
+    train_frequency = {
+        key: value
+        for _, frequency in source_data
+        for key, value in frequency.items()
+        if key[0] < 300
+    }
+
+    for target_seed, (records, frequency) in zip(target, target_data):
+        test_records = tuple(record for record in records if 450 <= record.tick < 600)
+        test_frequency = {
+            key: value
+            for key, value in frequency.items()
+            if 450 <= key[0] < 600
+        }
+        result = evaluate(
+            train_records,
+            train_frequency,
+            test_records,
+            test_frequency,
+        )
         results.append(result)
         print(target_seed, *result)
 
-    arr = np.asarray(results, float)
-    print("aggregate", len(results), int(np.sum(arr[:, 2] < arr[:, 1])), int(np.sum(arr[:, 2] < arr[:, 3])),
-          float(arr[:, 1].mean()), float(arr[:, 2].mean()), float(arr[:, 3].mean()), float(arr[:, 4].mean()))
+    values = np.asarray(results, dtype=float)
+    print(
+        "aggregate",
+        "targets=", len(results),
+        "beats_zero=", int(np.sum(values[:, 2] < values[:, 1])),
+        "beats_permutation=", int(np.sum(values[:, 2] < values[:, 3])),
+        "mean_zero=", float(values[:, 1].mean()),
+        "mean_model=", float(values[:, 2].mean()),
+        "mean_permutation=", float(values[:, 3].mean()),
+        "mean_improvement=", float(values[:, 4].mean()),
+    )
 
 
 if __name__ == "__main__":
