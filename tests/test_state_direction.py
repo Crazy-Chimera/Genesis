@@ -7,11 +7,16 @@ def test_direction_predictor_synthetic_relation():
     def record(tick, value):
         return MemoryRecord(
             tick=tick, identity=1, cells=(), coherence=value,
-            boundary_contrast=0.0, lifetime=1, persistence=1.0, overlap=1.0,
-            local_patch=(float(value),), phase_patch=(float(value),),
-            gradient_patch=(0.0,), motion=(0.0,), boundary_flux=(0.0,),
-            spatial_field=(float(value),), multiscale_field=(float(value),),
-            relational=(0.0,), graph_relational=(0.0,),
+            boundary_contrast=0.0, lifetime=1, persistence=1, overlap=1.0,
+            local_patch=(float(value),) * 9,
+            phase_patch=(float(value),) * 18,
+            gradient_patch=(0.0,) * 18,
+            motion=(0.0,) * 3,
+            boundary_flux=(0.0,) * 5,
+            spatial_field=(float(value),) * 18,
+            multiscale_field=(float(value),) * 68,
+            relational=(0.0,) * 16,
+            graph_relational=(0.0,) * 33,
         )
 
     records = [record(i, 0.1 if i % 2 else 0.0) for i in range(20)]
