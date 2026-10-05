@@ -1,0 +1,25 @@
+name: GENESIS 2.34
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_frequency_detuning_transfer.py"
+      - ".github/workflows/genesis-2.34.yml"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python experiments/pw001_frequency_detuning_transfer.py | tee genesis-2.34-results.txt
+      - run: test -s genesis-2.34-results.txt && grep -q "GENESIS-2.34 local frequency-detuning transfer" genesis-2.34-results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.34-frequency-detuning
+          path: genesis-2.34-results.txt
