@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.36-verified">
+<main data-ui-version="2.37-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -106,16 +106,16 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>28. Rule-transition cross-seed · 2.28 · <span class="muted">4/6 baseline wins</span></div>
       <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div>
       <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
-      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div></div>
+      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.36 VERIFIED</h2>
-    <p><b>The explicit PW-001 one-step rule predicts coherence innovation far better than the zero-change baseline across all 6 tested seeds.</b></p>
+    <h2>RESULT · GENESIS-2.37 VERIFIED</h2>
+    <p><b>The full PW-001 update rule beats the frequency-only model across all 6 tested seeds; coupling adds measurable predictive information.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">12 unseen target seeds · source 390013–390024 → target 390025–390036</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.36 positive · 6/6 seeds</span><br><span class="muted">mechanistic one-step rule; no feedback into the universe</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.37 positive · 6/6 seeds</span><br><span class="muted">full rule vs frequency-only; no feedback into the universe</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
@@ -130,7 +130,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-6">
-    <h2>EVIDENCE · 2.10–2.36</h2>
+    <h2>EVIDENCE · 2.10–2.37</h2>
     <div class="row"><span>single state · 2.10</span><span class="badge pending">not robust</span></div>
     <div class="row"><span>combined 193D state · 2.11</span><span class="badge pending">not reconstructed</span></div>
     <div class="row"><span>state trajectory · 2.12</span><span class="badge pending">0/12 positive</span></div>
@@ -167,9 +167,9 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.37</h2>
-    <p><b>Validate the mechanistic predictor against explicit noise sensitivity and an independent implementation of the PW-001 update equation.</b></p>
-    <p class="muted">The 2.36 result is mechanistic verification of the specified universe rule, not evidence of intelligence, agency, self-modeling, or autonomous learning. No prediction is fed back into the universe.</p>
+    <h2>NEXT · GENESIS-2.38</h2>
+    <p><b>Test whether the coupling advantage survives independent noise controls and stronger out-of-sample validation.</b></p>
+    <p class="muted">The 2.37 result isolates a measurable contribution from local coupling. It remains an external mechanistic predictor, not evidence of intelligence, agency, self-modeling, or autonomous learning.</p>
   </div>
 
   <div class="card span-12">
@@ -182,7 +182,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="card span-3"><span class="ok">✓</span> No goals / reward</div>
       <div class="card span-3"><span class="ok">✓</span> No agency</div>
       <div class="card span-3"><span class="ok">✓</span> No self-model</div>
-      <div class="card span-3"><span class="ok">✓</span> 2.10–2.34 results recorded</div>
+      <div class="card span-3"><span class="ok">✓</span> 2.10–2.37 results recorded</div>
     </div>
   </div>
 
