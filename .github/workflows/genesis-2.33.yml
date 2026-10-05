@@ -1,0 +1,26 @@
+name: GENESIS 2.33
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_rule_transition_permutation.py"
+      - "genesis/rule_transition.py"
+      - ".github/workflows/genesis-2.33.yml"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python experiments/pw001_rule_transition_permutation.py | tee genesis-2.33-results.txt
+      - run: test -s genesis-2.33-results.txt && grep -q "GENESIS-2.33 permutation audit" genesis-2.33-results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.33-permutation
+          path: genesis-2.33-results.txt
