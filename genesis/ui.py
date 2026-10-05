@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.31">
+<main data-ui-version="2.33">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -75,7 +75,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </header>
 
 <section class="grid">
-  <div class="card span-3"><h2>UNIVERSE</h2><div class="metric">PW-001</div><div class="muted">16×16 · 256 oscillators</div></div>
+  <div class="card span-3"><h2>UNIVERSE</h2><div class="metric">PW-001</div><div class="muted">16×16 · 256 oscillators<div class="stage"><span class="dot pending"></span>32. Independent unseen-seed rule-transition replication · 2.32 · <span class="muted">4/12 baseline; negative mean</span></div><div class="stage"><span class="dot pending"></span>33. Rule-transition permutation audit · 2.33 · <span class="muted">3/12 p&lt;0.05; insufficient</span></div></div>
   <div class="card span-3"><h2>TICK</h2><div id="tick" class="metric">{tick:,}</div><div class="muted">target 100,000</div><div class="bar"><i id="progress"></i></div></div>
   <div class="card span-3"><h2>COHERENCE</h2><div id="coherence" class="metric">{coherence:.9f}</div><div class="muted">external observer measurement</div></div>
   <div class="card span-3"><h2>Ω STATUS</h2><div class="metric ok">OBSERVER</div><div class="muted">Agent Ω not activated</div></div>
@@ -111,11 +111,11 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.31</h2>
-    <p><b>Rule-transition observables do not yet form a robust transferable mechanism.</b></p>
+    <h2>RESULT · GENESIS-2.33</h2>
+    <p><b>Rule-transition observables fail independent unseen-seed replication.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">rule-transition representation</span><br><span class="muted">18 unseen seeds · blocked-time cross-seed replication</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative replication</span><br><span class="muted">2/6 + 4/12 beat zero-change · 3/6 + 5/12 shuffled</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="pending">negative replication</span><br><span class="muted">2.32: 4/12 · 2.33: 3/12 permutation p<0.05</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
@@ -142,20 +142,20 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <div class="row"><span>population trajectory · 2.18</span><span class="badge pending">0/12 positive</span></div>
     <div class="row"><span>population PCA bottleneck · 2.19</span><span class="badge pending">0/24 positive</span></div>
     <div class="row"><span>cross-seed transfer · 2.20</span><span class="badge pending">7/54 positive</span></div>\n    <div class="row"><span>leave-one-seed-out · 2.21</span><span class="badge pending">0/9 positive</span></div>\n    <div class="row"><span>seed-invariant · 2.22</span><span class="badge pending">0/9 positive</span></div>
-    <div class="row"><span>expanded cross-seed · 2.23</span><span class="badge pending">0/18 positive</span></div>\n    <div class="row"><span>rule-native · 2.24</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-update · 2.25</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-invariant validation · 2.26</span><span class="badge ok">CI green</span></div>\n    <div class="row"><span>rule-distribution · 2.27</span><span class="badge pending">0/6 positive</span></div>
+    <div class="row"><span>expanded cross-seed · 2.23</span><span class="badge pending">0/18 positive</span></div>\n    <div class="row"><span>rule-native · 2.24</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-update · 2.25</span><span class="badge pending">0/6 positive</span></div>\n    <div class="row"><span>rule-invariant validation · 2.26</span><span class="badge ok">CI green</span></div>\n    <div class="row"><span>rule-distribution · 2.27</span><span class="badge pending">0/6 positive</span></div><div class="row"><span>unseen-seed replication · 2.32</span><span class="badge pending">4/12; negative mean</span></div><div class="row"><span>permutation audit · 2.33</span><span class="badge pending">3/12 p&lt;0.05</span></div>
     <p class="muted">The tested observer-state families and rule-derived representations do not establish robust cross-seed predictive generalization. The primary criterion remains held-out improvement over zero-change; shuffled superiority alone is insufficient.</p>
   </div>
 
   <div class="card span-12">
     <h2>RESULT · GENESIS-2.31</h2>
-    <p><b>Blocked-time rule-transition screening remains non-robust.</b></p>
-    <p class="muted">Six original plus eighteen unseen target seeds were tested with a 150-tick temporal gap. 2.30: 2/6 beat zero-change, 3/6 shuffled. 2.31: 4/12 beat zero-change, 5/12 shuffled; mean improvement became negative. The effect is not robust under unseen-seed replication.</p>
+    <p><b>Independent unseen-seed replication and permutation audit remain negative.</b></p>
+    <p class="muted">2.32 tested 12 unseen target seeds: 4/12 beat zero-change, 4/12 beat shuffled; mean improvement was negative. 2.33 repeated the same cases with 500 deterministic permutations: 3/12 had p < 0.05, median p = 0.532934. This is insufficient evidence for a general transferable mechanism.</p>
   </div>
 
   <div class="card span-12">
-    <h2>NEXT · GENESIS-2.32</h2>
-    <p><b>Stop expanding the same linear rule-transition representation. Next, perform an independent falsification/replication protocol before introducing a new representation.</b></p>
-    <p class="muted">A positive result must beat zero-change and shuffled controls on held-out seeds; no universe feedback is permitted.</p>
+    <h2>NEXT · GENESIS-2.34</h2>
+    <p><b>Stop expanding the same linear rule-transition representation. Next, test an independently motivated mechanism or representation.</b></p>
+    <p class="muted">A positive result must beat zero-change and shuffled/permutation controls on held-out unseen seeds; no universe feedback is permitted.</p>
   </div>
 
   <div class="card span-12">
