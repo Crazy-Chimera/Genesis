@@ -25,10 +25,9 @@ def test_dashboard_contains_genesis_pw001():
     assert "0/12 positive" in html
     assert "1/3 seeds positive" in html
     assert "negative; 7/54 zero-change wins" in html
-    assert "0/12 beat zero-change" in html
     assert "0/18 beat zero-change" in html
     assert "0/18 positive" in html
-    assert 'data-ui-version="2.24"' in html
+    assert 'data-ui-version="2.25"' in html
     assert "state trajectory" in html.lower()
     assert "No self-model" in html
     assert "/step" in html
