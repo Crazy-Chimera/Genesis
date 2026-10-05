@@ -66,6 +66,7 @@ STATE_FEATURES = (
     StateFeatureSpec("multiscale_field", field_state("multiscale_field"), 68),
     StateFeatureSpec("relational", field_state("relational"), 16),
     StateFeatureSpec("graph_relational", field_state("graph_relational"), 33),
+    StateFeatureSpec("global_harmonics", field_state("global_harmonics"), 9),
 )
 
 
@@ -76,7 +77,7 @@ def combined_state(record: MemoryRecord) -> tuple[float, ...]:
     return tuple(values)
 
 
-STATE_FEATURES_WITH_COMBINED = STATE_FEATURES + (StateFeatureSpec("combined", combined_state, 193),)
+STATE_FEATURES_WITH_COMBINED = STATE_FEATURES + (StateFeatureSpec("combined", combined_state, 202),)
 
 
 class StateInnovationPredictor:
