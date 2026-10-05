@@ -21,6 +21,9 @@ on:
       - "experiments/pw001_state_trajectory_sweep.py"
       - "experiments/pw001_state_trajectory_geometry.py"
       - "genesis/state_trajectory_geometry.py"
+      - "genesis/state_trajectory_regularized.py"
+      - "experiments/pw001_state_trajectory_regularized.py"
+      - "tests/test_state_trajectory_regularized.py"
       - "experiments/pw001_regularized_trajectory.py"
       - "experiments/pw001_rule_update.py"
       - "genesis/rule_update.py"
@@ -376,3 +379,16 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_state_trajectory_geometry.py | tee pw001-state-trajectory-geometry.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-trajectory-geometry, path: pw001-state-trajectory-geometry.txt}
+
+
+  state-trajectory-2-13:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_state_trajectory_regularized.py | tee pw001-state-trajectory-2-13.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-state-trajectory-2-13, path: pw001-state-trajectory-2-13.txt}
