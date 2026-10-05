@@ -29,6 +29,7 @@ on:
       - "genesis/mechanistic_decomposition.py"
       - "experiments/pw001_mechanistic_decomposition.py"
       - "experiments/pw001_mechanistic_validation.py"
+      - "experiments/pw001_mechanistic_coupling.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -236,6 +237,18 @@ jobs:
       - run: python -u experiments/pw001_mechanistic_validation.py | tee pw001-mechanistic-validation.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic-validation, path: pw001-mechanistic-validation.txt}
+
+  mechanistic-coupling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: python -u experiments/pw001_mechanistic_coupling.py | tee pw001-mechanistic-coupling.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-mechanistic-coupling, path: pw001-mechanistic-coupling.txt}
 
   global-phase:
     runs-on: ubuntu-latest
