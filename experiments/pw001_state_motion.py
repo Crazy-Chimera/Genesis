@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from genesis.core import GenesisConfig, GenesisUniverse
 from genesis.memory import TemporalMemory
 from genesis.observer import LocalStructureObserver, RegionTracker
@@ -24,9 +26,10 @@ def collect(seed: int, ticks: int = 10_000):
 
 
 def main() -> None:
-    print("GENESIS-2.13 state-motion benchmark")
+    ticks = int(os.environ.get("GENESIS_BENCHMARK_TICKS", "10_000"))
+    print(f"GENESIS-2.13 state-motion benchmark ticks={ticks}")
     for seed in (390001, 390002, 390003):
-        records = collect(seed)
+        records = collect(seed, ticks=ticks)
         print(f"seed={seed} records={len(records)}")
         print(
             "seed history_length samples zero_mae motion_mae "
