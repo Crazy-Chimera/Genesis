@@ -37,6 +37,8 @@ on:
       - "experiments/pw001_state_direction.py"
       - "experiments/pw001_temporal_state.py"
       - "genesis/temporal_state.py"
+      - "genesis/precision_audit.py"
+      - "experiments/pw001_precision_audit.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -315,3 +317,16 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_global_phase.py | tee pw001-global-phase.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-global-phase, path: pw001-global-phase.txt}
+
+
+  precision-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_precision_audit.py | tee pw001-precision-audit.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-precision-audit, path: pw001-precision-audit.txt}
