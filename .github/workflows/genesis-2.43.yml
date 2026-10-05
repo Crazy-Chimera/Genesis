@@ -1,0 +1,26 @@
+name: GENESIS 2.43
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "genesis/mechanistic_horizon.py"
+      - "experiments/pw001_mechanistic_horizon.py"
+      - "tests/test_mechanistic_horizon.py"
+      - ".github/workflows/genesis-2.43.yml"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: pytest -q tests/test_mechanistic_horizon.py
+      - run: python experiments/pw001_mechanistic_horizon.py | tee genesis-2.43-results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.43-results
+          path: genesis-2.43-results.txt
