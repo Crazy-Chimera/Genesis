@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "genesis/state_trajectory.py"
+      - "genesis/state_difference.py"
       - "experiments/pw001_state_difference.py"
       - "tests/test_state_trajectory.py"
       - ".github/workflows/genesis-2.13.yml"
@@ -23,7 +24,9 @@ jobs:
           python-version: "3.12"
       - run: pip install . pytest
       - run: pytest -q tests/test_state_trajectory.py
-      - run: python experiments/pw001_state_difference.py --seed ${{ matrix.seed }} | tee genesis-2.13-${{ matrix.seed }}.txt
+      - run: |
+          set -o pipefail
+          python experiments/pw001_state_difference.py --seed ${{ matrix.seed }} | tee genesis-2.13-${{ matrix.seed }}.txt
       - uses: actions/upload-artifact@v4
         with:
           name: genesis-2.13-results-${{ matrix.seed }}
