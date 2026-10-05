@@ -33,6 +33,8 @@ on:
       - "experiments/pw001_mechanistic_noise.py"
       - "genesis/mechanistic_noise.py"
       - "experiments/pw001_state_direction.py"
+      - "experiments/pw001_temporal_state.py"
+      - "genesis/temporal_state.py"
       - ".github/workflows/pw001-experiment.yml"
 
 jobs:
@@ -275,6 +277,18 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_state_direction.py | tee pw001-state-direction.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-direction, path: pw001-state-direction.txt}
+
+  temporal-state:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_temporal_state.py | tee pw001-temporal-state.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-temporal-state, path: pw001-temporal-state.txt}
 
   global-phase:
     runs-on: ubuntu-latest
