@@ -86,16 +86,20 @@ class StateDifferencePredictor:
 
         for items in groups.values():
             items.sort(key=lambda item: item.tick)
-            vectors = [
-                tuple(float(v) for v in self.spec.feature(item))
-                for item in items
-            ]
+            vectors = []
+            valid_items = []
+            for item in items:
+                vector = tuple(float(v) for v in self.spec.feature(item))
+                if len(vector) != self.spec.width:
+                    continue
+                vectors.append(vector)
+                valid_items.append(item)
 
-            for i in range(self.history_length + 1, len(items)):
+            for i in range(self.history_length + 1, len(valid_items)):
                 state_window = vectors[i - self.history_length - 1 : i + 1]
                 tick_window = [
                     item.tick
-                    for item in items[i - self.history_length - 1 : i + 1]
+                    for item in valid_items[i - self.history_length - 1 : i + 1]
                 ]
 
                 if self.require_consecutive and any(
@@ -112,9 +116,12 @@ class StateDifferencePredictor:
                     for j in range(1, len(state_window))
                 ]
                 row = tuple(v for difference in differences for v in difference)
-                delta = items[i].coherence - items[i - 1].coherence
+                delta = (
+                    valid_items[i].coherence
+                    - valid_items[i - 1].coherence
+                )
 
-                if items[i].tick < heldout:
+                if valid_items[i].tick < heldout:
                     train_x.append(row)
                     train_y.append(delta)
                 else:
