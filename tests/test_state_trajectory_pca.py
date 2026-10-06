@@ -26,6 +26,7 @@ def record(tick, value):
         multiscale_field=(value,) * 68,
         relational=(value,) * 16,
         graph_relational=(value,) * 33,
+        global_harmonics=(value,) * 9,
     )
 
 
