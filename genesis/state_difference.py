@@ -33,7 +33,7 @@ class StateDifferenceEvaluationResult:
 
 
 class StateDifferencePredictor:
-    """Predict coherence innovation from a trajectory of state differences."""
+    """Predict next coherence innovation from prior non-coherence state differences."""
 
     def __init__(
         self,
@@ -96,30 +96,30 @@ class StateDifferencePredictor:
                 valid_items.append(item)
 
             for i in range(self.history_length + 1, len(valid_items)):
-                state_window = vectors[i - self.history_length - 1 : i + 1]
-                tick_window = [
-                    item.tick
-                    for item in valid_items[i - self.history_length - 1 : i + 1]
-                ]
+                history_start = i - self.history_length - 1
+                history_end = i - 1
+                history_items = valid_items[history_start:i]
+                tick_window = [item.tick for item in valid_items[history_start:i + 1]]
 
                 if self.require_consecutive and any(
-                    b != a + 1
-                    for a, b in zip(tick_window, tick_window[1:])
+                    b != a + 1 for a, b in zip(tick_window, tick_window[1:])
                 ):
                     continue
 
                 differences = [
                     tuple(
-                        state_window[j][k] - state_window[j - 1][k]
+                        vectors[j][k] - vectors[j - 1][k]
                         for k in range(self.spec.width)
                     )
-                    for j in range(1, len(state_window))
+                    for j in range(history_start + 1, history_end + 1)
                 ]
+                if len(differences) != self.history_length:
+                    continue
+
+                # Only changes known by the current state are supplied.
+                # The target is the following coherence innovation.
                 row = tuple(v for difference in differences for v in difference)
-                delta = (
-                    valid_items[i].coherence
-                    - valid_items[i - 1].coherence
-                )
+                delta = valid_items[i].coherence - valid_items[i - 1].coherence
 
                 if valid_items[i].tick < heldout:
                     train_x.append(row)
