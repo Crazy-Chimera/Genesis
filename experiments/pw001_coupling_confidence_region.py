@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 import numpy as np
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from genesis.core import GenesisConfig, GenesisUniverse
 from experiments.pw001_mechanistic_coupling import predicted_coherence
