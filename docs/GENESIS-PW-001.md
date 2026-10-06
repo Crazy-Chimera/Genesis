@@ -2068,3 +2068,98 @@ The next clean validation target is not another observer feature expansion. The 
 5. test whether the identified relation survives parameter changes within the same rule family.
 
 The current evidence therefore supports a **tested mechanistic one-step predictive relation in PW-001**, while remaining deliberately agnostic about intelligence, agency, self-modeling, or autonomous learning.
+
+
+## GENESIS-2.45 — Numerical Convergence Audit
+
+GENESIS-2.45 tests numerical convergence of the independent mechanistic reference across six unseen seeds, 390061–390066, and four timestep values: 0.01, 0.005, 0.0025, and 0.00125.
+
+### Verified result
+
+CI workflow: **PW-001 experiment #277**, numerical-convergence job: **SUCCESS**  
+Commit: `7e7702839e700f52287a73673709bffb28a42603`  
+Artifact: `11391455355`  
+Artifact digest: `sha256:8d5f006206d2ce949d30d3829260f0e60823c07d72b9d01b72d55611e766711f`
+
+For every tested seed, reducing `dt` by approximately one half reduces both the phase RMS discrepancy and coherence discrepancy by approximately a factor of four.
+
+Representative convergence for seed 390061:
+
+| dt | phase RMS | coherence error |
+|---:|---:|---:|
+| 0.01 | 5.80207932320982e-09 | 6.99984355201355e-10 |
+| 0.005 | 1.45050860148609e-09 | 1.75074378605533e-10 |
+| 0.0025 | 3.62625755641385e-10 | 4.37783628792765e-11 |
+| 0.00125 | 9.06562167708475e-11 | 1.09458206387636e-11 |
+
+The same monotonic fourth-order reduction pattern is present in the reported error magnitudes for all six seeds.
+
+### Interpretation
+
+GENESIS-2.45 provides a numerical-convergence control for the mechanistic analysis. The observed discrepancy between the independent mechanistic reference and the production trajectory decreases systematically as the timestep is refined.
+
+This does not establish a physical law or intelligence-related property. It strengthens the numerical validity of the mechanistic comparison by showing that the measured implementation discrepancy has a controlled timestep dependence.
+
+## GENESIS-2.46 — Mechanistic Timestep Refinement
+
+GENESIS-2.46 tests the mechanistic one-step predictive relation directly across the same timestep family used by GENESIS-2.45: 0.01, 0.005, 0.0025, and 0.00125. Six new unseen seeds, 390067–390072, are evaluated for 2,000 ticks per timestep.
+
+The predictor remains the explicit deterministic PW-001 update rule without stochastic noise; the actual universe continues to use the complete production rule.
+
+### Verified result
+
+CI workflow: **PW-001 experiment #277**, mechanistic-dt-refinement job: **SUCCESS**  
+Commit: `7e7702839e700f52287a73673709bffb28a42603`  
+Artifact: `11391895678`  
+Artifact digest: `sha256:1fbaf1d037b9e1d7d30904429198881f207a7b9cdbb4549848457c66fdc0bbab`
+
+All **24/24** seed × timestep combinations beat the zero-change baseline.
+
+Mean results by timestep:
+
+| dt | mean improvement | mean mechanistic/zero MAE ratio |
+|---:|---:|---:|
+| 0.01 | 1.3500045901e-05 | 0.0297464 |
+| 0.005 | 5.9039259877e-06 | 0.0374555 |
+| 0.0025 | 2.9915284376e-06 | 0.0327148 |
+| 0.00125 | 1.5944532689e-06 | 0.0294999 |
+
+Across all 24 conditions:
+
+- **24/24** mechanistic predictors beat zero-change.
+- Mean improvement: approximately **5.9974884e-06**.
+- Mean mechanistic/zero-change MAE ratio: approximately **0.03235**.
+
+For seed 390067, for example:
+
+| dt | zero MAE | mechanistic MAE | improvement |
+|---:|---:|---:|---:|
+| 0.01 | 8.72798868997408e-06 | 3.615531019699e-07 | +8.36643558800418e-06 |
+| 0.005 | 3.17819198220396e-06 | 1.81082559913665e-07 | +2.99710942229029e-06 |
+| 0.0025 | 2.13609267138718e-06 | 9.05343168668624e-08 | +2.04555835452031e-06 |
+| 0.00125 | 1.0532037119433e-06 | 4.52765425690942e-08 | +1.00792716937421e-06 |
+
+### Interpretation
+
+GENESIS-2.46 extends the mechanistic validation across a controlled timestep refinement. The predictive advantage remains present for every tested unseen seed and every tested timestep.
+
+The absolute improvement decreases with smaller `dt`, as does the absolute zero-change innovation scale. The relative error remains on the order of a few percent of the zero-change MAE across the tested range.
+
+Together with GENESIS-2.45, this provides two linked observations:
+
+1. the independent-rule numerical discrepancy converges systematically with timestep refinement;
+2. the mechanistic predictive relation remains measurable under that same refinement.
+
+This is stronger numerical validation of the tested PW-001 mechanism, but it remains a result about the specified computational rule and protocol. It does not establish intelligence, agency, self-modeling, endogenous learning, or a general physical law.
+
+### Research frontier after 2.46
+
+The next priority is to consolidate the mechanistic validation rather than add more observer representations:
+
+1. maintain the independent full-rule implementation as a reproducibility oracle;
+2. retain the numerical-convergence control;
+3. test controlled coupling perturbations and ablations;
+4. separate deterministic-rule error from stochastic residuals;
+5. test whether the mechanistic advantage persists under longer horizons and additional unseen parameter regimes.
+
+All non-interference invariants remain unchanged.
