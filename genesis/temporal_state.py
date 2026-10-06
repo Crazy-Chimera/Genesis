@@ -65,14 +65,17 @@ class TemporalStatePredictor:
         self.ridge = ridge
         self.require_consecutive = require_consecutive
 
-    def _vector(self, record: MemoryRecord) -> np.ndarray:
+    def _vector(self, record: MemoryRecord) -> np.ndarray | None:
         values = np.asarray(self.spec.feature(record), dtype=np.float64)
         if values.size != self.spec.width:
-            raise ValueError("feature width mismatch")
+            return None
         return values
 
-    def _row(self, window: list[MemoryRecord]) -> np.ndarray:
+    def _row(self, window: list[MemoryRecord]) -> np.ndarray | None:
         states = [self._vector(item) for item in window]
+        if any(state is None for state in states):
+            return None
+        states = [state for state in states if state is not None]
         if self.mode == "delta":
             return states[-1] - states[-2]
         if self.mode == "acceleration":
@@ -117,6 +120,8 @@ class TemporalStatePredictor:
                 ):
                     continue
                 row = self._row(window)
+                if row is None:
+                    continue
                 delta = target.coherence - window[-1].coherence
                 if target.tick < heldout:
                     train_x.append(row)
