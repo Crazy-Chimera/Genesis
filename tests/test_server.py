@@ -19,11 +19,11 @@ def test_server_step_advances_universe():
 def test_dashboard_contains_current_genesis_frontier():
     html = render_dashboard({"tick": 0, "coherence": 0.5})
     assert "GENESIS-PW-001" in html
-    assert 'data-ui-version="2.56-verified"' in html
-    assert "GENESIS-2.56" in html
-    assert "2.55" in html
-    assert "Replicated grid-convergence control" in html
-    assert "50 replicates / condition" in html
+    assert 'data-ui-version="2.57-verified"' in html
+    assert "GENESIS-2.57" in html
+    assert "2.56" in html
+    assert "High-replication grid-scaling control" in html
+    assert "200 replicates / condition" in html
     assert "2.48 fine grid" in html
     assert "6/6 minimum at 0.01" in html
     assert "24/24 positive" in html
