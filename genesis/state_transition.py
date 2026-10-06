@@ -114,7 +114,12 @@ class StateTransitionPredictor:
                 ):
                     continue
 
-                row = transition_state(previous, current)
+                try:
+                    row = transition_state(previous, current)
+                except ValueError:
+                    # Observer features can be undefined at lifecycle boundaries.
+                    # Exclude that transition rather than coercing a missing state.
+                    continue
                 if len(row) != TRANSITION_WIDTH:
                     continue
 
