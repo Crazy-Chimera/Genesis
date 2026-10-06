@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from experiments.pw001_coupling_noise_ablation import evaluate
+from pw001_coupling_noise_ablation import evaluate
 
 
 def bootstrap_mean(values: np.ndarray, rng: np.random.Generator, draws: int = 5000):
