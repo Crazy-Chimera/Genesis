@@ -150,6 +150,11 @@ class StateTrajectoryGeometryPredictor:
                     ticks[j + 1] != ticks[j] + 1 for j in range(len(ticks) - 1)
                 ):
                     continue
+                if any(
+                    len(tuple(float(v) for v in self.spec.feature(record))) != self.spec.width
+                    for record in window
+                ):
+                    continue
                 row = trajectory_geometry(window, self.spec)
                 delta = target.coherence - window[-1].coherence
                 if target.tick < heldout:
