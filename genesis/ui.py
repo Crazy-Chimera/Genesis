@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.44-verified">
+<main data-ui-version="2.46-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -106,16 +106,18 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot"></span>28. Rule-transition cross-seed · 2.28 · <span class="muted">4/6 baseline wins</span></div>
       <div class="stage"><span class="dot pending"></span>29. Blocked-time rule-transition · 2.29 · <span class="muted">4/6 baseline; 1/6 shuffled</span></div>
       <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
-      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div><div class="stage"><span class="dot"></span>35. Independent full-rule audit · 2.42 · <span class="muted">0 residual error across 6 seeds</span></div><div class="stage"><span class="dot"></span>36. Mechanistic horizon validation · 2.43 · <span class="muted">24/24 positive</span></div><div class="stage"><span class="dot"></span>37. Mechanistic noise attribution · 2.44 · <span class="muted">noise effect measured; attribution audit</span></div></div>
+      <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div><div class="stage"><span class="dot"></span>35. Independent full-rule audit · 2.42 · <span class="muted">0 residual error across 6 seeds</span></div><div class="stage"><span class="dot"></span>36. Mechanistic horizon validation · 2.43 · <span class="muted">24/24 positive</span></div><div class="stage"><span class="dot"></span>37. Mechanistic noise attribution · 2.44 · <span class="muted">noise effect measured; attribution audit</span></div>
+      <div class="stage"><span class="dot"></span>38. Numerical convergence audit · 2.45 · <span class="muted">6 seeds · 4 dt values · convergent</span></div>
+      <div class="stage"><span class="dot"></span>39. Mechanistic dt refinement · 2.46 · <span class="muted">24/24 positive</span></div></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.43 VERIFIED</h2>
+    <h2>RESULT · GENESIS-2.46 VERIFIED</h2>
     <p><b>The mechanistic PW-001 predictor remains substantially better than zero-change through horizon 10 on all six unseen seeds tested in 2.43.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">explicit PW-001 rule</span><br><span class="muted">6 unseen seeds · horizons 1, 2, 5, 10</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.43 positive · 24/24 seed×horizon cases</span><br><span class="muted">deterministic rule prediction vs zero-change; no feedback into the universe</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.46 positive · 24/24 seed×dt cases</span><br><span class="muted">mechanistic rule prediction remains below zero-change across dt refinement; no feedback into the universe</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
@@ -179,7 +181,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-12">
-    <h2>RESULT · GENESIS-2.44</h2>\n    <p><b>Independent noise-attribution audit isolates the stochastic contribution without changing the universe rule.</b></p>\n    <p class="muted">Six seeds × four horizons (1, 2, 5, 10): deterministic-reference MAE is 0 in the tested comparison, while the measured noise effect remains non-zero and grows with horizon. This is an attribution/validation result, not evidence of agency or a new physical mechanism.</p>\n  </div>\n\n  <div class="card span-12">\n    <h2>INVARIANTS</h2>
+    <h2>RESULT · GENESIS-2.44</h2>\n    <p><b>Independent noise-attribution audit isolates the stochastic contribution without changing the universe rule.</b></p>\n    <p class="muted">Six seeds × four horizons (1, 2, 5, 10): deterministic-reference MAE is 0 in the tested comparison, while the measured noise effect remains non-zero and grows with horizon. This is an attribution/validation result, not evidence of agency or a new physical mechanism.</p>\n  </div>\n\n  <div class="card span-12">\n    <h2>RESULT · GENESIS-2.45 / 2.46</h2>\n    <p><b>Numerical convergence and mechanistic timestep refinement remain consistent across six unseen seeds.</b></p>\n    <p class="muted">2.45: phase/coherence discrepancy decreases systematically under dt refinement. 2.46: the explicit mechanistic predictor beats zero-change in all 24 seed×dt cases. These are numerical/mechanistic validation results, not evidence of intelligence or agency.</p>\n  </div>\n\n  <div class="card span-12">\n    <h2>INVARIANTS</h2>
     <div class="grid">
       <div class="card span-3"><span class="ok">✓</span> Universe rules unchanged</div>
       <div class="card span-3"><span class="ok">✓</span> Observer is external</div>
