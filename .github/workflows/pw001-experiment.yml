@@ -458,3 +458,15 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_coupling_perturbation_250.py | tee pw001-coupling-perturbation-2-50.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-coupling-perturbation-2-50, path: pw001-coupling-perturbation-2-50.txt}
+
+  state-transition-2-13:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_state_transition.py | tee pw001-state-transition-2-13.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-state-transition-2-13, path: pw001-state-transition-2-13.txt}
