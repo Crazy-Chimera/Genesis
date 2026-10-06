@@ -77,7 +77,10 @@ def combined_state(record: MemoryRecord) -> tuple[float, ...]:
     return tuple(values)
 
 
-STATE_FEATURES_WITH_COMBINED = STATE_FEATURES + (StateFeatureSpec("combined", combined_state, 202),)
+COMBINED_STATE_WIDTH = sum(spec.width for spec in STATE_FEATURES)
+STATE_FEATURES_WITH_COMBINED = STATE_FEATURES + (
+    StateFeatureSpec("combined", combined_state, COMBINED_STATE_WIDTH),
+)
 
 
 class StateInnovationPredictor:
