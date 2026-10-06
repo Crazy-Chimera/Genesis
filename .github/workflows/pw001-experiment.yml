@@ -44,6 +44,7 @@ on:
       - "experiments/pw001_mechanistic_dt_refinement.py"
       - "experiments/pw001_coupling_perturbation_247.py"
       - "experiments/pw001_coupling_perturbation_248.py"
+      - "experiments/pw001_coupling_perturbation_249.py"
       - "genesis/mechanistic_horizon.py"
       - "genesis/mechanistic_noise.py"
       - "experiments/pw001_state_direction.py"
@@ -384,7 +385,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: {name: pw001-state-trajectory-geometry, path: pw001-state-trajectory-geometry.txt}
 
-
   state-trajectory-2-13:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -432,3 +432,15 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_coupling_perturbation_248.py | tee pw001-coupling-perturbation-2-48.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-coupling-perturbation-2-48, path: pw001-coupling-perturbation-2-48.txt}
+
+  coupling-perturbation-2-49:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_coupling_perturbation_249.py | tee pw001-coupling-perturbation-2-49.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-coupling-perturbation-2-49, path: pw001-coupling-perturbation-2-49.txt}
