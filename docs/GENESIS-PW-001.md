@@ -2226,3 +2226,61 @@ All non-interference invariants remain unchanged.
 ### Research frontier after 2.48
 
 The next clean mechanistic control is to model or subtract the stochastic residual explicitly and determine whether the small +0.000125 offsets disappear. After that, the coupling perturbation should be repeated on additional unseen seeds and, where useful, with finer grids around the local minimum.
+
+
+## GENESIS-2.55 — Coupling Grid-Resolution Scaling Control
+
+GENESIS-2.55 tests whether coupling-selection error scales with the candidate grid spacing. The actual coupling values are 0.0025, 0.01, and 0.02; noise levels are 0, 0.001, and 0.002; grid spacings are 0.00025, 0.000125, 0.0000625, and 0.00003125. Each condition uses 20 independent evaluations and reports bootstrap confidence intervals, signed offset, absolute offset, and absolute offset normalized by grid spacing.
+
+The experiment is a discretization/noise control. It does not modify the PW-001 universe rules.
+
+### Interpretation
+
+At zero noise the candidate selection remains exact. With non-zero noise, selection offsets occur on both sides of the actual coupling. As the grid becomes finer, the absolute selection error does not shrink proportionally to the grid spacing; the normalized absolute offset therefore rises.
+
+This is consistent with a stochastic residual floor limiting parameter localization at sufficiently fine grid resolution. It does not establish a systematic signed bias in the coupling estimate.
+
+## GENESIS-2.56 — Replicated Grid-Convergence Control
+
+GENESIS-2.56 independently replicates the grid-resolution control around the production coupling **0.01**, using noise levels **0.001** and **0.002**, the same four grid spacings as 2.55, and **50 independent replicates per condition**.
+
+### Verified result
+
+Workflow: **GENESIS-2.56 replicated grid-convergence control** — **SUCCESS**  
+Commit: `19839daeca8953098b70aba2ef9a58a93ca5e9ef`  
+Artifact: `11406848327`  
+Artifact digest: `sha256:aa8d58e57b7cd068879dd24bd910d03fcead7018ce4fe111784dc80224bea7bd`
+
+| step | noise | actual | mean offset | 95% bootstrap CI | mean absolute offset | normalized absolute offset | n |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0.00025 | 0.001 | 0.01 | -5.0e-06 | [-1.5e-05, 0] | 5.0e-06 | 0.02 | 50 |
+| 0.00025 | 0.002 | 0.01 | -1.0e-05 | [-4.0e-05, 2.0e-05] | 5.0e-05 | 0.20 | 50 |
+| 0.000125 | 0.001 | 0.01 | -5.0e-06 | [-2.25e-05, 1.25e-05] | 3.0e-05 | 0.24 | 50 |
+| 0.000125 | 0.002 | 0.01 | +1.5e-05 | [-7.5e-06, 3.75e-05] | 5.5e-05 | 0.44 | 50 |
+| 0.0000625 | 0.001 | 0.01 | -1.25e-06 | [-1.375e-05, 1.0e-05] | 3.125e-05 | 0.50 | 50 |
+| 0.0000625 | 0.002 | 0.01 | -1.25e-06 | [-1.75e-05, 1.5e-05] | 5.375e-05 | 0.86 | 50 |
+| 0.00003125 | 0.001 | 0.01 | -1.25e-06 | [-8.140625e-06, 6.25e-06] | 2.125e-05 | 0.68 | 50 |
+| 0.00003125 | 0.002 | 0.01 | +1.875e-06 | [-6.25e-06, 1.0e-05] | 2.6875e-05 | 0.86 | 50 |
+
+All reported bootstrap intervals are compatible with zero signed offset at the stated resolution.
+
+### Interpretation
+
+The replicated control supports a bounded conclusion:
+
+1. coupling-selection offsets are noise-dependent;
+2. the signed mean offset does not show a stable non-zero bias in the tested conditions;
+3. refining the candidate grid below the residual/noise scale does not produce proportional localization improvement;
+4. the coupling minimum is therefore identifiable only within a noise- and discretization-limited neighborhood under this protocol.
+
+GENESIS-2.56 is a **numerical/statistical identifiability control**, not evidence of intelligence, agency, self-modeling, endogenous learning, or a new physical law.
+
+### Research frontier after 2.56
+
+The next clean experiment should not simply use an even finer grid. It should estimate the **noise-limited confidence region of the coupling minimum** using the replicated candidate-error surface, preferably with a preregistered decision rule that distinguishes:
+
+- exact identification,
+- interval identification,
+- and non-identifiability.
+
+The universe rules, observer separation, and no-feedback invariants remain unchanged.
