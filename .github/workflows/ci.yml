@@ -17,15 +17,13 @@ jobs:
       - run: pip install -e ".[test]"
       - run: pytest -q
 
-  genesis-2-13:
+  genesis-2-13-nonlinear:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install .
-      - env:
-          GENESIS_BENCHMARK_TICKS: "2_000"
-        run: python -u experiments/pw001_state_motion.py
+      - run: python -u experiments/pw001_nonlinear_eval.py
