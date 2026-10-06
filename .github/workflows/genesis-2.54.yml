@@ -1,0 +1,24 @@
+name: GENESIS-2.54 fine-grid coupling control
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_coupling_fine_grid.py"
+      - ".github/workflows/genesis-2.54.yml"
+
+jobs:
+  fine-grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_coupling_fine_grid.py | tee pw001-2.54-fine-grid.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-2.54-fine-grid
+          path: pw001-2.54-fine-grid.txt
