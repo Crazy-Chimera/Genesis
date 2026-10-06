@@ -41,6 +41,7 @@ on:
       - "experiments/pw001_mechanistic_noise.py"
       - "experiments/pw001_mechanistic_horizon.py"
       - "experiments/pw001_mechanistic_dt_refinement.py"
+      - "experiments/pw001_coupling_perturbation_247.py"
       - "genesis/mechanistic_horizon.py"
       - "genesis/mechanistic_noise.py"
       - "experiments/pw001_state_direction.py"
@@ -405,3 +406,15 @@ jobs:
       - run: set -o pipefail; python -u experiments/pw001_mechanistic_dt_refinement.py | tee pw001-mechanistic-dt-refinement.txt
       - uses: actions/upload-artifact@v4
         with: {name: pw001-mechanistic-dt-refinement, path: pw001-mechanistic-dt-refinement.txt}
+
+  coupling-perturbation-2-47:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_coupling_perturbation_247.py | tee pw001-coupling-perturbation-2-47.txt
+      - uses: actions/upload-artifact@v4
+        with: {name: pw001-coupling-perturbation-2-47, path: pw001-coupling-perturbation-2-47.txt}
