@@ -1,0 +1,26 @@
+name: GENESIS-2.51 replicated coupling noise sweep
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_coupling_noise_replicated.py"
+      - "experiments/pw001_coupling_noise_ablation.py"
+      - "genesis/core.py"
+      - ".github/workflows/genesis-2.51.yml"
+
+jobs:
+  coupling-noise-replicated:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_coupling_noise_replicated.py | tee pw001-2.51.txt
+      - run: test "$(grep -Ec '^(0|0\.00025|0\.0005|0\.001|0\.002) ' pw001-2.51.txt)" -eq 75
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.51-coupling-noise-replicated
+          path: pw001-2.51.txt
