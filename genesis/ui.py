@@ -26,6 +26,7 @@ def render_dashboard(state: Mapping[str, float | int]) -> str:
         ("2.49–2.54", "Noise / fine-grid controls", "noise-dependent offsets"),
         ("2.55", "Grid-resolution scaling", "scaling control"),
         ("2.56", "Replicated grid-convergence control", "50 replicates · 4 steps"),
+        ("2.57", "High-replication grid-scaling control", "200 replicates · 4 spacings"),
     ]
 
     stage_html = "".join(
@@ -72,7 +73,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.56-verified">
+<main data-ui-version="2.57-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -100,7 +101,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   </div>
 
   <div class="card span-8">
-    <h2>CURRENT FRONTIER · GENESIS-2.56</h2>
+    <h2>CURRENT FRONTIER · GENESIS-2.57</h2>
     <p><b>Replicated grid-convergence control for coupling selection.</b></p>
     <p class="muted" style="margin-top:8px">
       Actual coupling = 0.01. Noise = 0.001 and 0.002. Four grid spacings:
@@ -132,8 +133,8 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <h2>COUPLING IDENTIFICATION</h2>
     <div class="row"><span>2.48 fine grid</span><span class="badge">4/6 exact · 2/6 adjacent</span></div>
     <div class="row"><span>2.54 fine-grid control</span><span class="badge">15/15 conditions</span></div>
-    <div class="row"><span>2.56 replicated control</span><span class="badge ok">50 replicates / condition</span></div>
-    <p class="muted">Current question: is the observed coupling minimum identifiable beyond stochastic and discretization uncertainty?</p>
+    <div class="row"><span>2.56 replicated control</span><span class="badge ok">200 replicates / condition</span></div>
+    <p class="muted">Current question: does the coupling-selection residual shrink with grid refinement beyond the stochastic residual floor?</p>
   </div>
 
   <div class="card span-12">
