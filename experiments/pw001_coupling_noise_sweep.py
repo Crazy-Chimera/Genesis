@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import numpy as np
 
-from experiments.pw001_coupling_noise_ablation import evaluate
+try:
+    from experiments.pw001_coupling_noise_ablation import evaluate
+except ModuleNotFoundError:
+    from pw001_coupling_noise_ablation import evaluate
 
 
 def main() -> None:
