@@ -64,7 +64,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 </style>
 </head>
 <body>
-<main data-ui-version="2.46-verified">
+<main data-ui-version="2.48-verified">
 <header>
   <div>
     <div class="muted">AGENT Ω / GENESIS</div>
@@ -108,16 +108,16 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
       <div class="stage"><span class="dot pending"></span>30. Unseen-seed replication · 2.30 · <span class="muted">2/6 baseline; 3/6 shuffled</span></div>
       <div class="stage"><span class="dot pending"></span>31. Extended unseen-seed replication · 2.31 · <span class="muted">4/12 baseline; 5/12 shuffled</span></div><div class="stage"><span class="dot"></span>32. Mechanistic one-step rule · 2.36 · <span class="muted">6/6 positive</span></div><div class="stage"><span class="dot"></span>33. Coupling decomposition · 2.37 · <span class="muted">6/6 full-rule wins</span></div><div class="stage"><span class="dot"></span>34. Coupling dose-response · 2.39 · <span class="muted">6/6 best at 0.01</span></div><div class="stage"><span class="dot"></span>35. Independent full-rule audit · 2.42 · <span class="muted">0 residual error across 6 seeds</span></div><div class="stage"><span class="dot"></span>36. Mechanistic horizon validation · 2.43 · <span class="muted">24/24 positive</span></div><div class="stage"><span class="dot"></span>37. Mechanistic noise attribution · 2.44 · <span class="muted">noise effect measured; attribution audit</span></div>
       <div class="stage"><span class="dot"></span>38. Numerical convergence audit · 2.45 · <span class="muted">6 seeds · 4 dt values · convergent</span></div>
-      <div class="stage"><span class="dot"></span>39. Mechanistic dt refinement · 2.46 · <span class="muted">24/24 positive</span></div></div>
+      <div class="stage"><span class="dot"></span>39. Mechanistic dt refinement · 2.46 · <span class="muted">24/24 positive</span></div><div class="stage"><span class="dot"></span>40. Coupling perturbation · 2.47 · <span class="muted">6/6 exact</span></div><div class="stage"><span class="dot"></span>41. Fine coupling resolution · 2.48 · <span class="muted">4/6 exact · 2/6 adjacent</span></div></div>
     </div>
   </div>
 
   <div class="card span-8">
-    <h2>RESULT · GENESIS-2.46 VERIFIED</h2>
-    <p><b>The mechanistic PW-001 predictor remains substantially better than zero-change through horizon 10 on all six unseen seeds tested in 2.43.</b></p>
+    <h2>RESULT · GENESIS-2.48 VERIFIED</h2>
+    <p><b>Coupling perturbation 2.47 matches the actual coupling in 6/6 coarse tests; 2.48 places the fine-resolution minimum at the exact or immediately adjacent grid point in all 6 tests.</b></p>
     <div class="grid">
       <div class="card span-6"><h2>INPUT</h2><span class="ok">explicit PW-001 rule</span><br><span class="muted">6 unseen seeds · horizons 1, 2, 5, 10</span></div>
-      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.46 positive · 24/24 seed×dt cases</span><br><span class="muted">mechanistic rule prediction remains below zero-change across dt refinement; no feedback into the universe</span></div>
+      <div class="card span-6"><h2>RESULT</h2><span class="ok">2.48 verified · 4/6 exact, 2/6 adjacent-grid minima</span><br><span class="muted">coupling error surface remains locally minimized at or immediately beside the actual coupling; no feedback into the universe</span></div>
       <div class="card span-6"><h2>TARGET</h2><span>next coherence innovation ΔC</span></div>
       <div class="card span-6"><h2>CONTROLS</h2><span>zero-change · shuffled representation</span></div>
     </div>
