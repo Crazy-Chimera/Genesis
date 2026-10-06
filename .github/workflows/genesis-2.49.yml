@@ -1,0 +1,25 @@
+name: GENESIS-2.49 coupling noise ablation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_coupling_noise_ablation.py"
+      - "genesis/core.py"
+      - ".github/workflows/genesis-2.49.yml"
+
+jobs:
+  coupling-noise-ablation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_coupling_noise_ablation.py | tee pw001-2.49.txt
+      - run: test "$(grep -c '^3900' pw001-2.49.txt)" -eq 12
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.49-coupling-noise-ablation
+          path: pw001-2.49.txt
