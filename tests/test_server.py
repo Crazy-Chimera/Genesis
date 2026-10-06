@@ -27,8 +27,10 @@ def test_dashboard_contains_genesis_pw001():
     assert "negative; 7/54 zero-change wins" in html
     assert "4/12 baseline" in html
     assert "0/18 positive" in html
-    assert 'data-ui-version="2.46-verified"' in html
-    assert "GENESIS-2.46" in html
+    assert 'data-ui-version="2.48-verified"' in html
+    assert "GENESIS-2.48" in html
+    assert "Coupling perturbation" in html
+    assert "4/6 exact" in html
     assert "Numerical convergence audit" in html
     assert "GENESIS-2.45" in html
     assert "6/6 positive" in html
