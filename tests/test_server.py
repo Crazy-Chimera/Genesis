@@ -29,7 +29,7 @@ def test_dashboard_contains_genesis_pw001():
     assert "0/18 positive" in html
     assert 'data-ui-version="2.46-verified"' in html
     assert "GENESIS-2.46" in html
-    assert "numerical-convergence" in html
+    assert "Numerical convergence audit" in html
     assert "GENESIS-2.45" in html
     assert "6/6 positive" in html
     assert "mechanistic one-step rule" in html
