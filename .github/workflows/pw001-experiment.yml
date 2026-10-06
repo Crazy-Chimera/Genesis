@@ -10,6 +10,7 @@ on:
       - "genesis/compressed_trajectory.py"
       - "experiments/pw001_state_trajectory.py"
       - "experiments/pw001_state_difference.py"
+      - "experiments/pw001_state_difference.py"
       - "experiments/pw001_state_velocity.py"
       - "experiments/pw001_state_motion.py"
       - "experiments/pw001_state_change_trajectory.py"
