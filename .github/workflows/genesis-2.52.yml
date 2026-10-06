@@ -1,0 +1,26 @@
+name: GENESIS-2.52 statistical coupling noise replication
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_coupling_noise_statistics.py"
+      - "experiments/pw001_coupling_noise_ablation.py"
+      - "genesis/core.py"
+      - ".github/workflows/genesis-2.52.yml"
+
+jobs:
+  coupling-noise-statistics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: python -u experiments/pw001_coupling_noise_statistics.py | tee pw001-2.52.txt
+      - run: test "$(grep -Ec '^(0|0\.00025|0\.0005|0\.001|0\.002) ' pw001-2.52.txt)" -eq 15
+      - uses: actions/upload-artifact@v4
+        with:
+          name: genesis-2.52-coupling-noise-statistics
+          path: pw001-2.52.txt
