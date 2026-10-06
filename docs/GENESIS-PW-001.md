@@ -2284,3 +2284,50 @@ The next clean experiment should not simply use an even finer grid. It should es
 - and non-identifiability.
 
 The universe rules, observer separation, and no-feedback invariants remain unchanged.
+
+
+
+## GENESIS-2.57 — High-Replication Grid-Scaling Control
+
+GENESIS-2.57 repeats the coupling grid-resolution control at the production coupling **0.01** with **200 independent replicates per condition**. Noise levels are **0.001** and **0.002**. Candidate grid spacings are **0.00025, 0.000125, 0.0000625, and 0.00003125**.
+
+### Verified result
+
+Workflow: **GENESIS-2.57 high-replication grid-scaling control** — **SUCCESS**  
+Commit: `0c30f84547019b52dc5b6284b4def0baf4836d83`  
+Artifact: `11414966763`  
+Artifact digest: `sha256:4e7d00ca5ec61ba6d4424bbe61b8c5a7ac973ccb4c3215b126ba5e79b689ef41`
+
+| step | noise | actual | mean offset | 95% CI | mean absolute offset | normalized absolute offset | n |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0.00025 | 0.001 | 0.01 | -2.5e-06 | [-1.25e-05, 7.5e-06] | 2.0e-05 | 0.08 | 200 |
+| 0.000125 | 0.001 | 0.01 | +1.875e-06 | [-6.875e-06, 1.0625e-05] | 3.1875e-05 | 0.255 | 200 |
+| 0.0000625 | 0.001 | 0.01 | -3.125e-06 | [-9.375e-06, 2.8125e-06] | 3.125e-05 | 0.50 | 200 |
+| 0.00003125 | 0.001 | 0.01 | -6.25e-07 | [-4.21875e-06, 3.125e-06] | 2.25e-05 | 0.72 | 200 |
+| 0.00025 | 0.002 | 0.01 | -1.25e-06 | [-1.75e-05, 1.5e-05] | 5.625e-05 | 0.225 | 200 |
+| 0.000125 | 0.002 | 0.01 | -6.25e-07 | [-1.25e-05, 1.125e-05] | 6.0625e-05 | 0.485 | 200 |
+| 0.0000625 | 0.002 | 0.01 | -9.375e-07 | [-8.1328125e-06, 6.875e-06] | 4.65625e-05 | 0.745 | 200 |
+| 0.00003125 | 0.002 | 0.01 | +1.5625e-07 | [-3.75e-06, 4.06640625e-06] | 2.671875e-05 | 0.855 | 200 |
+
+The fitted scaling exponent for mean absolute offset versus grid spacing was estimated as:
+
+`alpha = 0.001`: 95% CI **[-0.672425, -0.0481206, 0.473931]**  
+`alpha = 0.002`: 95% CI **[-0.10806, 0.360275, 0.801316]**
+
+### Interpretation
+
+The higher-replication control strengthens the previous 2.55–2.56 conclusion:
+
+1. signed coupling-selection offsets remain statistically centered near zero in the tested conditions;
+2. increasing replication does not reveal a stable signed bias;
+3. mean absolute localization error does not decrease proportionally with grid spacing;
+4. normalized absolute error therefore rises as the candidate grid becomes finer;
+5. the observed scaling exponents remain statistically compatible with no positive proportional convergence rate under these conditions.
+
+The result is consistent with a **noise-limited residual floor** rather than unlimited parameter localization by grid refinement.
+
+GENESIS-2.57 is a numerical/statistical identifiability control. It does not establish intelligence, agency, self-modeling, endogenous learning, or a new physical law.
+
+### Research frontier after 2.57
+
+The next clean step is to stop refining the grid blindly and formalize a **noise-aware coupling confidence interval** from the replicated candidate-error surface. The decision rule should distinguish exact identification, interval identification, and non-identifiability while preserving the same universe, observer, and no-feedback invariants.
