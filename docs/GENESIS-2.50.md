@@ -14,22 +14,38 @@ For each condition, the predictor evaluates the actual coupling and adjacent can
 
 The predictor is external. No prediction is fed back into `GenesisUniverse`.
 
+## Verified result
+
+Workflow: **GENESIS-2.50 coupling noise sweep #3 — SUCCESS**  
+Commit: `c62eb86b1ab4d33ab92acc39dc8817c8eccbe548`  
+Artifact: `11395841466`  
+Artifact digest: `sha256:3eab69d470b1cd4c0a4b89c1bbe083508d1ce472c480789faed8d19d27dcb8b0`  
+Conditions: **15/15** completed.
+
+| noise | exact recoveries | offsets |
+|---:|---:|---|
+| 0 | 3/3 | all 0 |
+| 0.00025 | 3/3 | all 0 |
+| 0.0005 | 3/3 | all 0 |
+| 0.001 | 2/3 | one −0.000125 |
+| 0.002 | 2/3 | one +0.000125 |
+
+The mean MAE rises with noise amplitude in the tested conditions. The only coupling-selection errors are one grid step from the actual coupling; no case selects a value farther from the actual coupling.
+
+### Interpretation
+
+The result strengthens the GENESIS-2.49 attribution: increasing stochastic noise raises the prediction residual and eventually produces small one-grid-step coupling-selection offsets. The effect is bounded at the tested resolution and does not imply that the underlying coupling has changed.
+
+This is an implementation-level attribution result for the tested PW-001 computational rule. It does not establish intelligence, agency, self-modeling, endogenous learning, or a general physical law.
+
 ## Reproduction
 
 Workflow: `GENESIS-2.50 coupling noise sweep`
 
 Entry point: `experiments/pw001_coupling_noise_sweep.py`
 
-The workflow evaluates 15 seed × noise × coupling conditions and stores the raw output as an artifact.
+The raw result is stored in artifact `11395841466`.
 
-## Interpretation rule
+## Research frontier after 2.50
 
-The experiment is not considered positive merely because a noisy condition selects the exact coupling. The primary quantities are exact-recovery frequency, signed grid offset, prediction MAE, and their dependence on noise amplitude.
-
-A systematic dependence of the coupling-selection offset on noise amplitude would strengthen the attribution established in GENESIS-2.49. Absence of such dependence would constrain that interpretation.
-
-The result remains an implementation-level property of the tested PW-001 computational rule. It is not evidence of intelligence, agency, self-modeling, endogenous learning, or a general physical law.
-
-## Research frontier
-
-After 2.50, the clean next step is to repeat the relationship on additional unseen seeds and finer coupling grids before treating the coupling minimum as a quantitative estimator.
+The next clean control is **replication across additional unseen seeds at the same noise amplitudes**, followed by a finer coupling grid around the local minimum. The purpose is to determine whether the one-grid-step offsets remain bounded and whether their frequency scales reproducibly with noise amplitude.
