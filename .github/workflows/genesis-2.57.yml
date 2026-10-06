@@ -1,0 +1,24 @@
+name: GENESIS-2.57 high-replication grid-scaling control
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "experiments/pw001_coupling_grid_scaling_highrep.py"
+      - ".github/workflows/genesis-2.57.yml"
+
+jobs:
+  high-replication-grid-scaling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - run: set -o pipefail; python -u experiments/pw001_coupling_grid_scaling_highrep.py | tee pw001-2.57-grid-scaling.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pw001-2.57-grid-scaling
+          path: pw001-2.57-grid-scaling.txt
