@@ -16,31 +16,19 @@ def test_server_step_advances_universe():
     assert 0.0 <= state["coherence"] <= 1.0
 
 
-def test_dashboard_contains_genesis_pw001():
+def test_dashboard_contains_current_genesis_frontier():
     html = render_dashboard({"tick": 0, "coherence": 0.5})
     assert "GENESIS-PW-001" in html
-    assert "2.12" in html
-    assert "State-difference / harmonic-state probes · 2.13" in html
-    assert "Nonlinear state trajectory · 2.14" in html
-    assert "0/12 positive" in html
-    assert "1/3 seeds positive" in html
-    assert "negative; 7/54 zero-change wins" in html
-    assert "4/12 baseline" in html
-    assert "0/18 positive" in html
-    assert 'data-ui-version="2.48-verified"' in html
-    assert "GENESIS-2.48" in html
-    assert "Coupling perturbation" in html
-    assert "4/6 exact" in html
-    assert "Numerical convergence audit" in html
-    assert "GENESIS-2.45" in html
-    assert "6/6 positive" in html
-    assert "mechanistic one-step rule" in html
-    assert "state trajectory" in html.lower()
-    assert "unseen-seed replication" in html.lower()
-    assert "12/12 unseen seeds" in html
+    assert 'data-ui-version="2.56-verified"' in html
+    assert "GENESIS-2.56" in html
+    assert "2.55" in html
+    assert "Replicated grid-convergence control" in html
+    assert "50 replicates / condition" in html
+    assert "2.48 fine grid" in html
     assert "6/6 minimum at 0.01" in html
-    assert "negative mean" in html
+    assert "24/24 positive" in html
     assert "No self-model" in html
+    assert "No AGI claim" in html
     assert "/step" in html
 
 
