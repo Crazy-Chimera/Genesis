@@ -19,7 +19,7 @@ jobs:
           python-version: "3.12"
       - run: pip install .
       - run: python -u experiments/pw001_coupling_noise_sweep.py | tee pw001-2.50.txt
-      - run: test "$(grep -Ec '^(0|0.00025|0.0005|0.001|0.002) ' pw001-2.50.txt)" -eq 15
+      - run: test "$(grep -Ec '^(0|0\.00025|0\.0005|0\.001|0\.002) ' pw001-2.50.txt)" -eq 15
       - uses: actions/upload-artifact@v4
         with:
           name: genesis-2.50-coupling-noise-sweep
