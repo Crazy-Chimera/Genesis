@@ -59,3 +59,30 @@ def test_transition_predictor_rejects_invalid_configuration():
         pass
     else:
         raise AssertionError("expected ValueError")
+
+
+def test_transition_predictor_skips_undefined_observer_feature():
+    previous = make_record(tick=0)
+    current = make_record(tick=1)
+    current = MemoryRecord(
+        tick=current.tick,
+        identity=current.identity,
+        cells=current.cells,
+        coherence=current.coherence,
+        boundary_contrast=current.boundary_contrast,
+        lifetime=current.lifetime,
+        persistence=current.persistence,
+        overlap=current.overlap,
+        local_patch=current.local_patch,
+        phase_patch=current.phase_patch,
+        gradient_patch=current.gradient_patch,
+        motion=(),
+        boundary_flux=current.boundary_flux,
+        spatial_field=current.spatial_field,
+        multiscale_field=current.multiscale_field,
+        relational=current.relational,
+        graph_relational=current.graph_relational,
+        global_harmonics=current.global_harmonics,
+    )
+    result = StateTransitionPredictor().evaluate((previous, current))
+    assert result.samples == 0
