@@ -63,6 +63,10 @@ h1,h2,p {{ margin:0; }} h1 {{ font-size:22px; }} h2 {{ font-size:13px; color:var
 button {{ background:var(--accent); color:#071019; border:0; border-radius:7px;
   padding:9px 13px; font:inherit; font-weight:700; cursor:pointer; }}
 button:disabled {{ opacity:.5; cursor:wait; }}
+button.secondary {{ background:transparent; color:var(--text); border:1px solid var(--line); }}
+.controls {{ display:flex; gap:8px; flex-wrap:wrap; }}
+#oscillators {{ display:block; width:100%; height:auto; aspect-ratio:1/1; background:#071019; border:1px solid var(--line); border-radius:8px; }}
+.legend {{ display:flex; justify-content:space-between; gap:10px; margin-top:8px; color:var(--muted); font-size:12px; }}
 .bar {{ height:8px; background:#182634; border-radius:99px; overflow:hidden; margin-top:10px; }}
 .bar > i {{ display:block; height:100%; width:{progress:.4f}%; background:var(--accent); }}
 .timeline {{ display:grid; gap:7px; }} .stage {{ display:flex; gap:8px; align-items:center; }}
@@ -80,7 +84,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
     <h1>PRIMORDIAL EMERGENCE LAB</h1>
     <p class="muted">GENESIS-PW-001 · measurement-only experimental substrate</p>
   </div>
-  <button id="step">ADVANCE ONE TICK</button>
+  <div class="controls"><button id="step">ADVANCE ONE TICK</button><button id="live" class="secondary">START LIVE</button></div>
 </header>
 
 <section class="grid">
@@ -89,7 +93,14 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
   <div class="card span-3"><h2>COHERENCE</h2><div id="coherence" class="metric">{coherence:.9f}</div><div class="muted">external observer measurement</div></div>
   <div class="card span-3"><h2>Ω STATUS</h2><div class="metric ok">OBSERVER</div><div class="muted">Agent Ω not activated</div></div>
 
-  <div class="card span-4">
+  <div class="card span-6">
+    <h2>LIVE OSCILLATOR FIELD · 16 × 16</h2>
+    <canvas id="oscillators" width="640" height="640" aria-label="Live phase visualization of 256 oscillators"></canvas>
+    <div class="legend"><span>Hue = phase (0–2π)</span><span>Arrow = phase direction</span><span id="osc-meta">Waiting for field…</span></div>
+    <p class="muted" style="margin-top:8px">Live mode advances the existing universe rule and redraws the external visualization. It does not add feedback, memory, or new universe rules.</p>
+  </div>
+
+  <div class="card span-6">
     <h2>OBSERVATION / VALIDATION STACK</h2>
     <div class="timeline">
       <div class="stage"><span class="dot"></span><span class="stage-id">1.0–2.35</span> Observer / transfer probes</div>
@@ -160,24 +171,57 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 <script>
 const tickEl=document.getElementById("tick"), coherenceEl=document.getElementById("coherence");
 const progressEl=document.getElementById("progress"), stateEl=document.getElementById("state");
-const button=document.getElementById("step");
+const button=document.getElementById("step"), liveButton=document.getElementById("live");
+const canvas=document.getElementById("oscillators"), ctx=canvas.getContext("2d");
+const oscMeta=document.getElementById("osc-meta");
+let liveTimer=null, requestBusy=false;
 function render(s) {{
   tickEl.textContent=Number(s.tick).toLocaleString();
   coherenceEl.textContent=Number(s.coherence).toFixed(9);
   progressEl.style.width=Math.min(100, Number(s.tick)/100000*100)+"%";
   stateEl.textContent=JSON.stringify(s);
 }}
-button.addEventListener("click", async () => {{
-  button.disabled=true;
+async function refreshOscillators() {{
+  const response=await fetch("/oscillators", {{cache:"no-store"}});
+  if (!response.ok) throw new Error("oscillator field unavailable");
+  const field=await response.json();
+  const phases=field.phase, n=field.size, cell=canvas.width/n;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for (let y=0;y<n;y++) for (let x=0;x<n;x++) {{
+    const phase=phases[y][x], cx=(x+.5)*cell, cy=(y+.5)*cell;
+    ctx.fillStyle=`hsl(${{phase/(2*Math.PI)*360}},72%,52%)`;
+    ctx.beginPath(); ctx.arc(cx,cy,cell*.29,0,2*Math.PI); ctx.fill();
+    const length=cell*.22, ex=cx+Math.cos(phase)*length, ey=cy+Math.sin(phase)*length;
+    ctx.strokeStyle="#f3f7fb"; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ex,ey); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ex,ey); ctx.lineTo(ex-Math.cos(phase-.55)*cell*.09,ey-Math.sin(phase-.55)*cell*.09);
+    ctx.lineTo(ex-Math.cos(phase+.55)*cell*.09,ey-Math.sin(phase+.55)*cell*.09); ctx.closePath(); ctx.fillStyle="#f3f7fb"; ctx.fill();
+  }}
+  oscMeta.textContent=`${{n*n}} oscillators · tick ${{field.tick}}`;
+}}
+async function advanceAndRender() {{
+  if (requestBusy) return;
+  requestBusy=true;
   try {{
     const response=await fetch("/step", {{cache:"no-store"}});
     if (!response.ok) throw new Error("step failed");
     render(await response.json());
-  }} finally {{ button.disabled=false; }}
+    await refreshOscillators();
+  }} catch (error) {{ oscMeta.textContent="Connection error — retrying"; }}
+  finally {{ requestBusy=false; }}
+}}
+button.addEventListener("click", async () => {{
+  button.disabled=true;
+  try {{ await advanceAndRender(); }} finally {{ button.disabled=false; }}
+}});
+liveButton.addEventListener("click", () => {{
+  if (liveTimer!==null) {{ clearInterval(liveTimer); liveTimer=null; liveButton.textContent="START LIVE"; liveButton.classList.add("secondary"); return; }}
+  liveButton.textContent="STOP LIVE"; liveButton.classList.remove("secondary");
+  advanceAndRender(); liveTimer=setInterval(advanceAndRender,250);
 }});
 window.addEventListener("load", async () => {{
   const response=await fetch("/state", {{cache:"no-store"}});
   if (response.ok) render(await response.json());
+  try {{ await refreshOscillators(); }} catch (error) {{ oscMeta.textContent="Waiting for server…"; }}
 }});
 </script>
 </body>
