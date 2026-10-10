@@ -19,6 +19,13 @@ def test_server_step_advances_universe():
 def test_dashboard_contains_current_genesis_frontier():
     html = render_dashboard({"tick": 0, "coherence": 0.5})
     assert "GENESIS-PW-001" in html
+    assert "GENESIS: ELS-0.1" in html
+    assert 'id="els-log"' in html
+    assert 'id="els-save"' in html
+    assert 'id="els-record"' in html
+    assert 'overflow-y:auto' in html
+    assert "localStorage" in html
+    assert "NO FEEDBACK" in html
     assert 'data-ui-version="2.57-verified"' in html
     assert "GENESIS-2.57" in html
     assert "2.56" in html
