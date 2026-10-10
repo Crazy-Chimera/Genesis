@@ -75,15 +75,15 @@ button.secondary {{ background:transparent; color:var(--text); border:1px solid 
 pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 
 /* ELS-0.1 is an external research layer; it does not alter universe state. */
-.els-banner { margin:18px 0 8px; border:1px solid #41634f; background:linear-gradient(120deg,#10251f,#0d1823 70%); border-radius:10px; padding:18px; }
-.els-kicker { color:var(--accent); letter-spacing:.12em; font-size:11px; margin-bottom:6px; }
-.els-layout { display:grid; grid-template-columns: minmax(0,1fr) minmax(280px,.85fr); gap:12px; margin-top:12px; }
-.els-input { width:100%; background:#071019; color:var(--text); border:1px solid var(--line); border-radius:7px; padding:10px; font:inherit; margin:6px 0 10px; }
-.els-log { height:220px; overflow-y:auto; overscroll-behavior:contain; border:1px solid var(--line); border-radius:7px; padding:10px; background:#071019; }
-.els-entry { padding:8px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
-.els-entry:last-child { border-bottom:0; }
-.els-entry time { color:var(--accent); font-size:11px; display:block; }
-.scroll-hint { color:var(--muted); font-size:11px; margin-top:6px; }
+.els-banner {{ margin:18px 0 8px; border:1px solid #41634f; background:linear-gradient(120deg,#10251f,#0d1823 70%); border-radius:10px; padding:18px; }}
+.els-kicker {{ color:var(--accent); letter-spacing:.12em; font-size:11px; margin-bottom:6px; }}
+.els-layout {{ display:grid; grid-template-columns: minmax(0,1fr) minmax(280px,.85fr); gap:12px; margin-top:12px; }}
+.els-input {{ width:100%; background:#071019; color:var(--text); border:1px solid var(--line); border-radius:7px; padding:10px; font:inherit; margin:6px 0 10px; }}
+.els-log {{ height:220px; overflow-y:auto; overscroll-behavior:contain; border:1px solid var(--line); border-radius:7px; padding:10px; background:#071019; }}
+.els-entry {{ padding:8px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }}
+.els-entry:last-child {{ border-bottom:0; }}
+.els-entry time {{ color:var(--accent); font-size:11px; display:block; }}
+.scroll-hint {{ color:var(--muted); font-size:11px; margin-top:6px; }}
 @media(max-width:800px) { .els-layout { grid-template-columns:1fr; } }
 
 @media(max-width:800px) {{ .span-3,.span-4,.span-6,.span-8 {{ grid-column:span 12; }} header {{ flex-direction:column; }} }}
@@ -223,97 +223,97 @@ const elsLogEl=document.getElementById("els-log"), elsCountEl=document.getElemen
 const elsHypothesisEl=document.getElementById("els-hypothesis"), elsNoteEl=document.getElementById("els-note");
 const ELS_STORAGE_KEY="genesis-els-0.1-log";
 let elsEntries=[];
-function elsPersist() { try { localStorage.setItem(ELS_STORAGE_KEY,JSON.stringify(elsEntries)); } catch(e) { /* UI remains usable if storage is unavailable. */ } }
-function elsRenderLog() {
+function elsPersist() {{ try {{ localStorage.setItem(ELS_STORAGE_KEY,JSON.stringify(elsEntries)); }} catch(e) {{ /* UI remains usable if storage is unavailable. */ }} }}
+function elsRenderLog() {{
   elsCountEl.textContent=elsEntries.length+" entr"+(elsEntries.length===1?"y":"ies");
   elsLogEl.replaceChildren();
-  if (!elsEntries.length) { const p=document.createElement("p"); p.className="muted"; p.textContent="No entries yet. Research actions and notes will appear here."; elsLogEl.appendChild(p); return; }
-  for (const entry of elsEntries) {
+  if (!elsEntries.length) {{ const p=document.createElement("p"); p.className="muted"; p.textContent="No entries yet. Research actions and notes will appear here."; elsLogEl.appendChild(p); return; }}
+  for (const entry of elsEntries) {{
     const article=document.createElement("article"); article.className="els-entry";
     const time=document.createElement("time"); time.dateTime=entry.timestamp; time.textContent=new Date(entry.timestamp).toLocaleString();
     const title=document.createElement("strong"); title.textContent=entry.kind;
     const body=document.createElement("div"); body.textContent=[entry.hypothesis,entry.note].filter(Boolean).join("\n");
     article.append(time,title,body); elsLogEl.appendChild(article);
-  }
+  }}
   elsLogEl.scrollTop=elsLogEl.scrollHeight;
-}
-function elsRecord(kind,hypothesis="",note="") {
-  elsEntries.push({timestamp:new Date().toISOString(),kind,hypothesis,note,tick:Number(tickEl.textContent.replace(/,/g,""))||0,coherence:Number(coherenceEl.textContent)||0,layer:"ELS-0.1"});
+}}
+function elsRecord(kind,hypothesis="",note="") {{
+  elsEntries.push({{timestamp:new Date().toISOString(),kind,hypothesis,note,tick:Number(tickEl.textContent.replace(/,/g,""))||0,coherence:Number(coherenceEl.textContent)||0,layer:"ELS-0.1"}});
   elsPersist(); elsRenderLog();
-}
-function elsDownload(filename,mime,text) {
-  const blob=new Blob([text],{type:mime}); const url=URL.createObjectURL(blob);
+}}
+function elsDownload(filename,mime,text) {{
+  const blob=new Blob([text],{{type:mime}}); const url=URL.createObjectURL(blob);
   const a=document.createElement("a"); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-try { const stored=localStorage.getItem(ELS_STORAGE_KEY); if (stored) { const parsed=JSON.parse(stored); if (Array.isArray(parsed)) elsEntries=parsed; } } catch(e) { elsEntries=[]; }
+}}
+try {{ const stored=localStorage.getItem(ELS_STORAGE_KEY); if (stored) {{ const parsed=JSON.parse(stored); if (Array.isArray(parsed)) elsEntries=parsed; }} }} catch(e) {{ elsEntries=[]; }}
 elsRenderLog();
-document.getElementById("els-record").addEventListener("click",()=>{
+document.getElementById("els-record").addEventListener("click",()=>{{
   const hypothesis=elsHypothesisEl.value.trim(), note=elsNoteEl.value.trim();
-  if (!hypothesis && !note) { elsNoteEl.focus(); return; }
+  if (!hypothesis && !note) {{ elsNoteEl.focus(); return; }}
   elsRecord("Research note",hypothesis,note); elsNoteEl.value="";
-});
-document.getElementById("els-save").addEventListener("click",()=>{
-  elsDownload("genesis-els-0.1-log.json","application/json",JSON.stringify({schema:"GENESIS: ELS-0.1",saved_at:new Date().toISOString(),boundary:"external; no feedback into universe",entries:elsEntries},null,2));
+}});
+document.getElementById("els-save").addEventListener("click",()=>{{
+  elsDownload("genesis-els-0.1-log.json","application/json",JSON.stringify({{schema:"GENESIS: ELS-0.1",saved_at:new Date().toISOString(),boundary:"external; no feedback into universe",entries:elsEntries}},null,2));
   elsRecord("Log exported","Saved JSON research log","Export is a UI action; the log includes this action after the exported snapshot.");
-});
-document.getElementById("els-export-text").addEventListener("click",()=>{
-  const text=["GENESIS: ELS-0.1 RESEARCH LOG","Boundary: external; no feedback into GENESIS-PW-001","",...elsEntries.map(e=>`[${e.timestamp}] ${e.kind} | tick=${e.tick} | coherence=${e.coherence}\n${e.hypothesis||""}\n${e.note||""}\n`)].join("\n");
+}});
+document.getElementById("els-export-text").addEventListener("click",()=>{{
+  const text=["GENESIS: ELS-0.1 RESEARCH LOG","Boundary: external; no feedback into GENESIS-PW-001","",...elsEntries.map(e=>`[${{e.timestamp}}] ${{e.kind}} | tick=${{e.tick}} | coherence=${{e.coherence}}\n${{e.hypothesis||""}}\n${{e.note||""}}\n`)].join("\n");
   elsDownload("genesis-els-0.1-log.txt","text/plain;charset=utf-8",text);
   elsRecord("Log exported","Saved text research log","Export is a UI action.");
-});
-document.getElementById("els-clear").addEventListener("click",()=>{
+}});
+document.getElementById("els-clear").addEventListener("click",()=>{{
   if (!confirm("Clear the ELS-0.1 log stored in this browser? Export a copy first if you need it.")) return;
   elsEntries=[]; elsPersist(); elsRenderLog();
   elsRecord("Local log cleared","Previous local entries removed","The clear event begins a new local log.");
-});
+}});
 
 let liveTimer=null, requestBusy=false;
-function render(s) {{
+function render(s) {{{{
   tickEl.textContent=Number(s.tick).toLocaleString();
   coherenceEl.textContent=Number(s.coherence).toFixed(9);
   progressEl.style.width=Math.min(100, Number(s.tick)/100000*100)+"%";
   stateEl.textContent=JSON.stringify(s);
-}}
-async function refreshOscillators() {{
-  const response=await fetch("/oscillators", {{cache:"no-store"}});
+}}}}
+async function refreshOscillators() {{{{
+  const response=await fetch("/oscillators", {{{{cache:"no-store"}}}});
   if (!response.ok) throw new Error("oscillator field unavailable");
   const field=await response.json();
   const phases=field.phase, n=field.size, cell=canvas.width/n;
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  for (let y=0;y<n;y++) for (let x=0;x<n;x++) {{
+  for (let y=0;y<n;y++) for (let x=0;x<n;x++) {{{{
     const phase=phases[y][x], cx=(x+.5)*cell, cy=(y+.5)*cell;
-    ctx.fillStyle=`hsl(${{phase/(2*Math.PI)*360}},72%,52%)`;
+    ctx.fillStyle=`hsl(${{{{phase/(2*Math.PI)*360}}}},72%,52%)`;
     ctx.beginPath(); ctx.arc(cx,cy,cell*.29,0,2*Math.PI); ctx.fill();
     const length=cell*.22, ex=cx+Math.cos(phase)*length, ey=cy+Math.sin(phase)*length;
     ctx.strokeStyle="#f3f7fb"; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ex,ey); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(ex,ey); ctx.lineTo(ex-Math.cos(phase-.55)*cell*.09,ey-Math.sin(phase-.55)*cell*.09);
     ctx.lineTo(ex-Math.cos(phase+.55)*cell*.09,ey-Math.sin(phase+.55)*cell*.09); ctx.closePath(); ctx.fillStyle="#f3f7fb"; ctx.fill();
-  }}
-  oscMeta.textContent=`${{n*n}} oscillators · tick ${{field.tick}}`;
-}}
-async function advanceAndRender() {{
+  }}}}
+  oscMeta.textContent=`${{{{n*n}}}} oscillators · tick ${{{{field.tick}}}}`;
+}}}}
+async function advanceAndRender() {{{{
   if (requestBusy) return;
   requestBusy=true;
-  try {{
-    const response=await fetch("/step", {{cache:"no-store"}});
+  try {{{{
+    const response=await fetch("/step", {{{{cache:"no-store"}}}});
     if (!response.ok) throw new Error("step failed");
     render(await response.json());
     await refreshOscillators();
-  }} catch (error) {{ oscMeta.textContent="Connection error — retrying"; }}
-  finally {{ requestBusy=false; }}
-}}
-button.addEventListener("click", async () => {{
+  }}}} catch (error) {{{{ oscMeta.textContent="Connection error — retrying"; }}}}
+  finally {{{{ requestBusy=false; }}}}
+}}}}
+button.addEventListener("click", async () => {{{{
   elsRecord("Manual advance","Advanced universe by one tick","Recorded externally; no research-layer feedback.");
   button.disabled=true;
-  try {{ await advanceAndRender(); }} finally {{ button.disabled=false; }}
-}});
-liveButton.addEventListener("click", () => {{
-  if (liveTimer!==null) {{ clearInterval(liveTimer); liveTimer=null; liveButton.textContent="START LIVE"; liveButton.classList.add("secondary"); elsRecord("Live mode stopped"); return; }}
+  try {{{{ await advanceAndRender(); }}}} finally {{{{ button.disabled=false; }}}}
+}}}});
+liveButton.addEventListener("click", () => {{{{
+  if (liveTimer!==null) {{{{ clearInterval(liveTimer); liveTimer=null; liveButton.textContent="START LIVE"; liveButton.classList.add("secondary"); elsRecord("Live mode stopped"); return; }}}}
   liveButton.textContent="STOP LIVE"; liveButton.classList.remove("secondary");
   elsRecord("Live mode started","External visualization running","The research layer observes UI activity only.");
   advanceAndRender(); liveTimer=setInterval(advanceAndRender,250);
-}});
+}}}});
 window.addEventListener("load", async () => {{
   const response=await fetch("/state", {{cache:"no-store"}});
   if (response.ok) render(await response.json());
