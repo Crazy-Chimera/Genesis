@@ -25,6 +25,18 @@ class GenesisServer:
         with self._lock:
             return self.observer.measure(self.universe)
 
+    def oscillator_state(self) -> dict:
+        """Return a read-only snapshot for the external live visualizer."""
+        with self._lock:
+            measured = self.observer.measure(self.universe)
+            snapshot = self.universe.state()
+            return {
+                **measured,
+                "size": self.universe.config.size,
+                "phase": snapshot["phase"].tolist(),
+                "omega": snapshot["omega"].tolist(),
+            }
+
 
 class Handler(BaseHTTPRequestHandler):
     server_version = "GENESIS/0.2"
@@ -40,6 +52,10 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, app.state())
             return
 
+        if self.path == "/oscillators":
+            self._json(200, app.oscillator_state())
+            return
+
         if self.path == "/step":
             self._json(200, app.step())
             return
@@ -50,7 +66,7 @@ class Handler(BaseHTTPRequestHandler):
 
         self._json(
             404,
-            {"error": "not_found", "endpoints": ["/", "/health", "/state", "/step"]},
+            {"error": "not_found", "endpoints": ["/", "/health", "/state", "/oscillators", "/step"]},
         )
 
     def _json(self, status: int, payload: dict) -> None:
