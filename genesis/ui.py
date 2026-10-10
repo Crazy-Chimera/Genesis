@@ -84,7 +84,7 @@ pre {{ margin:0; white-space:pre-wrap; color:var(--muted); }}
 .els-entry:last-child {{ border-bottom:0; }}
 .els-entry time {{ color:var(--accent); font-size:11px; display:block; }}
 .scroll-hint {{ color:var(--muted); font-size:11px; margin-top:6px; }}
-@media(max-width:800px) { .els-layout { grid-template-columns:1fr; } }
+@media(max-width:800px) {{ .els-layout {{ grid-template-columns:1fr; }} }}
 
 @media(max-width:800px) {{ .span-3,.span-4,.span-6,.span-8 {{ grid-column:span 12; }} header {{ flex-direction:column; }} }}
 </style>
