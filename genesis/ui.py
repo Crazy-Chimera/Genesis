@@ -269,51 +269,51 @@ document.getElementById("els-clear").addEventListener("click",()=>{{
 }});
 
 let liveTimer=null, requestBusy=false;
-function render(s) {{{{
+function render(s) {{
   tickEl.textContent=Number(s.tick).toLocaleString();
   coherenceEl.textContent=Number(s.coherence).toFixed(9);
   progressEl.style.width=Math.min(100, Number(s.tick)/100000*100)+"%";
   stateEl.textContent=JSON.stringify(s);
-}}}}
-async function refreshOscillators() {{{{
-  const response=await fetch("/oscillators", {{{{cache:"no-store"}}}});
+}}
+async function refreshOscillators() {{
+  const response=await fetch("/oscillators", {{cache:"no-store"}});
   if (!response.ok) throw new Error("oscillator field unavailable");
   const field=await response.json();
   const phases=field.phase, n=field.size, cell=canvas.width/n;
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  for (let y=0;y<n;y++) for (let x=0;x<n;x++) {{{{
+  for (let y=0;y<n;y++) for (let x=0;x<n;x++) {{
     const phase=phases[y][x], cx=(x+.5)*cell, cy=(y+.5)*cell;
-    ctx.fillStyle=`hsl(${{{{phase/(2*Math.PI)*360}}}},72%,52%)`;
+    ctx.fillStyle=`hsl(${{phase/(2*Math.PI)*360}},72%,52%)`;
     ctx.beginPath(); ctx.arc(cx,cy,cell*.29,0,2*Math.PI); ctx.fill();
     const length=cell*.22, ex=cx+Math.cos(phase)*length, ey=cy+Math.sin(phase)*length;
     ctx.strokeStyle="#f3f7fb"; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ex,ey); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(ex,ey); ctx.lineTo(ex-Math.cos(phase-.55)*cell*.09,ey-Math.sin(phase-.55)*cell*.09);
     ctx.lineTo(ex-Math.cos(phase+.55)*cell*.09,ey-Math.sin(phase+.55)*cell*.09); ctx.closePath(); ctx.fillStyle="#f3f7fb"; ctx.fill();
-  }}}}
-  oscMeta.textContent=`${{{{n*n}}}} oscillators · tick ${{{{field.tick}}}}`;
-}}}}
-async function advanceAndRender() {{{{
+  }}
+  oscMeta.textContent=`${{n*n}} oscillators · tick ${{field.tick}}`;
+}}
+async function advanceAndRender() {{
   if (requestBusy) return;
   requestBusy=true;
-  try {{{{
-    const response=await fetch("/step", {{{{cache:"no-store"}}}});
+  try {{
+    const response=await fetch("/step", {{cache:"no-store"}});
     if (!response.ok) throw new Error("step failed");
     render(await response.json());
     await refreshOscillators();
-  }}}} catch (error) {{{{ oscMeta.textContent="Connection error — retrying"; }}}}
-  finally {{{{ requestBusy=false; }}}}
-}}}}
-button.addEventListener("click", async () => {{{{
+  }} catch (error) {{ oscMeta.textContent="Connection error — retrying"; }}
+  finally {{ requestBusy=false; }}
+}}
+button.addEventListener("click", async () => {{
   elsRecord("Manual advance","Advanced universe by one tick","Recorded externally; no research-layer feedback.");
   button.disabled=true;
-  try {{{{ await advanceAndRender(); }}}} finally {{{{ button.disabled=false; }}}}
-}}}});
-liveButton.addEventListener("click", () => {{{{
-  if (liveTimer!==null) {{{{ clearInterval(liveTimer); liveTimer=null; liveButton.textContent="START LIVE"; liveButton.classList.add("secondary"); elsRecord("Live mode stopped"); return; }}}}
+  try {{ await advanceAndRender(); }} finally {{ button.disabled=false; }}
+}});
+liveButton.addEventListener("click", () => {{
+  if (liveTimer!==null) {{ clearInterval(liveTimer); liveTimer=null; liveButton.textContent="START LIVE"; liveButton.classList.add("secondary"); elsRecord("Live mode stopped"); return; }}
   liveButton.textContent="STOP LIVE"; liveButton.classList.remove("secondary");
   elsRecord("Live mode started","External visualization running","The research layer observes UI activity only.");
   advanceAndRender(); liveTimer=setInterval(advanceAndRender,250);
-}}}});
+}});
 window.addEventListener("load", async () => {{
   const response=await fetch("/state", {{cache:"no-store"}});
   if (response.ok) render(await response.json());
