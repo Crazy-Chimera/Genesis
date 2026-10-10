@@ -37,3 +37,34 @@ def test_dashboard_renders_live_state():
     assert "123" in html
     assert "0.123456789" in html
     assert "100,000" in html
+
+
+
+def test_oscillator_snapshot_exposes_phase_and_frequency_fields():
+    app = GenesisServer()
+    snapshot = app.oscillator_state()
+    assert snapshot["tick"] == 0
+    assert snapshot["size"] == 16
+    assert len(snapshot["phase"]) == 16
+    assert all(len(row) == 16 for row in snapshot["phase"])
+    assert len(snapshot["omega"]) == 16
+    assert all(len(row) == 16 for row in snapshot["omega"])
+    assert all(0.0 <= value < 6.283185307179586 for row in snapshot["phase"] for value in row)
+
+
+def test_oscillator_snapshot_changes_when_universe_advances():
+    app = GenesisServer()
+    before = app.oscillator_state()
+    app.step()
+    after = app.oscillator_state()
+    assert after["tick"] == before["tick"] + 1
+    assert after["phase"] != before["phase"]
+
+
+def test_dashboard_includes_live_oscillator_visualizer():
+    page = render_dashboard({"tick": 0, "coherence": 0.5})
+    assert 'id="oscillators"' in page
+    assert 'id="live"' in page
+    assert 'fetch("/oscillators"' in page
+    assert "START LIVE" in page
+    assert "STOP LIVE" in page
